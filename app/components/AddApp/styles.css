@@ -1,0 +1,30 @@
+.pointer {
+    cursor: pointer;
+}
+
+.newAppInputContainer {
+    composes: baseInputContainer from 'shared/styles.css';
+}
+
+.newAppInput {
+    composes: baseInput from 'shared/styles.css';
+    border-width: 0;
+}
+
+.darkBtn {
+    composes: darkBtn from 'shared/styles.css';
+    text-decoration: none;
+}
+
+.submitAppBtn {
+    composes: darkBtn from 'shared/styles.css';
+    margin: 0px auto;
+    width: 150px;
+    text-align: center;
+    display: block;
+}
+
+.submitAppBtn:disabled {
+    background: #C6C6C6;
+    border: 1px solid #C6C6C6;
+}

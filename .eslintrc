@@ -1,0 +1,41 @@
+{
+    parser: "babel-eslint",
+    env: {
+        es6: true,
+        browser: true,
+        node: true
+    },
+    parserOptions: {
+        ecmaversion: 6,
+        sourceType: "module",
+        ecmaFeatures: {
+            jsx: true,
+            experimentalObjectRestSpread: true
+        }
+    },
+    extends: [
+        "eslint:recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "standard",
+        "airbnb"
+    ],
+    plugins: [
+        "react"
+    ],
+    "rules": {
+        "comma-dangle": 0,
+        "no-console": [1, {allow: ["warn", "error"]}],
+        "semi": [1, "never"],
+        "no-extra-semi": 1,
+        "indent": ["error", 4],
+        "jsx-quotes": [1, "prefer-single"],
+        "react/jsx-boolean-value": [1, "always"],
+        "react/jsx-closing-bracket-location": [1, {selfClosing: "after-props", nonEmpty: "after-props"}],
+        "react/jsx-curly-spacing": [1, "never", {"allowMultiline": false}],
+        "react/jsx-max-props-per-line": [1, {maximum: 3}],
+        "react/jsx-no-literals": 1,
+        "react/self-closing-comp": 1,
+        "react/sort-comp": 1
+    }
+}

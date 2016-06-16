@@ -1,0 +1,1 @@
+export CheckAuthentication from './CheckAuthentication'
