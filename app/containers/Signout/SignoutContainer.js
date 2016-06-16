@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { Signout } from 'components'
+import { Signout } from 'views'
 import { signout } from 'actions'
 import { connect } from 'react-redux'
 
@@ -12,7 +12,7 @@ const SignoutContainer = React.createClass({
     },
     render () {
         return (
-            <Signout />
+            <Signout props={this.props} />
         )
     }
 })

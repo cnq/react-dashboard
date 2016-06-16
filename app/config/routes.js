@@ -14,7 +14,7 @@ import {
     Billing,
     Profile,
     Settings
-} from 'components'
+} from 'views'
 import {
     CheckAuthentication
 } from 'hocs'

@@ -9,6 +9,9 @@ const {
     string
 } = PropTypes
 
+/**
+ * AppCard() returns an UI Card component
+ */
 AppCard.propTypes = {
     title: string.isRequired,
     actions: object.isRequired

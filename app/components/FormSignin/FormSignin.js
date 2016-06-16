@@ -1,5 +1,11 @@
 import React, { PropTypes } from 'react'
-//import { } from './styles.css'
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import {
+    centeredContainer,
+    errorMsg
+} from 'shared/styles.css'
+
 const {
     string,
     func,
@@ -10,27 +16,47 @@ const {
 FormSignin.propTypes = {
     error: string.isRequired,
     isFetching: bool.isRequired,
-    onAuth: func.isRequired,
-    fields: array.isRequired
+    onAuth: func.isRequired
+    //fields: array.isRequired
 }
 
-export default function FormSignin ({onAuth, isFetching, error, email, password}) {
+function FormSignin(props) {
+
+    const renderError = ({ error }) => {
+        return (
+            error
+                ?   <div className={errorMsg}>
+                        <strong>Oops!</strong> {error}
+                    </div>
+                :   null
+        )
+    }
+
     return (
-        <div className='auth card box-shadow'>
-            <div className='card-block'>
-                <form onAuth={this.onAuth.bind(this)}>
-                    <fieldset className='input-group input-group-lg'>
-                        <input placeholder='Email' className='form-control' {...email} />
-                    </fieldset>
-                    <fieldset className='input-group input-group-lg'>
-                        <input placeholder='Password' className='form-control' type='password' {...password} />
-                    </fieldset>
-                    {error ? <p>{error}</p> : null}
-                    <button className='btn btn-primary btn-lg btn-block' action='submit'>
-                        Sign In
-                    </button>
-                </form>
-            </div>
+        <div className={centeredContainer}>
+            <form onSubmit={props.onAuth}>
+                <div>
+                    <TextField
+                        hintText="Enter an email address"
+                        floatingLabelText="Email"
+                        type="password"
+                    />
+                </div>
+                <div>
+                    <TextField
+                        hintText="Enter a password"
+                        floatingLabelText="Password"
+                        type="password"
+                    />
+                </div>
+                {renderError(props)}
+                <div className={centeredContainer}>
+                    <RaisedButton label="Sign In" primary={true} action="submit" />
+                </div>
+            </form>
         </div>
     )
+
 }
+
+export default FormSignin

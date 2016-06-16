@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { SocialSignin } from 'components'
-import { users as actions } from 'actions';
+import { SocialSignin, FormSignin } from 'components'
+import { Signin } from 'views'
+import { users as actions } from 'actions'
 import { formatAuthData } from 'helpers/utils'
 
 const SigninContainer = React.createClass({
@@ -23,13 +24,20 @@ const SigninContainer = React.createClass({
     },
     render () {
         return (
-            <div>
+            <Signin props={this.props}>
+                <FormSignin
+                    isFetching={this.props.isFetching}
+                    error={this.props.error}
+                    onAuth={this.handleAuth}
+                />
+                <br />
+                <br />
                 <SocialSignin
                     isFetching={this.props.isFetching}
                     error={this.props.error}
                     onAuth={this.handleAuth}
                 />
-            </div>
+            </Signin>
         )
     }
 })
@@ -41,4 +49,4 @@ function mapStateToProps ({users}) {
     }
 }
 
-export default connect(mapStateToProps, actions)(SigninContainer);
+export default connect(mapStateToProps, actions)(SigninContainer)

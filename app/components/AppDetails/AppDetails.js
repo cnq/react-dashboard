@@ -16,6 +16,10 @@ const {
     bool
 } = PropTypes
 
+/**
+ * AppDetails() returns app details component which displays
+ * the settings for the currently selected app.
+ */
 AppDetails.propTypes = {
     appId: string.isRequired,
     isFetching: bool.isRequired,
