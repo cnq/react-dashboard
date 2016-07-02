@@ -3,6 +3,10 @@ import {
     gridItem
 } from './styles.css'
 
+/**
+ * GridItem() returns grid items for managing
+ * app card layout within the feed.
+ */
 export default function GridItem (props) {
     return (
         <div className={gridItem}>
@@ -10,3 +14,5 @@ export default function GridItem (props) {
         </div>
     )
 }
+
+export default GridItem

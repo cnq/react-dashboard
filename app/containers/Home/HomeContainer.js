@@ -1,10 +1,10 @@
 import React from 'react'
-import { Home } from 'components';
+import { Home } from 'views';
 
 const HomeContainer = React.createClass({
     render () {
         return (
-            <Home />
+            <Home props={this.props} />
         )
     }
 })

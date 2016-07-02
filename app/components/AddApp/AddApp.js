@@ -39,6 +39,10 @@ const {
     bool
 } = PropTypes
 
+/**
+ * AddApp() returns component that displays necessary
+ * input fields for adding new apps.
+ */
 AddApp.propTypes = {
     appDomain: string.isRequired,
     isActive: bool.isRequired,

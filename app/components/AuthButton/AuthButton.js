@@ -11,14 +11,11 @@ import {
 import { buttonContainer } from './styles.css'
 
 const styles = {
-    button: {
-    },
+    button: {},
     label: {
         textTransform: 'capitalize'
     },
-    icon: {
-    }
-
+    icon: {}
 }
 
 const {
@@ -26,6 +23,10 @@ const {
     func
 } = PropTypes
 
+/**
+ * AuthButton() returns a styled button for a
+ * federated authentication provider.
+ */
 AuthButton.propTypes = {
     onAuth: func.isRequired,
     authProvider: string.isRequired

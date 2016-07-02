@@ -16,6 +16,10 @@ import {
 
 const {func} = PropTypes
 
+/**
+ * App() returns an individual app component
+ * which contains the AppCard.
+ */
 App.propTypes = {
     app: PropTypes.instanceOf(Map),
     goToAppDetail: func
