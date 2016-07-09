@@ -1,62 +1,61 @@
-import React, { PropTypes } from 'react'
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import React, { Component,PropTypes } from 'react';
+import { reduxForm } from 'redux-form';
+import { getProviderInfo } from 'helpers/utils'
 import {
-    centeredContainer,
-    errorMsg
-} from 'shared/styles.css'
+    EMAIL
+} from 'config/constants'
 
-const {
-    string,
-    func,
-    bool,
-    array
-} = PropTypes
+class FormSignin extends Component {
 
-FormSignin.propTypes = {
-    error: string.isRequired,
-    isFetching: bool.isRequired,
-    onAuth: func.isRequired
-    //fields: array.isRequired
-}
-
-function FormSignin(props) {
-
-    const renderError = ({ error }) => {
-        return (
-            error
-                ?   <div className={errorMsg}>
-                        <strong>Oops!</strong> {error}
-                    </div>
-                :   null
-        )
+    static propTypes = {
+        fields: PropTypes.object.isRequired,
+        handleSubmit: PropTypes.func.isRequired
     }
 
-    return (
-        <div className={centeredContainer}>
-            <form onSubmit={props.onAuth}>
-                <div>
-                    <TextField
-                        hintText="Enter an email address"
-                        floatingLabelText="Email"
-                        type="password"
-                    />
+    renderAlert () {
+        if ( this.props.errorMessage ) {
+            return (
+                <div className='alert alert-danger'>
+                    <strong>Oops!</strong> { this.props.errorMessage }
                 </div>
-                <div>
-                    <TextField
-                        hintText="Enter a password"
-                        floatingLabelText="Password"
-                        type="password"
-                    />
-                </div>
-                {renderError(props)}
-                <div className={centeredContainer}>
-                    <RaisedButton label="Sign In" primary={true} action="submit" />
-                </div>
-            </form>
-        </div>
-    )
+            );
+        }
+    }
 
+    render () {
+
+        const { fields: { email, password }, handleSubmit } = this.props;
+
+        return (
+            <div className='auth card box-shadow'>
+                <div className='card-block'>
+                    <form onSubmit={handleSubmit((fields, event) => this.props.onAuth(getProviderInfo(EMAIL), fields.email, fields.password))}>
+                        <fieldset className='input-group input-group-lg'>
+                            <input placeholder='Email' className='form-control' { ...email } />
+                        </fieldset>
+                        <fieldset className='input-group input-group-lg'>
+                            <input placeholder='Password' className='form-control' type='password' { ...password } />
+                        </fieldset>
+                            { this.renderAlert() }
+                            <button className='btn btn-primary btn-lg btn-block' action='submit'>
+                                Sign In
+                            </button>
+                        </form>
+                    </div>
+                </div>
+         )
+    }
 }
 
-export default FormSignin
+function mapStateToProps ( state ) {
+    return {
+        errorMessage: state.users.error
+    }
+}
+
+FormSignin = reduxForm({
+    form: 'signin',
+    fields: [ 'email', 'password' ]
+}, mapStateToProps )( FormSignin );
+
+export default FormSignin;

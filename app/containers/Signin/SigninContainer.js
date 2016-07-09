@@ -22,21 +22,23 @@ const SigninContainer = React.createClass({
                 this.context.router.replace('dashboard')
             })
     },
+    handleFormAuth (authProvider, email, password) {
+        console.debug("triggering login event");
+        const authData = formatAuthData(authProvider, null, null, null, email, password)
+        this.props.fetchAndHandleAuthenticatedUser(authData)
+            .then(() => {
+                this.context.router.replace('dashboard')
+            })
+    },
     render () {
-        return (
+        return ( 
             <Signin props={this.props}>
                 <FormSignin
                     isFetching={this.props.isFetching}
                     error={this.props.error}
-                    onAuth={this.handleAuth}
-                />
-                <br />
-                <br />
-                <SocialSignin
-                    isFetching={this.props.isFetching}
-                    error={this.props.error}
-                    onAuth={this.handleAuth}
-                />
+                    onAuth={this.handleFormAuth}
+                /> 
+
             </Signin>
         )
     }

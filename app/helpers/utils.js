@@ -27,13 +27,14 @@ export function formatApp (text, {name, avatar, uid}) {
     }
 }
 
-export function formatAuthData (provider = null, accessToken = null, idToken = null, secret = null, password = null) {
+export function formatAuthData (provider = null, accessToken = null, idToken = null, secret = null, email = null, password = null) {
     return {
         credential: {
             provider,
             accessToken,
             idToken,
             secret,
+            email,
             password,
             timestamp: Date.now()
         }

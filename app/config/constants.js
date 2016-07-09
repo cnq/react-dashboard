@@ -1,4 +1,4 @@
-import firebase from 'firebase/firebase-browser'
+//import firebase from 'firebase/firebase-browser'
 import {
     apiKey,
     authDomain,
@@ -15,9 +15,9 @@ const config = {
 };
 
 // Initialize Firebase
-export const fireApp = firebase.initializeApp(config);
-export const fireDb = fireApp.database();
-export const fireAuth = fireApp.auth();
+//export const fireApp = firebase.initializeApp(config);
+//export const fireDb = fireApp.database();
+//export const fireAuth = fireApp.auth();
 
 export const usersAppsExpirationLength = 100000
 export const userExpirationLength = 100000

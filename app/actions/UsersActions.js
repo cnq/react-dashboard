@@ -57,16 +57,10 @@ export function fetchAndHandleAuthenticatedUser (authData) {
             auth(authData)
                 .then((results) => {
 
-                    // Pull credentials and user data from result
-                    const provider = results.credential.provider
-                    const accessToken = results.credential.accessToken
-                    const idToken = provider === GOOGLE ? results.credential.idToken : null
-                    const secret = provider === TWITTER ? results.credential.secret : null
-                    const password = provider === EMAIL ? results.credential.password : null
                     const user = results.user
 
                     // Format auth data
-                    const authData = formatAuthData(provider, accessToken, idToken, secret, password)
+                    const authData = formatAuthData(results.credential.provider, null, null, null, results.credential.email, results.credential.password)
 
                     // Store the authData credentials in localStorage as a string by
                     // using JSON.stringify
@@ -74,6 +68,8 @@ export function fetchAndHandleAuthenticatedUser (authData) {
 
                     // Format user data
                     const userData = formatUserData(user.displayName, user.photoURL, user.uid)
+
+                    localStorage.setItem('user', JSON.stringify(userData))
 
                     // Fetch User
                     return dispatch(fetchingUserSuccess(user.uid, userData, Date.now()))
@@ -90,6 +86,7 @@ export function signoutAndUnauth () {
 
     // Remove the credential data from local storage
     localStorage.removeItem('auth')
+    localStorage.removeItem('user')
 
     // Signout and unauth user
     return function (dispatch) {

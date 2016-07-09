@@ -1,81 +1,27 @@
-import firebase from 'firebase/firebase-browser'
-import {
-    fireApp,
-    fireDb,
-    fireAuth,
-    FACEBOOK,
-    GOOGLE,
-    GITHUB,
-    TWITTER
-} from 'config/constants'
+import axios from 'axios';
 import { formatUserData } from 'helpers/utils'
 import { users as actions } from 'actions'
 import { store } from '../index.js'
 
 
-function getProvider (authData) {
-    const {provider, accessToken, idToken, secret} = authData.credential
-
-    switch (provider) {
-        case FACEBOOK:
-            return (
-                accessToken
-                    ?  firebase.auth.FacebookAuthProvider.credential(accessToken)
-                    :  new firebase.auth.FacebookAuthProvider()
-            )
-        case GOOGLE:
-            return (
-                accessToken
-                    ?  firebase.auth.GoogleAuthProvider.credential(idToken, accessToken)
-                    :  new firebase.auth.GoogleAuthProvider()
-            )
-        case GITHUB:
-            return (
-                accessToken
-                    ?  firebase.auth.GithubAuthProvider.credential(accessToken)
-                    :  new firebase.auth.GithubAuthProvider()
-            )
-        case TWITTER:
-            return (
-                accessToken
-                    ?  firebase.auth.TwitterAuthProvider.credential(accessToken, secret)
-                    :  new firebase.auth.TwitterAuthProvider()
-            )
-        default:
-            return null
-    }
-}
 
 export default function auth (authData) {
 
-    const { accessToken } = authData.credential
-    const user = fireAuth.currentUser
-
-    //Is the user authenticated?
-    if (!user) {
-        const provider = getProvider(authData)
-        if (accessToken) {
-            // If we have a token, authenticate with token and attach the
-            // returned user object and pass it on with the authData object
-            return (
-                fireAuth.signInWithCredential(provider)
-                    .then ((user) => {
-                        return {credential: authData.credential, user: user}
-                    })
-            )
-
-        } else {
-            //Start authentication flow
-            return fireAuth.signInWithPopup(provider)
-        }
-    } else {
-        signout()
-    }
+    return(
+        axios.post("/api/auth/signin", {
+            userName: authData.credential.email,
+            password: authData.credential.password
+            }
+        ).then(function(response){
+            return {credential: authData.credential, user: response.data}
+        })
+    )
 
 }
 
 export function checkIfAuthenticated (isAuthenticated, nextIsAuthenticated) {
-    const user = fireAuth.currentUser
+    //TODO:  This needs to be supported with an api call to check if the user is truely authenticated
+    const user = JSON.parse(localStorage.getItem('user'))
     //Is the user authenticated?
     if (user === null){
         return false
@@ -91,12 +37,13 @@ export function checkIfAuthenticated (isAuthenticated, nextIsAuthenticated) {
 }
 
 export function signout () {
-    fireAuth.signOut()
+    //TODO: Add server side sign out
+    console.debug("sign user out");
 }
 
 export function saveUser (user) {
-    return fireDb.ref().child(`users/${user.uid}`)
-        .set(user)
-        .then(() => user)
+    //TODO: This method may not be necessary.  Check to see if we need this
+    console.debug("save user");
+    return () => user;
 }
 
