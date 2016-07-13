@@ -22,6 +22,22 @@ export function saveApp (app) {
 
 }
 
+export function deleteApp (appId) {
+    
+    console.debug("deleteApp...")
+
+    return axios({
+            method: 'delete',
+            url: `/api/apps/${appId}`,
+            timeout: 60000
+            }).then(function(response) {
+            return response.data;
+        }).catch(function(response){
+            errorCallback();
+        })
+
+}
+
 export function listenToFeed (callback, errorCallback) {
 
     return axios.get("/api/apps").then(function(response) {

@@ -22,17 +22,18 @@ const {func} = PropTypes
  */
 App.propTypes = {
     app: PropTypes.instanceOf(Map),
-    goToAppDetail: func
+    goToAppDetail: func,
+    deleteApp: func
 }
 
 function App(props) {
 
-    const renderActions = ({ goToAppDetail }) => {
+    const renderActions = ({ goToAppDetail, deleteApp }) => {
         return (
             <div>
                 <FlatButton onClick={goToAppDetail} label="View Details" />
                 <FlatButton label="Add Hook" />
-                <FlatButton label="Delete" />
+                <FlatButton onClick={(event) => deleteApp(event, props.appId )} label="Delete" />
             </div>
         )
     }

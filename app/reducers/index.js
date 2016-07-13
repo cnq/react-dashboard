@@ -1,5 +1,6 @@
 export users from './UsersReducer'
 export addApp from './AddAppReducer'
+export removeApp from './RemoveAppReducer'
 export apps from './AppsReducer'
 export usersApps from './UsersAppsReducer'
 export feed from './FeedReducer'
