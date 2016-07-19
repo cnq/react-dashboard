@@ -41,7 +41,7 @@ function App(props) {
     return (
         <AppCard
             className={appContainer}
-            title={props.app.get('text')}
+            title={props.app.get('backendSiteUri')}
             actions={renderActions(props)}
         />
     )

@@ -10,8 +10,7 @@ export function saveApp (app) {
         method: 'post',
         url: '/api/apps',
         data:  {
-            name: app.text,
-            text: app.text
+            backendSiteUri: app.text
         },
         timeout: 60000
     }).then(function(response) {
