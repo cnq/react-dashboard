@@ -76,6 +76,7 @@ function AddApp(props) {
     return (
         <AppCard
             title="Create New App"
+            backendSiteUri=""
             actions={renderActions(props)}
             onClick={props.activateAddApp}
         >
