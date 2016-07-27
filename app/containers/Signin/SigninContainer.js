@@ -37,8 +37,14 @@ const SigninContainer = React.createClass({
                     isFetching={this.props.isFetching}
                     error={this.props.error}
                     onAuth={this.handleFormAuth}
-                /> 
-
+                />
+                <br />
+                <br />
+                <SocialSignin
+                    isFetching={this.props.isFetching}
+                    error={this.props.error}
+                    onAuth={this.handleAuth}
+                />
             </Signin>
         )
     }

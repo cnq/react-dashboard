@@ -1,4 +1,4 @@
-import { deleteApp } from 'helpers/api'
+import { deleteApp } from 'api'
 
 export const REMOVING_APP = 'REMOVING_APP'
 export const REMOVE_APP_ERROR = 'REMOVE_APP_ERROR'

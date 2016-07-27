@@ -1,4 +1,4 @@
-import { fetchUser } from 'helpers/api'
+import { fetchUser } from 'api'
 import auth, { signout, saveUser } from 'helpers/auth'
 import { formatAuthData, formatUserData } from 'helpers/utils'
 import {

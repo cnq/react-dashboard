@@ -1,4 +1,4 @@
-import { fetchUsersApps } from 'helpers/api'
+import { fetchUsersApps } from 'api'
 import { addMultipleApps } from './AppsActions'
 
 export const FETCHING_USERS_APPS = 'FETCHING_USERS_APPS'

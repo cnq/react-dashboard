@@ -1,6 +1,6 @@
 import { addListener } from './ListenersActions'
 import { addMultipleApps } from './AppsActions'
-import { listenToFeed } from 'helpers/api'
+import { listenToFeed } from 'api'
 
 export const SETTING_FEED_LISTENER = 'SETTING_FEED_LISTENER'
 export const SETTING_FEED_LISTENER_ERROR = 'SETTING_FEED_LISTENER_ERROR'

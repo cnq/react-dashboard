@@ -1,9 +1,13 @@
-import React, { Component,PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { getProviderInfo } from 'helpers/utils'
 import {
     EMAIL
 } from 'config/constants'
+import {
+    centeredContainer,
+    errorMsg
+} from 'shared/styles.css'
 
 class FormSignin extends Component {
 

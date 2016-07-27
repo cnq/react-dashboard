@@ -6,6 +6,7 @@
   "scripts": {
     "prestart": "babel-node tools/startMessage.js",
     "start": "webpack-dev-server --port 8080 --hot --host 0.0.0.0",
+    "start:paperhook": "webpack-dev-server --port 8080 --hot --host 0.0.0.0",
     "production": "webpack -p",
     "lint": "npm-run-all --parallel start lint:watch; exit 0",
     "lint:watch": "npm run lint:files -- --watch",
@@ -20,7 +21,7 @@
   "author": "James Ryan Cooper",
   "license": "MIT",
   "dependencies": {
-    "firebase": "3.0.1",
+    "firebase": "^3.0.1",
     "immutable": "3.8.1",
     "lodash": "4.13.1",
     "mailcheck": "1.1.1",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "autoprefixer": "6.3.6",
+    "axios": "^0.13.1",
     "babel-cli": "6.9.0",
     "babel-core": "6.7.7",
     "babel-eslint": "6.0.0-beta.6",
