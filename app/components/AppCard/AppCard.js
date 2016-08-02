@@ -13,14 +13,14 @@ const {
  * AppCard() returns an UI Card component
  */
 AppCard.propTypes = {
-    title: string.isRequired,
+    backendSiteUri: string.isRequired,
     actions: object.isRequired
 }
 
 function AppCard (props) {
     return (
         <Card>
-            <CardHeader title={props.title} />
+            <CardHeader title={props.backendSiteUri} />
             <CardText>{props.children}</CardText>
             <CardActions>{props.actions}</CardActions>
         </Card>

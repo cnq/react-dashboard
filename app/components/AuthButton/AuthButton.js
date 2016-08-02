@@ -6,7 +6,8 @@ import {
     FACEBOOK,
     GOOGLE,
     GITHUB,
-    TWITTER
+    TWITTER,
+    EMAIL
 } from 'config/constants'
 import { buttonContainer } from './styles.css'
 
@@ -20,7 +21,8 @@ const styles = {
 
 const {
     string,
-    func
+    func,
+    object
 } = PropTypes
 
 /**
@@ -29,15 +31,14 @@ const {
  */
 AuthButton.propTypes = {
     onAuth: func.isRequired,
-    authProvider: string.isRequired
+    authData: object.isRequired
 }
 
-function AuthButton ({ onAuth, authProvider }) {
+function AuthButton ({ onAuth, authData }) {
 
-    const providerInfo = getProviderInfo(authProvider)
-    const name = providerInfo.name
-    const icon = providerInfo.icon
-    const color = providerInfo.color
+    const name = getProviderInfo(authData.provider).name
+    const icon = getProviderInfo(authData.provider).icon
+    const color = getProviderInfo(authData.provider).color
 
     return (
         <RaisedButton
@@ -47,7 +48,7 @@ function AuthButton ({ onAuth, authProvider }) {
             labelColor="#ffffff"
             backgroundColor={color}
             linkButton={true}
-            onClick={(event) => onAuth(authProvider, event)}
+            onClick={(event) => onAuth(authData, event)}
             icon={<FontIcon className={`fa fa-${icon} fa-3x`} style={styles.icon} />}
             style={styles.button}
         />

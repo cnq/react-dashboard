@@ -1,3 +1,4 @@
+import axios from 'axios';
 import firebase from 'firebase/firebase-browser'
 import {
     fireApp,
@@ -6,16 +7,16 @@ import {
     FACEBOOK,
     GOOGLE,
     GITHUB,
-    TWITTER
+    TWITTER,
+    EMAIL
 } from 'config/constants'
 import { formatUserData } from 'helpers/utils'
 import { users as actions } from 'actions'
 import { store } from '../index.js'
 
-
 function getProvider (authData) {
-    const {provider, accessToken, idToken, secret} = authData.credential
-
+    const {provider, accessToken, idToken, secret, email, password} = authData.credential
+    console.log('provider getProvider::::: ', provider)
     switch (provider) {
         case FACEBOOK:
             return (
@@ -41,6 +42,12 @@ function getProvider (authData) {
                     ?  firebase.auth.TwitterAuthProvider.credential(accessToken, secret)
                     :  new firebase.auth.TwitterAuthProvider()
             )
+        case EMAIL:
+            return (
+                email && password
+                    ?  provider
+                    :  console.log('there was an issue logging in with email') // TODO: Handle email login issue
+            )
         default:
             return null
     }
@@ -48,34 +55,77 @@ function getProvider (authData) {
 
 export default function auth (authData) {
 
-    const { accessToken } = authData.credential
+    const { accessToken, email, password } = authData.credential
     const user = fireAuth.currentUser
 
-    //Is the user authenticated?
-    if (!user) {
-        const provider = getProvider(authData)
-        if (accessToken) {
-            // If we have a token, authenticate with token and attach the
-            // returned user object and pass it on with the authData object
-            return (
-                fireAuth.signInWithCredential(provider)
-                    .then ((user) => {
-                        return {credential: authData.credential, user: user}
-                    })
-            )
-
+    if (process.env.NODE_ENV !== 'production') {
+        //firebase
+        //Is the user authenticated?
+        if (!user) {
+            const provider = getProvider(authData)
+            if (accessToken || (email && password)) {
+                // If we have a token, authenticate with token and attach the
+                // returned user object and pass it on with the authData object
+                if (provider !== EMAIL) {
+                    //authenticate via federated identity provider
+                    console.log('provider with credentials::::: ', provider)
+                    return (
+                        fireAuth.signInWithCredential(provider)
+                            .then((user) => {
+                                return {credential: authData.credential, user: user}
+                            }, function (error) {
+                                console.warn('signInWithCredential() error: ', error)
+                            })
+                    )
+                } else {
+                    //authenticate via email
+                    return (
+                        fireAuth.signInWithEmailAndPassword(email, password)
+                            .then((user) => {
+                                return {credential: authData.credential, user: user}
+                            }, function (error) {
+                                console.warn('signInWithEmailAndPassword() error: ', error)
+                            })
+                    )
+                }
+            } else {
+                //Start authentication flow
+                console.log('provider without credentials::::: ', provider)
+                if (provider !== EMAIL) {
+                    return fireAuth.signInWithPopup(provider)
+                } else {
+                    return fireAuth.createUserWithEmailAndPassword(email, password)
+                        .catch(function(error) {
+                            console.warn('createUserWithEmailAndPassword() error: ', error)
+                        })
+                }
+            }
         } else {
-            //Start authentication flow
-            return fireAuth.signInWithPopup(provider)
+            signout()
         }
-    } else {
-        signout()
+    }  else {
+        //paperhook
+        return (
+            axios.post("/api/auth/signin", {
+                    userName: email,
+                    password: password
+                }
+            ).then(function (response) {
+                return {credential: authData.credential, user: response.data}
+            })
+        )
     }
 
 }
 
 export function checkIfAuthenticated (isAuthenticated, nextIsAuthenticated) {
-    const user = fireAuth.currentUser
+    
+    //TODO:  This needs to be supported with an api call to check if the user is truely authenticated
+    const user =
+        process.env.NODE_ENV !== 'production'
+            ? fireAuth.currentUser  //firebase
+            : JSON.parse(localStorage.getItem('user')) //paperhook
+    
     //Is the user authenticated?
     if (user === null){
         return false
@@ -91,12 +141,31 @@ export function checkIfAuthenticated (isAuthenticated, nextIsAuthenticated) {
 }
 
 export function signout () {
-    fireAuth.signOut()
+    //TODO: Add server side sign out
+    if (process.env.NODE_ENV !== 'production') {
+        //firebase
+        fireAuth.signOut()
+            .then(function() {
+                console.log('signout() success')
+            }, function(error) {
+                console.warn('signout() error: ', error)
+            })
+    } else {
+        //paperhook
+        console.debug("sign user out");
+    }
 }
 
 export function saveUser (user) {
-    return fireDb.ref().child(`users/${user.uid}`)
-        .set(user)
-        .then(() => user)
+    //TODO: This method may not be necessary.  Check to see if we need this
+    if (process.env.NODE_ENV !== 'production') {
+        //firebase
+        return fireDb.ref().child(`users/${user.uid}`)
+            .set(user)
+            .then(() => user)
+    } else {
+        //paperhook
+        console.debug("save user");
+        return () => user;
+    }
 }
-

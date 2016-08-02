@@ -1,12 +1,14 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { App } from 'components'
+import { removeApp as actions } from 'actions'
 
-const { object } = PropTypes
+const { object, func } = PropTypes
 
 const AppContainer = React.createClass({
     propTypes: {
-        app: object.isRequired
+        app: object.isRequired,
+        deleteAndHandleApp: func.isRequired
     },
     contextTypes: {
         router: PropTypes.object.isRequired
@@ -19,11 +21,16 @@ const AppContainer = React.createClass({
         event.stopPropagation()
         this.context.router.push('/dashboard/app/' + this.props.app.get('appId'))
     },
+    deleteApp (event, appId) {
+        //event.stopPropagation()
+        this.props.deleteAndHandleApp(appId)
+    },
     render () {
         return (
             <App
                 goToProfile={this.goToProfile}
                 goToAppDetail={this.goToAppDetail}
+                deleteApp={this.deleteApp}
                 {...this.props}
             />
         )
@@ -37,5 +44,5 @@ function mapStateToProps ({apps}, props) {
 }
 
 export default connect(
-    mapStateToProps
+    mapStateToProps, actions
 )(AppContainer)

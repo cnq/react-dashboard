@@ -13,6 +13,16 @@ const PATHS = {
     build: path.join(__dirname, 'dist')
 }
 
+const LAUNCH_COMMAND = process.env.npm_lifecycle_event
+
+const isDevelopment = LAUNCH_COMMAND === 'start'
+
+const developmentPlugin = new webpack.DefinePlugin({
+    'process.env':{
+        'NODE_ENV': JSON.stringify(isDevelopment ? 'development' : 'production')
+    }
+})
+
 export default {
     debug: true,
     entry: [
@@ -30,6 +40,7 @@ export default {
     },
     plugins: [
         HtmlWebpackPluginConfig,
+        developmentPlugin,
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin() //new
     ]
