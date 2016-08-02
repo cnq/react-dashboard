@@ -1,4 +1,4 @@
-import { fetchUser } from 'api'
+import { fetchUser } from 'apis'
 import auth, { signout, saveUser } from 'helpers/auth'
 import { formatAuthData, formatUserData } from 'helpers/utils'
 import {
@@ -57,10 +57,17 @@ export function fetchAndHandleAuthenticatedUser (authData) {
             auth(authData)
                 .then((results) => {
 
+                    // Pull credentials and user data from result
+                    const provider = results.credential.provider
+                    const accessToken = provider !== EMAIL ? results.credential.accessToken : null
+                    const idToken = provider === GOOGLE ? results.credential.idToken : null
+                    const secret = provider === TWITTER ? results.credential.secret : null
+                    const email = provider === EMAIL ? results.credential.email : null
+                    const password = provider === EMAIL ? results.credential.password : null
                     const user = results.user
 
                     // Format auth data
-                    const authData = formatAuthData(results.credential.provider, null, null, null, results.credential.email, results.credential.password)
+                    const authData = formatAuthData(provider, accessToken, idToken, secret, email, password)
 
                     // Store the authData credentials in localStorage as a string by
                     // using JSON.stringify

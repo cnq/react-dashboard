@@ -40,7 +40,7 @@ function SocialSignin ({ onAuth, isFetching, error }) {
                 <AuthButton
                     key={getProviderInfo(provider).name.toLowerCase()}
                     onAuth={onAuth}
-                    authProvider={provider}
+                    authData={{provider}}
                 />
             )
         )

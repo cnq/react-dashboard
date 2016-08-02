@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { reduxForm } from 'redux-form';
+import React, { PropTypes } from 'react'
+import RaisedButton from 'material-ui/RaisedButton';
 import { getProviderInfo } from 'helpers/utils'
 import {
     EMAIL
@@ -9,57 +9,66 @@ import {
     errorMsg
 } from 'shared/styles.css'
 
-class FormSignin extends Component {
+const styles = {
+    button: {},
+    label: {
+        textTransform: 'capitalize'
+    },
+    icon: {}
+}
 
-    static propTypes = {
-        fields: PropTypes.object.isRequired,
-        handleSubmit: PropTypes.func.isRequired
-    }
+const {
+    string,
+    object,
+    func,
+    bool
+} = PropTypes
 
-    renderAlert () {
-        if ( this.props.errorMessage ) {
+FormSignin.propTypes = {
+    handleSubmit: func.isRequired,
+    email: object.isRequired,
+    password: object.isRequired,
+    error: string.isRequired,
+    onAuth: func.isRequired
+}
+
+
+function FormSignin ({ handleSubmit, password, email, onAuth, error }) {
+
+    const renderAlert = () => {
+        if ( error ) {
             return (
                 <div className='alert alert-danger'>
-                    <strong>Oops!</strong> { this.props.errorMessage }
+                    <strong>Oops!</strong> { error }
                 </div>
             );
         }
     }
 
-    render () {
+    const provider = EMAIL
+    const providerInfo = getProviderInfo(provider)
+    const name = providerInfo.name
+    const color = providerInfo.color
 
-        const { fields: { email, password }, handleSubmit } = this.props;
+    return (
+        <div className='auth card box-shadow'>
+            <div className='card-block'>
+                <form onSubmit={handleSubmit((event) => onAuth({provider, email, password}, event))}>
+                    <fieldset className='input-group input-group-lg'>
+                        <input placeholder='Email' className='form-control' { ...email } />
+                    </fieldset>
+                    <fieldset className='input-group input-group-lg'>
+                        <input placeholder='Password' className='form-control' type='password' { ...password } />
+                    </fieldset>
+                    { renderAlert() }
+                    <button className='btn btn-primary btn-lg btn-block' type='submit'>
+                        Sign In
+                    </button>
+                </form>
+            </div>
+        </div>
+     )
 
-        return (
-            <div className='auth card box-shadow'>
-                <div className='card-block'>
-                    <form onSubmit={handleSubmit((fields, event) => this.props.onAuth(getProviderInfo(EMAIL), fields.email, fields.password))}>
-                        <fieldset className='input-group input-group-lg'>
-                            <input placeholder='Email' className='form-control' { ...email } />
-                        </fieldset>
-                        <fieldset className='input-group input-group-lg'>
-                            <input placeholder='Password' className='form-control' type='password' { ...password } />
-                        </fieldset>
-                            { this.renderAlert() }
-                            <button className='btn btn-primary btn-lg btn-block' action='submit'>
-                                Sign In
-                            </button>
-                        </form>
-                    </div>
-                </div>
-         )
-    }
 }
-
-function mapStateToProps ( state ) {
-    return {
-        errorMessage: state.users.error
-    }
-}
-
-FormSignin = reduxForm({
-    form: 'signin',
-    fields: [ 'email', 'password' ]
-}, mapStateToProps )( FormSignin );
 
 export default FormSignin;

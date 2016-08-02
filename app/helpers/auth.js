@@ -14,9 +14,9 @@ import { formatUserData } from 'helpers/utils'
 import { users as actions } from 'actions'
 import { store } from '../index.js'
 
-function getFederatedIdentityProvider (authData) {
-    const {provider, accessToken, idToken, secret} = authData.credential
-
+function getProvider (authData) {
+    const {provider, accessToken, idToken, secret, email, password} = authData.credential
+    console.log('provider getProvider::::: ', provider)
     switch (provider) {
         case FACEBOOK:
             return (
@@ -42,6 +42,12 @@ function getFederatedIdentityProvider (authData) {
                     ?  firebase.auth.TwitterAuthProvider.credential(accessToken, secret)
                     :  new firebase.auth.TwitterAuthProvider()
             )
+        case EMAIL:
+            return (
+                email && password
+                    ?  provider
+                    :  console.log('there was an issue logging in with email') // TODO: Handle email login issue
+            )
         default:
             return null
     }
@@ -49,25 +55,25 @@ function getFederatedIdentityProvider (authData) {
 
 export default function auth (authData) {
 
-    const { accessToken, provider, email, password } = authData.credential
+    const { accessToken, email, password } = authData.credential
     const user = fireAuth.currentUser
-    
+
     if (process.env.NODE_ENV !== 'production') {
         //firebase
         //Is the user authenticated?
         if (!user) {
-            console.log('provider::::: ', provider)
-            if (accessToken) {
+            const provider = getProvider(authData)
+            if (accessToken || (email && password)) {
                 // If we have a token, authenticate with token and attach the
                 // returned user object and pass it on with the authData object
                 if (provider !== EMAIL) {
                     //authenticate via federated identity provider
-                    const federatedIdentityProvider = getFederatedIdentityProvider(authData)
+                    console.log('provider with credentials::::: ', provider)
                     return (
-                        fireAuth.signInWithCredential(federatedIdentityProvider)
-                            .then ((user) => {
+                        fireAuth.signInWithCredential(provider)
+                            .then((user) => {
                                 return {credential: authData.credential, user: user}
-                            }, function(error) {
+                            }, function (error) {
                                 console.warn('signInWithCredential() error: ', error)
                             })
                     )
@@ -75,15 +81,16 @@ export default function auth (authData) {
                     //authenticate via email
                     return (
                         fireAuth.signInWithEmailAndPassword(email, password)
-                            .then ((user) => {
+                            .then((user) => {
                                 return {credential: authData.credential, user: user}
-                            }, function(error) {
+                            }, function (error) {
                                 console.warn('signInWithEmailAndPassword() error: ', error)
                             })
                     )
                 }
             } else {
                 //Start authentication flow
+                console.log('provider without credentials::::: ', provider)
                 if (provider !== EMAIL) {
                     return fireAuth.signInWithPopup(provider)
                 } else {

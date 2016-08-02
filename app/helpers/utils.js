@@ -27,15 +27,15 @@ export function formatApp (text, {name, avatar, uid}) {
     }
 }
 
-export function formatAuthData (provider = null, accessToken = null, idToken = null, secret = null, email = null, password = null) {
+export function formatAuthData (authData = {provider: null, accessToken: null, idToken: null, secret: null, email: null, password: null}) {
     return {
         credential: {
-            provider,
-            accessToken,
-            idToken,
-            secret,
-            email,
-            password,
+            provider: authData.provider,
+            accessToken: authData.accessToken,
+            idToken: authData.idToken,
+            secret: authData.secret,
+            email: authData.email ? authData.email.value : null, // passed in as object from redux-form. grabbing value
+            password: authData.password ? authData.password.value : null, // passed in as object from redux-form. grabbing value
             timestamp: Date.now()
         }
     }

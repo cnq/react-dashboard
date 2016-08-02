@@ -1,4 +1,4 @@
-import { deleteApp } from 'api'
+import { deleteApp } from 'apis'
 
 export const REMOVING_APP = 'REMOVING_APP'
 export const REMOVE_APP_ERROR = 'REMOVE_APP_ERROR'
