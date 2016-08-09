@@ -21,9 +21,9 @@ const AppContainer = React.createClass({
         event.stopPropagation()
         this.context.router.push('/dashboard/app/' + this.props.app.get('appId'))
     },
-    deleteApp (event, appId) {
-        //event.stopPropagation()
-        this.props.deleteAndHandleApp(appId)
+    deleteApp (event, appId, uid) {
+        event.stopPropagation()
+        this.props.deleteAndHandleApp(appId, uid)
     },
     render () {
         return (

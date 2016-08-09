@@ -1,32 +1,47 @@
 import axios from 'axios';
 import { fireDb } from 'config/constants'
 
+
+/**
+ * saveToApps() save an app to Firebase and returns a an
+ * appId along with a Promise
+ *
+ * @param {Object} app
+ * @return {String} appId, {Promise} appPromise
+ */
 function saveToApps (app) {
     //Firebase
-    const appId = fireDb.ref().child('apps').push().key
+    const appId = fireDb.ref().child('apps').push().key //Have firebase generate the appId for us
     const appPromise = fireDb.ref().child(`apps/${appId}`).set({...app, appId})
-
     return {
         appId,
         appPromise
     }
 }
 
+/**
+ * saveToUsersApps() saves, to Firebase, a reference to the app along with
+ * pertinent data under the user's object and returns a firebase reference
+ *
+ * @param {Object} app, {String} appId
+ * @return firebase.ref()
+ */
 function saveToUsersApps (app, appId) {
     //Firebase
     return fireDb.ref().child(`usersApps/${app.uid}/${appId}`)
         .set({...app, appId})
 }
 
-
+/**
+ * saveApp() saves the app to Firebase or Paperhook
+ *
+ * @param {Object} app
+ * @return {Object} app, {String} appId
+ */
 export function saveApp (app) {
-
-    console.debug("saveApp...")
-
     if (process.env.NODE_ENV !== 'production') {
         //Firebase
         const { appId, appPromise } = saveToApps(app)
-
         return Promise.all([
             appPromise,
             saveToUsersApps(app, appId)
@@ -37,7 +52,7 @@ export function saveApp (app) {
             method: 'post',
             url: '/api/apps',
             data: {
-                backendSiteUri: app.backendSiteUri
+                backendSiteUri: app.text
             },
             timeout: 60000
         }).then(function (response) {
@@ -46,17 +61,57 @@ export function saveApp (app) {
             errorCallback();
         })
     }
-
 }
 
-export function deleteApp (appId) {
+/**
+ * deleteFromApps() deletes an app from Firebase and returns a Promise
+ *
+ * @param {String} appId
+ * @return {Promise} appPromise
+ */
+function deleteFromApps (appId) {
+    //Firebase
+    const appPromise = fireDb.ref(`apps/${appId}`).remove()
+    return {
+        appPromise
+    }
+}
 
-    console.debug("deleteApp...")
+/**
+ * deleteFromUsersApps() deletes the reference to the app from the user object on Firebase
+ *
+ * @param {Object} app
+ * @return firebase.ref()
+ */
+function deleteFromUsersApps (appId, uid) {
+    //Firebase
+    return fireDb.ref(`usersApps/${uid}/${appId}`).remove()
+}
 
+/**
+ * deleteApp() deletes the app from Firebase or Paperhook
+ *
+ * @param {String} appId, {String} uid
+ * @return {Promise} appPromise, {String} error
+ */
+export function deleteApp (appId, uid) {
     if (process.env.NODE_ENV !== 'production') {
         //Firebase
-        console.log('useFirebase')
+        const { appPromise } = deleteFromApps(appId)
+        return Promise.all([
+            appPromise,
+            deleteFromUsersApps(appId, uid)
+        ]).then(
+            (error) => {
+                if (error) {
+                    console.log('Firebase delete failed: ', error);
+                } else {
+                    console.log('Firebase delete succeeded');
+                }
+            }
+        )
     } else {
+        //Paperhook
         return axios({
             method: 'delete',
             url: `/api/apps/${appId}`,
@@ -67,21 +122,22 @@ export function deleteApp (appId) {
             errorCallback();
         })
     }
-
 }
 
+/**
+ * listenToFeed() listens to app feed for updates
+ *
+ * @param {Function} callback, {Function} errorCallback
+ * @return {Function} callback, {Function} errorCallback
+ */
 export function listenToFeed (callback, errorCallback) {
-
     if (process.env.NODE_ENV !== 'production') {
         //Firebase
         fireDb.ref().child('apps').on('value', (snapshot) => {
-
             const feed = snapshot.val() || {}
-
             const sortedIds = Object.keys(feed).sort((a,b) => {
                 return feed[b].timestamp - feed[a].timestamp
             })
-
             callback({feed, sortedIds})
         }, errorCallback)
     } else {
@@ -96,9 +152,14 @@ export function listenToFeed (callback, errorCallback) {
             errorCallback();
         })
     }
-
 }
 
+/**
+ * fetchUser() fetches user data from Firebase or Paperhook
+ *
+ * @param {String} uid
+ * @return {Object} user data
+ */
 export function fetchUser (uid) {
     if (process.env.NODE_ENV !== 'production') {
         //Firebase
@@ -114,6 +175,12 @@ export function fetchUser (uid) {
     }
 }
 
+/**
+ * fetchUsersApps() fetches user created apps from Firebase or Paperhook
+ *
+ * @param {String} uid
+ * @return {Object} users apps data
+ */
 export function fetchUsersApps (uid) {
     if (process.env.NODE_ENV !== 'production') {
         //Firebase
@@ -125,13 +192,15 @@ export function fetchUsersApps (uid) {
         //Paperhook
         console.debug("fetchUsersApps...")
     }
-
 }
 
+/**
+ * fetchApp() fetches a specific app from Firebase or Paperhook
+ *
+ * @param {String} appId
+ * @return {Object} app data
+ */
 export function fetchApp (appId) {
-
-    console.debug("fetchApp...")
-
     if (process.env.NODE_ENV !== 'production') {
         //Firebase
         return fireDb.ref().child(`apps/${appId}`).once('value')
@@ -144,5 +213,4 @@ export function fetchApp (appId) {
             return response.data;
         })
     }
-
 }

@@ -29,10 +29,12 @@ App.propTypes = {
 function App(props) {
 
     const renderActions = ({ deleteApp }) => {
+        const appId = props.app.get('appId')
+        const uid = props.app.get('uid')
         return (
             <div>
                 <FlatButton label="Add Connection" />
-                <FlatButton onClick={(event) => deleteApp(event, props.appId )} label="Delete" />
+                <FlatButton onClick={(event) => deleteApp(event, appId, uid)} label="Delete" />
             </div>
         )
     }
