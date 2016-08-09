@@ -1,36 +1,15 @@
 import React, { PropTypes } from 'react'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton';
 import { AppCard } from 'components'
-import { formatApp } from 'helpers/utils'
+import { formatApp, getDevDomain } from 'helpers/utils'
 import {
     newAppTop,
     pointer,
     newAppInputContainer,
-    newAppInput,
-    darkBtn,
-    submitAppBtn
+    enabled,
+    disabled
 } from './styles.css'
-
-const activeStyles = {
-    content: {
-        width: 350,
-        margin: '0px auto',
-        height: 220,
-        borderRadius: 5,
-        background: '#FFF',
-        padding: 0
-    }
-}
-
-const deactiveStyles = {
-    content: {
-        width: 350,
-        margin: '0px auto',
-        height: 220,
-        borderRadius: 5,
-        background: '#EBEBEB',
-        padding: 0
-    }
-}
 
 const {
     object,
@@ -45,31 +24,33 @@ const {
  */
 AddApp.propTypes = {
     appDomain: string.isRequired,
+    devDomain: string.isRequired,
     isActive: bool.isRequired,
     user: object.isRequired,
     isSubmitDisabled: bool.isRequired,
     activateAddApp: func.isRequired,
     deactivateAddApp: func.isRequired,
     updateAppDomain: func.isRequired,
+    updateDevDomain: func.isRequired,
     appFanout: func.isRequired
 }
 
 function AddApp(props) {
 
     const onClickCreateApp = ()  => {
-        props.appFanout(formatApp(props.appDomain, props.user))
+        props.appFanout(formatApp(props.appDomain, props.devDomain, props.user))
     }
 
     const renderActions = ({ isActive, isSubmitDisabled }) => {
         return (
-            <button
-                className={submitAppBtn}
-                style={isActive ? activeStyles : deactiveStyles}
+            <RaisedButton
+                className={isActive ? `enabled` : `disabled`}
+                primary={true}
                 disabled={isSubmitDisabled}
-                onClick={onClickCreateApp}
+                onTouchTap={onClickCreateApp}
             >
                 {'Create App'}
-            </button>
+            </RaisedButton>
         )
     }
 
@@ -77,17 +58,23 @@ function AddApp(props) {
         <AppCard
             title="Create New App"
             backendSiteUri=""
+            devSiteUri=""
             actions={renderActions(props)}
             onClick={props.activateAddApp}
         >
             <div className={newAppInputContainer}>
-                <input
-                    className={newAppInput}
+                <TextField
                     value={props.appDomain}
                     maxLength={140}
-                    type='text'
-                    placeholder={`Enter your website url`}
-                    onChange={(event) => props.updateAppDomain(event.target.value)}
+                    type="text"
+                    floatingLabelText={`Website URL`}
+                    hintText={`Please enter your website URL`}
+                    onChange={
+                        (event) =>  {
+                            props.updateAppDomain(event.target.value)
+                            props.updateDevDomain(getDevDomain(event.target.value))
+                        }
+                    }
                 />
             </div>
         </AppCard>

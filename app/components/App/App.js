@@ -28,11 +28,10 @@ App.propTypes = {
 
 function App(props) {
 
-    const renderActions = ({ goToAppDetail, deleteApp }) => {
+    const renderActions = ({ deleteApp }) => {
         return (
             <div>
-                <FlatButton onClick={goToAppDetail} label="View Details" />
-                <FlatButton label="Add Hook" />
+                <FlatButton label="Add Connection" />
                 <FlatButton onClick={(event) => deleteApp(event, props.appId )} label="Delete" />
             </div>
         )
@@ -42,6 +41,8 @@ function App(props) {
         <AppCard
             className={appContainer}
             backendSiteUri={props.app.get('backendSiteUri')}
+            devSiteUri={props.app.get('devSiteUri')}
+            goToAppDetail={props.goToAppDetail}
             actions={renderActions(props)}
         />
     )

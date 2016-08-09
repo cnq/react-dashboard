@@ -1,9 +1,0 @@
-.buttonContainer {
-    width: 150px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-.buttonContainer:hover {
-    opacity: .8;
-}

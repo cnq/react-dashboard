@@ -16,7 +16,7 @@ import { store } from '../index.js'
 
 function getProvider (authData) {
     const {provider, accessToken, idToken, secret, email, password} = authData.credential
-    console.log('provider getProvider::::: ', provider)
+
     switch (provider) {
         case FACEBOOK:
             return (
@@ -68,7 +68,6 @@ export default function auth (authData) {
                 // returned user object and pass it on with the authData object
                 if (provider !== EMAIL) {
                     //authenticate via federated identity provider
-                    console.log('provider with credentials::::: ', provider)
                     return (
                         fireAuth.signInWithCredential(provider)
                             .then((user) => {
@@ -90,7 +89,6 @@ export default function auth (authData) {
                 }
             } else {
                 //Start authentication flow
-                console.log('provider without credentials::::: ', provider)
                 if (provider !== EMAIL) {
                     return fireAuth.signInWithPopup(provider)
                 } else {
@@ -119,7 +117,6 @@ export default function auth (authData) {
 }
 
 export function checkIfAuthenticated (isAuthenticated, nextIsAuthenticated) {
-    
     //TODO:  This needs to be supported with an api call to check if the user is truely authenticated
     const user =
         process.env.NODE_ENV !== 'production'

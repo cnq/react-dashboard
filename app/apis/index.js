@@ -37,7 +37,7 @@ export function saveApp (app) {
             method: 'post',
             url: '/api/apps',
             data: {
-                backendSiteUri: app.text
+                backendSiteUri: app.backendSiteUri
             },
             timeout: 60000
         }).then(function (response) {

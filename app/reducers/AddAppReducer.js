@@ -2,6 +2,7 @@ import { addApp as actions } from 'actions'
 
 const initialState = {
     appDomain: '',
+    devDomain: '',
     isActive: false
 };
 
@@ -27,6 +28,12 @@ export default function addApp ( state = initialState, action ) {
                 appDomain: action.newAppDomain
             };
 
+        case actions.UPDATE_DEV_DOMAIN:
+            return {
+                ...state,
+                devDomain: action.newDevDomain
+            };
+        
         default:
             return state
 

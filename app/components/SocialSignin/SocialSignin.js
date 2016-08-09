@@ -11,6 +11,9 @@ import {
     centeredContainer,
     errorMsg
 } from 'shared/styles.css'
+import {
+    socialButtonsList
+} from './styles.css'
 
 const {
     string,
@@ -37,11 +40,13 @@ function SocialSignin ({ onAuth, isFetching, error }) {
 
         return (
             providers.map( provider =>
-                <AuthButton
-                    key={getProviderInfo(provider).name.toLowerCase()}
-                    onAuth={onAuth}
-                    authData={{provider}}
-                />
+                <li key={`${getProviderInfo(provider).name.toLowerCase()}Container`}>
+                    <AuthButton
+                        key={getProviderInfo(provider).name.toLowerCase()}
+                        onAuth={onAuth}
+                        authProvider={provider}
+                    />
+                </li>
             )
         )
 
@@ -49,11 +54,10 @@ function SocialSignin ({ onAuth, isFetching, error }) {
 
     return (
         <div className={centeredContainer}>
-            <br />
             {
                 isFetching === true
                     ?   <div>{'Loading'}</div>
-                    :   renderSocialButtons(onAuth)
+                    :   <ul className={socialButtonsList}>{renderSocialButtons(onAuth)}</ul>
             }
             {error ? <p className={errorMsg}>{'Oops! Well this is embarrassing, we had an issue getting you logged in. Please try again.'}</p> : null}
         </div>

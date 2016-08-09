@@ -1,74 +1,114 @@
 import React, { PropTypes } from 'react'
+import { Field, reduxForm, propTypes } from 'redux-form';
+import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton';
-import { getProviderInfo } from 'helpers/utils'
+import { getProviderInfo, asyncValidate } from 'helpers/utils'
+import { AuthButton } from 'components';
 import {
     EMAIL
 } from 'config/constants'
 import {
     centeredContainer,
-    errorMsg
+    errorMsg,
+    buttonContainer,
+    buttonLabel
 } from 'shared/styles.css'
-
-const styles = {
-    button: {},
-    label: {
-        textTransform: 'capitalize'
-    },
-    icon: {}
-}
+import {
+    formField,
+    formButtons
+} from './styles.css'
 
 const {
     string,
-    object,
-    func,
-    bool
+    bool,
+    func
 } = PropTypes
 
 FormSignin.propTypes = {
-    handleSubmit: func.isRequired,
-    email: object.isRequired,
-    password: object.isRequired,
-    error: string.isRequired,
+    formError: string.isRequired,
+    isFetching: bool.isRequired,
     onAuth: func.isRequired
 }
 
-
-function FormSignin ({ handleSubmit, password, email, onAuth, error }) {
-
-    const renderAlert = () => {
-        if ( error ) {
-            return (
-                <div className='alert alert-danger'>
-                    <strong>Oops!</strong> { error }
-                </div>
-            );
+const validate = values => {
+    const errors = {}
+    const requiredFields = [ 'email', 'password' ]
+    requiredFields.forEach(field => {
+        if (!values[ field ]) {
+            errors[ field ] = 'Required'
         }
+    })
+    if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address'
+    }
+    return errors
+}
+
+const renderTextField = field => (
+    <div className={formField}>
+        <TextField
+            key={field.name}
+            errorText={field.touched && field.error}
+            {...field.input}
+        />
+    </div>
+)
+
+function FormSignin (props) {
+
+    const renderForm = (props) => {
+        
+        const { handleSubmit, pristine, submitting, onAuth } = props
+
+        return (
+
+            <form onSubmit={handleSubmit((event) => onAuth({provider: EMAIL}, event))}>
+                <Field
+                    name="email"
+                    component={renderTextField}
+                    floatingLabelText={`Email Address`}
+                    hintText={`Please enter your email address`}
+                />
+                <Field
+                    name="password"
+                    component={renderTextField}
+                    floatingLabelText={`Password`}
+                    hintText={`Please enter your password`}
+                />
+                <div className={formButtons}>
+                    <RaisedButton
+                        className={buttonLabel}
+                        type="submit"
+                        disabled={pristine || submitting}
+                        fullWidth={true}
+                    >
+                        {`Sign In`}
+                    </RaisedButton>
+                </div>
+            </form>
+        )
+
     }
 
-    const provider = EMAIL
-    const providerInfo = getProviderInfo(provider)
-    const name = providerInfo.name
-    const color = providerInfo.color
+    const { formError, isFetching } = props
 
     return (
-        <div className='auth card box-shadow'>
-            <div className='card-block'>
-                <form onSubmit={handleSubmit((event) => onAuth({provider, email, password}, event))}>
-                    <fieldset className='input-group input-group-lg'>
-                        <input placeholder='Email' className='form-control' { ...email } />
-                    </fieldset>
-                    <fieldset className='input-group input-group-lg'>
-                        <input placeholder='Password' className='form-control' type='password' { ...password } />
-                    </fieldset>
-                    { renderAlert() }
-                    <button className='btn btn-primary btn-lg btn-block' type='submit'>
-                        Sign In
-                    </button>
-                </form>
-            </div>
+        <div className={centeredContainer}>
+            <br />
+            {
+                isFetching === true
+                    ?   <div>{'Loading'}</div>
+                    :   renderForm(props)
+            }
+            {formError ? <p className={errorMsg}>{'Oops! Well this is embarrassing, we had an issue getting you logged in. Please try again.'}</p> : null}
         </div>
+
      )
 
 }
 
-export default FormSignin;
+export default reduxForm({
+    form: 'signin',
+    validate
+    //asyncValidate
+})(FormSignin)

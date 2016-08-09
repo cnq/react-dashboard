@@ -1,10 +1,16 @@
 import React, { PropTypes } from 'react'
-//import { connect } from 'react-redux'
-import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux'
+import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
 import { SocialSignin, FormSignin } from 'components'
 import { Signin } from 'views'
 import { users as actions } from 'actions'
 import { formatAuthData } from 'helpers/utils'
+import {
+    EMAIL
+} from 'config/constants'
+import { paper, divider } from './styles.css'
+
 
 const SigninContainer = React.createClass({
     propTypes: {
@@ -15,35 +21,46 @@ const SigninContainer = React.createClass({
     contextTypes: {
         router: PropTypes.object.isRequired
     },
-    handleAuth (authData, event) {
+    handleAuth (authProvider, event) {
         event.preventDefault
-        this.props.fetchAndHandleAuthenticatedUser(formatAuthData(authData))
+        this.props.fetchAndHandleAuthenticatedUser(
+            authProvider === EMAIL
+                ? formatAuthData(authProvider, email, password)
+                : formatAuthData(authProvider)
+            )
             .then(() => {
                 this.context.router.replace('dashboard')
             })
     },
-    // TODO: add environment check here.
+
     render () {
-        
-        const { fields: { email, password }, handleSubmit } = this.props;
-        console.log('error prop::::', this.props.error)
+
+        const socialAuthButtons = (props, handleAuth) => {
+            // Are we in production?
+            if (process.env.NODE_ENV !== 'production') {
+                return (
+                    <div>
+                        <Divider className={divider}/>
+                        <SocialSignin
+                            isFetching={props.isFetching}
+                            error={props.error}
+                            onAuth={handleAuth}
+                        />
+                    </div>
+                )
+            }
+        }
+
         return ( 
             <Signin props={this.props}>
-                <FormSignin
-                    handleSubmit={handleSubmit}
-                    email={email}
-                    password={password}
-                    isFetching={this.props.isFetching}
-                    error={this.props.error}
-                    onAuth={this.handleAuth}
-                />
-                <br />
-                <br />
-                <SocialSignin
-                    isFetching={this.props.isFetching}
-                    error={this.props.error}
-                    onAuth={this.handleAuth}
-                />
+                <Paper className={paper} zDepth={2}>
+                    <FormSignin
+                        isFetching={this.props.isFetching}
+                        formError={this.props.error}
+                        onAuth={this.handleAuth}
+                    />
+                    {socialAuthButtons(this.props, this.handleAuth)}
+                </Paper>
             </Signin>
         )
     }
@@ -56,7 +73,4 @@ function mapStateToProps ({users}) {
     }
 }
 
-export default reduxForm({
-    form: 'signin',
-    fields: [ 'email', 'password']
-},mapStateToProps, actions)(SigninContainer)
+export default connect(mapStateToProps, actions)(SigninContainer)

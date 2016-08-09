@@ -8,9 +8,10 @@ import {
 export default ({ children }) => {
     return (
         <div className={container}>
-            <p className={title}>{'Universal Dashboard'}</p>
-            <p className={slogan}>{'a dashboard for any project including authentication via federated identity providers.'}</p>
+            <p className={title}>{'PaperHook'}</p>
+            <p className={slogan}>{'Content, content everywhere and not a way to join it. Until now.'}</p>
             {children}
         </div>
     )
 }
+

@@ -1,0 +1,12 @@
+.paper {
+    height: 500px;
+    width: 400px;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    display: inline-block;
+}
+
+.divider {
+    margin-top: 30px;
+}

@@ -9,7 +9,7 @@ import {
     TWITTER,
     EMAIL
 } from 'config/constants'
-import { buttonContainer } from './styles.css'
+import { buttonContainer } from 'shared/styles.css'
 
 const styles = {
     button: {},
@@ -20,9 +20,8 @@ const styles = {
 }
 
 const {
-    string,
     func,
-    object
+    string
 } = PropTypes
 
 /**
@@ -31,15 +30,15 @@ const {
  */
 AuthButton.propTypes = {
     onAuth: func.isRequired,
-    authData: object.isRequired
+    authProvider: string.isRequired
 }
 
-function AuthButton ({ onAuth, authData }) {
+function AuthButton ({ onAuth, authProvider }) {
 
-    const name = getProviderInfo(authData.provider).name
-    const icon = getProviderInfo(authData.provider).icon
-    const color = getProviderInfo(authData.provider).color
-
+    const name = getProviderInfo(authProvider).name
+    const icon = getProviderInfo(authProvider).icon
+    const color = getProviderInfo(authProvider).color
+    
     return (
         <RaisedButton
             className={buttonContainer}
@@ -47,8 +46,7 @@ function AuthButton ({ onAuth, authData }) {
             labelStyle={styles.label}
             labelColor="#ffffff"
             backgroundColor={color}
-            linkButton={true}
-            onClick={(event) => onAuth(authData, event)}
+            onTouchTap={authProvider != EMAIL ? (event) => onAuth(authProvider, event) : undefined}
             icon={<FontIcon className={`fa fa-${icon} fa-3x`} style={styles.icon} />}
             style={styles.button}
         />

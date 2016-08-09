@@ -34,14 +34,12 @@ export default {
     devServer: {
         historyApiFallback: true,
         contentBase: PATHS.build,
-        hot: true,
         inline: true,
         progress: true
     },
     plugins: [
         HtmlWebpackPluginConfig,
         developmentPlugin,
-        new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin() //new
     ]
 }

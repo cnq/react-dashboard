@@ -10,6 +10,7 @@ function mapStateToProps({addApp, users}) {
     return {
         user: users[users.authenticatedId] ? users[users.authenticatedId].info : {},
         appDomain: addApp.appDomain,
+        devDomain: addApp.devDomain,
         isActive: addApp.isActive,
         isSubmitDisabled: appDomainLength <= 0 || appDomainLength > 140
     }

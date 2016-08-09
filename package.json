@@ -1,6 +1,6 @@
 {
-  "name": "universal-dashboard",
-  "version": "1.0.0",
+  "name": "react-dashboard",
+  "version": "0.0.2",
   "description": "A starter dashboard that can be used on any project.",
   "main": "index.js",
   "scripts": {
@@ -25,16 +25,17 @@
     "immutable": "3.8.1",
     "lodash": "4.13.1",
     "mailcheck": "1.1.1",
-    "material-ui": "0.15.1",
-    "react": "15.1.0",
+    "material-ui": "^0.15.3",
+    "react": "^15.3.0",
     "react-dom": "15.0.2",
+    "react-icons": "^2.2.1",
     "react-redux": "4.4.5",
-    "react-router": "2.4.1",
+    "react-router": "^2.6.1",
     "react-router-redux": "4.0.5",
     "react-tap-event-plugin": "1.0.0",
     "redux": "3.5.2",
-    "redux-form": "^5.2.3",
-    "redux-thunk": "2.0.1",
+    "redux-form": "^6.0.0-rc.3",
+    "redux-thunk": "^2.1.0",
     "validator": "5.2.0"
   },
   "devDependencies": {
@@ -66,8 +67,8 @@
     "postcss": "5.0.21",
     "postcss-loader": "0.9.1",
     "style-loader": "0.13.1",
-    "webpack": "1.13.0",
-    "webpack-dev-server": "1.14.1",
-    "webpack-hot-middleware": "2.10.0"
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.12.2"
   }
 }

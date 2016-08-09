@@ -17,9 +17,10 @@ export function formatUserData (name, avatar, uid) {
     }
 }
 
-export function formatApp (text, {name, avatar, uid}) {
+export function formatApp (backendSiteUri, devSiteUri, {name, avatar, uid}) {
     return {
-        text,
+        backendSiteUri,
+        devSiteUri,
         name,
         avatar,
         uid,
@@ -27,15 +28,15 @@ export function formatApp (text, {name, avatar, uid}) {
     }
 }
 
-export function formatAuthData (authData = {provider: null, accessToken: null, idToken: null, secret: null, email: null, password: null}) {
+export function formatAuthData (provider = undefined, email = undefined, password = undefined, accessToken = undefined, idToken =undefined, secret = undefined) {
     return {
         credential: {
-            provider: authData.provider,
-            accessToken: authData.accessToken,
-            idToken: authData.idToken,
-            secret: authData.secret,
-            email: authData.email ? authData.email.value : null, // passed in as object from redux-form. grabbing value
-            password: authData.password ? authData.password.value : null, // passed in as object from redux-form. grabbing value
+            provider,
+            email,
+            password,
+            accessToken,
+            idToken,
+            secret,
             timestamp: Date.now()
         }
     }
@@ -87,10 +88,27 @@ export function getProviderInfo (authProvider) {
         case EMAIL:
             return {
                 name: 'email',
-                icon: 'email',
+                icon: 'envelope-o',
                 color: '#444444'
             }
         default:
             return null
     }
+}
+
+//TODO: Build this into the cnq call and firebase call
+export function asyncValidate (values) {
+
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+    return sleep(1000) // simulate server latency
+        .then(() => {
+            if ([ 'foo@foo.com', 'bar@bar.com' ].includes(values.email)) {
+                throw { email: 'Email already Exists' }
+            }
+        })
+}
+
+export function getDevDomain (devDomain) {
+    return `${(devDomain.split('.').join(''))}.tailspin.paperhook.com`
 }

@@ -27,7 +27,6 @@ export const store = createStore(
 
 // Retrieve auth string and turn it back into an object by using JSON.parse
 const authData = JSON.parse(localStorage.getItem('auth'))
-
 //If user has token, consider the user to be authenticated
 authData
     // Update application state
