@@ -55,11 +55,13 @@ export function saveApp (app) {
                 backendSiteUri: app.text
             },
             timeout: 60000
-        }).then(function (response) {
-            return response.data;
-        }).catch(function (response) {
-            errorCallback();
         })
+            .then(function (response) {
+                return response.data;
+            })
+            .catch(function (response) {
+                errorCallback();
+            })
     }
 }
 
@@ -101,26 +103,26 @@ export function deleteApp (appId, uid) {
         return Promise.all([
             appPromise,
             deleteFromUsersApps(appId, uid)
-        ]).then(
-            (error) => {
-                if (error) {
-                    console.log('Firebase delete failed: ', error);
-                } else {
-                    console.log('Firebase delete succeeded');
-                }
-            }
-        )
+        ])
+            .then(() => {
+                console.log("Delete succeeded.")
+            })
+            .catch((error) => {
+                console.log("Delete failed: " + error.message)
+            })
     } else {
         //Paperhook
         return axios({
             method: 'delete',
             url: `/api/apps/${appId}`,
             timeout: 60000
-        }).then(function (response) {
-            return response.data;
-        }).catch(function (response) {
-            errorCallback();
         })
+            .then(function (response) {
+                return response.data;
+            })
+            .catch(function (response) {
+                errorCallback();
+            })
     }
 }
 
