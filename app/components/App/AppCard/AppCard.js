@@ -27,7 +27,7 @@ AppCard.propTypes = {
 const connections = (props) => (
     <div>
         <Badge
-            badgeContent={4}
+            badgeContent={6}
             primary={true}
         >
             <IconButton onClick={props.goToAppDetail} tooltip="Blogs">
@@ -35,7 +35,7 @@ const connections = (props) => (
             </IconButton>
         </Badge>
         <Badge
-            badgeContent={4}
+            badgeContent={2}
             primary={true}
         >
             <IconButton onClick={props.goToAppDetail}  tooltip="Pages">

@@ -1,0 +1,7 @@
+.pointer {
+    cursor: pointer;
+}
+
+.newAppConnectionInputContainer {
+    composes: baseInputContainer from 'shared/styles.css';
+}
