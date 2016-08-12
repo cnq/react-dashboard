@@ -1,4 +1,4 @@
-import { AddApp } from 'components'
+import { AddAppConnection } from 'components'
 import { connect } from 'react-redux'
 import {
     addAppConnection as addAppConnectionActions,
@@ -17,4 +17,4 @@ function mapStateToProps({addAppConnection, appId}) {
 export default connect(
     mapStateToProps,
     {...addAppConnectionActions, ...appConnectionsActions}
-)(AddAppConnections)
+)(AddAppConnection)

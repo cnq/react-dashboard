@@ -23,11 +23,13 @@ const SigninContainer = React.createClass({
     },
     handleAuth (authProvider, event) {
         event.preventDefault
-        this.props.fetchAndHandleAuthenticatedUser(
-            authProvider === EMAIL
-                ? formatAuthData(authProvider, email, password)
-                : formatAuthData(authProvider)
-            )
+        var authData
+        if(authProvider.provider === EMAIL){
+            authData = formatAuthData(authProvider, event.email, event.password)
+        }else{
+            authData = formatAuthData(authProvider)
+        }
+        this.props.fetchAndHandleAuthenticatedUser(authData)
             .then(() => {
                 this.context.router.replace('dashboard')
             })

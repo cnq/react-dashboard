@@ -11,10 +11,10 @@ const {
 } = PropTypes
 
 /**
- * AddApp() returns component that displays necessary
- * input fields for adding new apps.
+ * AddAppConnection() returns component that displays necessary
+ * input fields for adding new app connections.
  */
-AddApp.propTypes = {
+AddAppConnection.propTypes = {
     appDomain: string.isRequired,
     appConnectionUri: string.isRequired,
     appConnectionType: string.isRequired,

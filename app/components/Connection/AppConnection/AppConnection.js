@@ -7,10 +7,10 @@ import { formatTimestamp } from 'helpers/utils'
 const {func} = PropTypes
 
 /**
- * App() returns an individual app component
- * which contains the AppCard.
+ * AppConnection() returns an individual app connection component
+ * which contains the AppConnectionCard.
  */
-App.propTypes = {
+AppConnection.propTypes = {
     connection: PropTypes.instanceOf(Map),
     goToAppConnectionDetail: func,
     deleteAppConnection: func
@@ -31,7 +31,7 @@ function AppConnection(props) {
     }
 
     return (
-        <AppCard
+        <AppConnectionCard
             className={appConnectionContainer}
             backendSiteUri={props.app.get('backendSiteUri')}
             appConnectionUri={props.app.get('appConnectionUri')}
@@ -44,4 +44,4 @@ function AppConnection(props) {
 
 }
 
-export default App
+export default AppConnection
