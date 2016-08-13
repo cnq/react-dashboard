@@ -17,10 +17,10 @@ export function formatUserData (name, avatar, uid) {
     }
 }
 
-export function formatApp (backendSiteUri, devSiteUri, {name, avatar, uid}) {
+export function formatApp (backendSiteUri, uri, {name, avatar, uid}) {
     return {
         backendSiteUri,
-        devSiteUri,
+        uri,
         name,
         avatar,
         uid,

@@ -39,11 +39,10 @@ function App(props) {
         )
     }
 
-    return (
+return (
         <AppCard
             className={appContainer}
-            backendSiteUri={props.app.get('backendSiteUri')}
-            devSiteUri={props.app.get('devSiteUri')}
+            app={props.app}
             goToAppDetail={props.goToAppDetail}
             actions={renderActions(props)}
         />

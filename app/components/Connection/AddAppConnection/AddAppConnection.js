@@ -48,7 +48,7 @@ function AddAppConnection(props) {
         <AppConnectionCard
             title="Create New App Connection"
             backendSiteUri=""
-            devSiteUri=""
+            uri=""
             actions={renderActions(props)}
         >
             <div className={newAppConnectionInputContainer}>

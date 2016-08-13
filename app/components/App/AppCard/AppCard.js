@@ -18,8 +18,7 @@ const {
  * AppCard() returns an UI Card component
  */
 AppCard.propTypes = {
-    backendSiteUri: string.isRequired,
-    devSiteUri: string.isRequired,
+    app: string.isRequired,
     goToAppDetail: func,
     actions: object.isRequired
 }
@@ -27,20 +26,9 @@ AppCard.propTypes = {
 const connections = (props) => (
     <div>
         <Badge
-            badgeContent={6}
+            badgeContent={(props.app != null ? props.app.get('connections').size : "")}
             primary={true}
         >
-            <IconButton onClick={props.goToAppDetail} tooltip="Blogs">
-                <WebAssetIcon />
-            </IconButton>
-        </Badge>
-        <Badge
-            badgeContent={2}
-            primary={true}
-        >
-            <IconButton onClick={props.goToAppDetail}  tooltip="Pages">
-                <WebAssetIcon />
-            </IconButton>
         </Badge>
     </div>
 );
@@ -48,9 +36,9 @@ const connections = (props) => (
 function AppCard (props) {
     return (
         <Card>
-            <CardHeader title={props.backendSiteUri} />
+            <CardHeader title={(props.app != null ? props.app.get('backendSiteUri'):"")} />
             <CardText>
-                {props.devSiteUri}
+                {(props.app != null ? props.app.get('uri'):"")}
                 {connections(props)}
                 {props.children}
             </CardText>
