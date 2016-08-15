@@ -90,7 +90,7 @@ const SigninContainer = React.createClass({
                             }
                         </CardText>
                         <CardText className={`${footnote} ${cardText}`}>
-                            <p>By logging in, you agree to Paperhook's <br /> <a target="_blank" href="/terms-of-use">Terms of Use</a> and <a target="_blank" href="/privacy-policy">Privacy Policy</a></p>
+                            <p>{`By logging in, you agree to Paperhook's`} <br /> <a target="_blank" href="/terms-of-use">{`Terms of Use`}</a> {`and`} <a target="_blank" href="/privacy-policy">{`Privacy Policy`}</a></p>
                         </CardText>
                     </Card>
                 </Paper>

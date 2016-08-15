@@ -59,7 +59,7 @@ function ConnectionList (props) {
                     }
                     <div className={centeredContainer}>
                         <FlatButton onClick={props.goToAddAppConnections} label="Connect" />
-                        <p>Click the 'Connect' button to begin connecting content to your website. It's easy.</p>
+                        <p>{`Click the 'Connect' button to begin connecting content to your website. It's easy.`}</p>
                     </div>
                     <Grid>
                         {
