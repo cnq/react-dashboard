@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
 import { AddConnectionContainer, ConnectionContainer } from 'containers'
+import FlatButton from 'material-ui/RaisedButton';
 import { Grid, GridItem } from 'components'
 import { List } from 'immutable'
 import { newConnectionWrapper, header } from './styles.css'
-import { errorMsg } from 'shared/styles.css'
+import { centeredContainer, breathingRoom, errorMsg } from 'shared/styles.css'
 
 const {
     string,
@@ -36,6 +37,7 @@ ConnectionList.propTypes = {
     appId: PropTypes.string.isRequired,
     error: string.isRequired,
     isFetching: bool.isRequired,
+    goToAddAppConnections: func.isRequired,
     newConnectionsAvailable: bool.isRequired,
     resetNewConnectionsAvailable: func.isRequired
 }
@@ -44,32 +46,37 @@ function ConnectionList (props) {
     return (
         props.isFetching === true
             ?   <h1 className={header}>{'Fetching'}</h1>
-            :   <Grid>
+            :   <div>
                     {props.newConnectionsAvailable ? <newConnectionsAvailable handleClick={props.resetNewConnectionsAvailable} /> : null}
-                    <GridItem>
-                        <AddConnectionContainer
-                            appId={props.appId}
-                        />
-                    </GridItem>
                     {
                         //  immutable uses .size instead of .length
                         props.connectionIds.size === 0
-                            ? <p className={header}>{'This is unfortunate.'} <br /> {'It appears that you have not connected your website to any content yet'}</p>
-                            : null
+                            ?   <div className={`${centeredContainer} ${breathingRoom}`}>
+                                    <h1>{'Oops!! This is unfortunate.'}</h1>
+                                    <h4>{'It appears that you have not connected any content to your website.'}</h4>
+                                </div>
+                            :   null
                     }
-                    {
-                        // immutable has a .map property also
-                        props.connectionIds.map( (id) => (
-                            <GridItem key={id}>
-                                <ConnectionContainer
-                                    connectionId={id}
-                                    appId={props.appId}
-                                />
-                            </GridItem>
-                        ))
-                    }
+                    <div className={centeredContainer}>
+                        <FlatButton onClick={props.goToAddAppConnections} label="Connect" />
+                        <p>Click the 'Connect' button to begin connecting content to your website. It's easy.</p>
+                    </div>
+                    <Grid>
+                        {
+                            // immutable has a .map property also
+                            props.connectionIds.map( (id) => (
+                                    <GridItem key={id}>
+                                        <ConnectionContainer
+                                            connectionId={id}
+                                            appId={props.appId}
+                                        />
+                                    </GridItem>
+                            ))
+                        }
+                    </Grid>
                     {props.error ? <p className={errorMsg}>{props.error}</p> : null}
-                </Grid>
+                </div>
+
     )
 }
 

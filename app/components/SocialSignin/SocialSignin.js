@@ -23,11 +23,10 @@ const {
 
 SocialSignin.propTypes = {
     error: string.isRequired,
-    isFetching: bool.isRequired,
     onAuth: func.isRequired
 }
 
-function SocialSignin ({ onAuth, isFetching, error }) {
+function SocialSignin ({ onAuth, error }) {
 
     const renderSocialButtons = (onAuth) => {
 
@@ -54,11 +53,7 @@ function SocialSignin ({ onAuth, isFetching, error }) {
 
     return (
         <div className={centeredContainer}>
-            {
-                isFetching === true
-                    ?   <div>{'Loading'}</div>
-                    :   <ul className={socialButtonsList}>{renderSocialButtons(onAuth)}</ul>
-            }
+            <ul className={socialButtonsList}>{renderSocialButtons(onAuth)}</ul>
             {error ? <p className={errorMsg}>{'Oops! Well this is embarrassing, we had an issue getting you logged in. Please try again.'}</p> : null}
         </div>
     )

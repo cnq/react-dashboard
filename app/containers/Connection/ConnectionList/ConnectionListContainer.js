@@ -14,14 +14,22 @@ const ConnectionListContainer = React.createClass({
         setAndHandleConnectionListListener: PropTypes.func.isRequired,
         resetNewConnectionsAvailable: PropTypes.func.isRequired
     },
+    contextTypes: {
+        router: PropTypes.object.isRequired
+    },
     componentDidMount () {
         this.props.setAndHandleConnectionListListener()
+    },
+    goToAddAppConnections (event) {
+        event.stopPropagation()
+        this.context.router.push('/dashboard/app/' + this.props.appId + '/connections/add')
     },
     render () {
         return (
             <ConnectionList
                 connectionIds={this.props.connectionIds}
                 appId={this.props.appId}
+                goToAddAppConnections={this.goToAddAppConnections}
                 newConnectionsAvailable={this.props.newConnectionsAvailable}
                 error={this.props.error}
                 isFetching={this.props.isFetching}

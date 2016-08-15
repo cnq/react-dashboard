@@ -11,9 +11,6 @@ import {
 const { string } = PropTypes
 
 const AddConnectionContainer = React.createClass({
-    propTypes: {
-        appId: PropTypes.string.isRequired
-    },
     render () {
         return (
             <AddConnection
@@ -25,7 +22,7 @@ const AddConnectionContainer = React.createClass({
 
 function mapStateToProps({addConnection, apps}, props) {
     return {
-        app: apps.get(props.appId) ? apps.get(props.appId) : Map({}),
+        app: apps.get(props.params.appId) ? apps.get(props.params.appId) : Map({}),
         connectionUri: addConnection.connectionUri,
         connectionType: addConnection.connectionType,
         connectionName: addConnection.connectionName,

@@ -1,7 +1,7 @@
 export const ACTIVATE_ADD_APP = 'ACTIVATE_ADD_APP'
 export const DEACTIVATE_ADD_APP = 'DEACTIVATE_ADD_APP'
-export const UPDATE_APP_DOMAIN = 'UPDATE_APP_DOMAIN'
-export const UPDATE_DEV_DOMAIN = 'UPDATE_DEV_DOMAIN'
+export const UPDATE_BACKEND_SITE_URI = 'UPDATE_BACKEND_SITE_URI'
+export const UPDATE_URI = 'UPDATE_URI'
 
 export function activateAddApp () {
     return {
@@ -15,16 +15,16 @@ export function deactivateAddApp () {
     }
 }
 
-export function updateAppDomain (newAppDomain) {
+export function updateBackendSiteUri (newBackendSiteUri) {
     return {
-        type: UPDATE_APP_DOMAIN,
-        newAppDomain
+        type: UPDATE_BACKEND_SITE_URI,
+        newBackendSiteUri
     }
 }
 
-export function updateDevDomain (newDevDomain) {
+export function updateUri (newUri) {
     return {
-        type: UPDATE_DEV_DOMAIN,
-        newDevDomain
+        type: UPDATE_URI,
+        newUri
     }
 }

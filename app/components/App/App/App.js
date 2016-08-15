@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react'
-import { Map } from 'immutable'
+import { Map, List } from 'immutable'
 import FlatButton from 'material-ui/FlatButton';
 import Badge from 'material-ui/Badge';
-import IconButton from 'material-ui/IconButton';
-import WebAssetIcon from 'material-ui/svg-icons/av/web-asset';
 import { AppCard } from 'components'
 import { formatTimestamp } from 'helpers/utils'
 import {
@@ -14,7 +12,7 @@ import {
     header,
     text,
     icon,
-    domain
+    uri
 } from './styles.css'
 
 const {func} = PropTypes
@@ -37,38 +35,27 @@ function App(props) {
         const uid = props.app.get('uid')
         return (
             <div>
-                <FlatButton label="Add Connection" />
-                <FlatButton onClick={(event) => deleteApp(event, appId, uid)} label="Delete" />
+                <FlatButton onClick={props.goToAppConnections} label="View Connections" />
+                <FlatButton onClick={(event) => deleteApp(event, appId, uid)} label="Delete Site" />
             </div>
         )
     }
 
-    const connections = (props) => (
-        <div>
+    const connections = (props) => {
+        const connectionCount = props.app.get('connections') != null ? List(props.app.get('connections')).size : 0
+        return (
             <Badge
-                badgeContent={6}
+                badgeContent={connectionCount}
                 primary={true}
-            >
-                <IconButton onClick={props.goToAppConnections} tooltip="Blogs">
-                    <WebAssetIcon />
-                </IconButton>
-            </Badge>
-            <Badge
-                badgeContent={2}
-                primary={true}
-            >
-                <IconButton onClick={props.goToAppConnections}  tooltip="Pages">
-                    <WebAssetIcon />
-                </IconButton>
-            </Badge>
-        </div>
-    )
+            />
+        )
+    }
 
     return (
         <AppCard
             className={appContainer}
             backendSiteUri={props.app.get('backendSiteUri')}
-            devSiteUri={props.app.get('devSiteUri')}
+            uri={props.app.get('uri')}
             connections={connections(props)}
             goToAppDetail={props.goToAppDetail}
             goToAppConnections={props.goToAppConnections}
