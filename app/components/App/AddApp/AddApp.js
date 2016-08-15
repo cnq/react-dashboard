@@ -54,15 +54,14 @@ function AddApp(props) {
         )
     }
 
-    return (
-        <AppCard
-            title="Create New App"
-            backendSiteUri=""
-            devSiteUri=""
-            actions={renderActions(props)}
-            onClick={props.activateAddApp}
-        >
-            <div className={newAppInputContainer}>
+return (
+    <AppCard
+        title="Create New App"
+        app = {null}
+        actions={renderActions(props)}
+        onClick={props.activateAddApp}
+    >
+        <div className={newAppInputContainer}>
                 <TextField
                     value={props.appDomain}
                     maxLength={140}

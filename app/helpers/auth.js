@@ -56,9 +56,10 @@ function getProvider (authData) {
 export default function auth (authData) {
 
     const { accessToken, email, password } = authData.credential
-    const user = fireAuth.currentUser
+    
 
     if (process.env.NODE_ENV !== 'production') {
+        const user = fireAuth.currentUser
         //firebase
         //Is the user authenticated?
         if (!user) {
@@ -103,15 +104,30 @@ export default function auth (authData) {
         }
     }  else {
         //paperhook
-        return (
-            axios.post("/api/auth/signin", {
+        var user = JSON.parse(localStorage.getItem('user'))
+
+        if (user) {
+            return (
+                axios.get("/api/auth/authenticateduser").then(function (response) {
+                    if(response.data.isAuthenticated) {
+                        return {credential: authData.credential, user: response.data}
+                    } else {
+                        signout()
+                    }
+                }
+                )
+                )
+            } else {
+            return (
+                axios.post("/api/auth/signin", {
                     userName: email,
                     password: password
                 }
-            ).then(function (response) {
-                return {credential: authData.credential, user: response.data}
-            })
-        )
+                ).then(function (response) {
+                    return {credential: authData.credential, user: response.data}
+                })
+                )
+            }
     }
 
 }
