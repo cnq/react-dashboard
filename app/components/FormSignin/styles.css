@@ -1,6 +1,7 @@
 .formField {
-    margin: 15px 0 0;
+    margin: 0;
 }
-.formButtons {
+.formButton {
     margin: 40px 0;
+    width: 70%;
 }

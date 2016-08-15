@@ -5,7 +5,7 @@ import {
 
 /**
  * Grid() returns a grid wrapper component for managing
- * app card layout within the feed.
+ * app card layout within the app list.
  */
 function Grid (props) {
     return (

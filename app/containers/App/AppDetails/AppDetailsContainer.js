@@ -10,14 +10,14 @@ const AppDetailsContainer = React.createClass({
         isFetching: PropTypes.bool.isRequired,
         error: PropTypes.string.isRequired,
         appAlreadyFetched: PropTypes.bool.isRequired,
-        removeFetching: PropTypes.func.isRequired,
+        removeAppFetching: PropTypes.func.isRequired,
         fetchAndHandleApp: PropTypes.func.isRequired
     },
     componentDidMount () {
         if (this.props.appAlreadyFetched === false) {
             this.props.fetchAndHandleApp(this.props.appId)
         } else {
-            this.props.removeFetching()
+            this.props.removeAppFetching()
         }
     },
     render () {

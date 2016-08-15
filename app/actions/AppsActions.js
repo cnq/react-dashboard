@@ -5,7 +5,7 @@ import { addSingleUsersApp } from './UsersAppsActions'
 export const FETCHING_APP = 'FETCHING_APP'
 export const FETCHING_APP_ERROR = 'FETCHING_APP_ERROR'
 export const FETCHING_APP_SUCCESS = 'FETCHING_APP_SUCCESS'
-export const REMOVE_FETCHING = 'REMOVE_FETCHING'
+export const REMOVE_APP_FETCHING = 'REMOVE_APP_FETCHING'
 export const ADD_APP = 'ADD_APP'
 export const ADD_MULTIPLE_APPS = 'ADD_MULTIPLE_APPS'
 
@@ -29,9 +29,9 @@ function fetchingAppSuccess (app) {
     }
 }
 
-export function removeFetching () {
+export function removeAppFetching () {
     return {
-        type: REMOVE_FETCHING
+        type: REMOVE_APP_FETCHING
     }
 }
 

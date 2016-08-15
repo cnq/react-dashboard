@@ -5,7 +5,7 @@ import {
 
 /**
  * GridItem() returns grid items for managing
- * app card layout within the feed.
+ * app card layout within the app list.
  */
 export default function GridItem (props) {
     return (

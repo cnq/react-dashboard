@@ -73,7 +73,7 @@ class SettingsDropdown extends Component {
                     animation={PopoverAnimationVertical}
                 >
                     <Menu onChange={this.handleChange} desktop={true} width={180}>
-                        <MenuItem value="/dashboard/profile" primaryText="Profile" rightIcon={<Profile />} />
+                        <MenuItem value={`/dashboard/user/${user.uid}`} primaryText="Profile" rightIcon={<Profile />} />
                         <MenuItem value="/dashboard/settings" primaryText="Settings" rightIcon={<Settings />} />
                         <MenuItem value="/dashboard/billing" primaryText="Billing" rightIcon={<Billing />} />
                         <Divider />

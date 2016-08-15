@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { User } from 'components'
+import { UserProfile } from 'views'
 import { staleUser, staleApps } from 'helpers/utils'
 import {
     users as usersActions,
@@ -31,13 +32,15 @@ const UserContainer = React.createClass({
     },
     render () {
         return (
-            <User
-                noUser={this.props.noUser}
-                name={this.props.name}
-                isFetching={this.props.isFetching}
-                error={this.props.error}
-                appIds={this.props.appIds}
-            />
+            <UserProfile>
+                <User
+                    noUser={this.props.noUser}
+                    name={this.props.name}
+                    isFetching={this.props.isFetching}
+                    error={this.props.error}
+                    appIds={this.props.appIds}
+                />
+            </UserProfile>
         )
     }
 

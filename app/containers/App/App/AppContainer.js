@@ -5,6 +5,7 @@ import { removeApp as actions } from 'actions'
 
 const { object, func } = PropTypes
 
+//TODO: convert from using contextTypes router to wrapping component in withRouter hoc
 const AppContainer = React.createClass({
     propTypes: {
         app: object.isRequired,
@@ -13,13 +14,13 @@ const AppContainer = React.createClass({
     contextTypes: {
         router: PropTypes.object.isRequired
     },
-    goToProfile (event) {
-        event.stopPropagation()
-        this.context.router.push('/dashboard/user/' + this.props.app.get('uid'))
-    },
     goToAppDetail (event) {
         event.stopPropagation()
         this.context.router.push('/dashboard/app/' + this.props.app.get('appId'))
+    },
+    goToAppConnections (event) {
+        event.stopPropagation()
+        this.context.router.push('/dashboard/app/' + this.props.app.get('appId') + '/connections')
     },
     deleteApp (event, appId, uid) {
         event.stopPropagation()
@@ -28,8 +29,8 @@ const AppContainer = React.createClass({
     render () {
         return (
             <App
-                goToProfile={this.goToProfile}
                 goToAppDetail={this.goToAppDetail}
+                goToAppConnections={this.goToAppConnections}
                 deleteApp={this.deleteApp}
                 {...this.props}
             />

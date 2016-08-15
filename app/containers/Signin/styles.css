@@ -1,12 +1,19 @@
 .paper {
-    height: 500px;
     width: 400px;
     margin: 20px;
-    padding: 20px;
-    text-align: center;
     display: inline-block;
+}
+
+.cardText {
+    text-align: center;
 }
 
 .divider {
     margin-top: 30px;
+}
+
+.footnote {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #9fa3a9;
 }

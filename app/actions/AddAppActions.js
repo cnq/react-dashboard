@@ -7,14 +7,12 @@ export function activateAddApp () {
     return {
         type: ACTIVATE_ADD_APP
     }
-
 }
 
 export function deactivateAddApp () {
     return {
         type: DEACTIVATE_ADD_APP
     }
-
 }
 
 export function updateAppDomain (newAppDomain) {
@@ -22,7 +20,6 @@ export function updateAppDomain (newAppDomain) {
         type: UPDATE_APP_DOMAIN,
         newAppDomain
     }
-
 }
 
 export function updateDevDomain (newDevDomain) {
@@ -30,5 +27,4 @@ export function updateDevDomain (newDevDomain) {
         type: UPDATE_DEV_DOMAIN,
         newDevDomain
     }
-
 }

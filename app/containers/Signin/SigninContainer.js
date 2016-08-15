@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Paper from 'material-ui/Paper';
-import Divider from 'material-ui/Divider';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
 import { SocialSignin, FormSignin } from 'components'
 import { Signin } from 'views'
 import { users as actions } from 'actions'
@@ -9,7 +9,7 @@ import { formatAuthData } from 'helpers/utils'
 import {
     EMAIL
 } from 'config/constants'
-import { paper, divider } from './styles.css'
+import { paper, cardText, divider, footnote } from './styles.css'
 
 
 const SigninContainer = React.createClass({
@@ -41,14 +41,11 @@ const SigninContainer = React.createClass({
             // Are we in production?
             if (process.env.NODE_ENV !== 'production') {
                 return (
-                    <div>
-                        <Divider className={divider}/>
-                        <SocialSignin
-                            isFetching={props.isFetching}
-                            error={props.error}
-                            onAuth={handleAuth}
-                        />
-                    </div>
+                    <SocialSignin
+                        isFetching={props.isFetching}
+                        error={props.error}
+                        onAuth={handleAuth}
+                    />
                 )
             }
         }
@@ -56,12 +53,24 @@ const SigninContainer = React.createClass({
         return ( 
             <Signin props={this.props}>
                 <Paper className={paper} zDepth={2}>
-                    <FormSignin
-                        isFetching={this.props.isFetching}
-                        formError={this.props.error}
-                        onAuth={this.handleAuth}
-                    />
-                    {socialAuthButtons(this.props, this.handleAuth)}
+                    <Card>
+                        <CardHeader
+                            title="Nice to see you again!"
+                            subtitle="Login to get started"
+                        />
+                        <CardText className={cardText}>
+                            <FormSignin
+                                isFetching={this.props.isFetching}
+                                formError={this.props.error}
+                                onAuth={this.handleAuth}
+                            />
+                            <div className={divider}>– or –</div>
+                            {socialAuthButtons(this.props, this.handleAuth)}
+                        </CardText>
+                        <CardText className={`${footnote} ${cardText}`}>
+                            <p>By logging in, you agree to Paperhook's <br /> <a target="_blank" href="/terms-of-use">Terms of Use</a> and <a target="_blank" href="/privacy-policy">Privacy Policy</a></p>
+                        </CardText>
+                    </Card>
                 </Paper>
             </Signin>
         )

@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react'
 import { Map } from 'immutable'
 import FlatButton from 'material-ui/FlatButton';
+import Badge from 'material-ui/Badge';
+import IconButton from 'material-ui/IconButton';
+import WebAssetIcon from 'material-ui/svg-icons/av/web-asset';
 import { AppCard } from 'components'
 import { formatTimestamp } from 'helpers/utils'
 import {
@@ -22,8 +25,9 @@ const {func} = PropTypes
  */
 App.propTypes = {
     app: PropTypes.instanceOf(Map),
-    goToAppDetail: func,
-    deleteApp: func
+    goToAppDetail: func.isRequired,
+    goToAppConnections: func.isRequired,
+    deleteApp: func.isRequired
 }
 
 function App(props) {
@@ -39,12 +43,35 @@ function App(props) {
         )
     }
 
+    const connections = (props) => (
+        <div>
+            <Badge
+                badgeContent={6}
+                primary={true}
+            >
+                <IconButton onClick={props.goToAppConnections} tooltip="Blogs">
+                    <WebAssetIcon />
+                </IconButton>
+            </Badge>
+            <Badge
+                badgeContent={2}
+                primary={true}
+            >
+                <IconButton onClick={props.goToAppConnections}  tooltip="Pages">
+                    <WebAssetIcon />
+                </IconButton>
+            </Badge>
+        </div>
+    )
+
     return (
         <AppCard
             className={appContainer}
             backendSiteUri={props.app.get('backendSiteUri')}
             devSiteUri={props.app.get('devSiteUri')}
+            connections={connections(props)}
             goToAppDetail={props.goToAppDetail}
+            goToAppConnections={props.goToAppConnections}
             actions={renderActions(props)}
         />
     )

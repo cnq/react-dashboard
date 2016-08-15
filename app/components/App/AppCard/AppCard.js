@@ -1,8 +1,4 @@
 import React, { PropTypes } from 'react'
-import FlatButton from 'material-ui/FlatButton';
-import Badge from 'material-ui/Badge';
-import IconButton from 'material-ui/IconButton';
-import WebAssetIcon from 'material-ui/svg-icons/av/web-asset';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {
     cardWrapper
@@ -20,38 +16,18 @@ const {
 AppCard.propTypes = {
     backendSiteUri: string.isRequired,
     devSiteUri: string.isRequired,
+    connections: object,
     goToAppDetail: func,
     actions: object.isRequired
 }
 
-const connections = (props) => (
-    <div>
-        <Badge
-            badgeContent={6}
-            primary={true}
-        >
-            <IconButton onClick={props.goToAppDetail} tooltip="Blogs">
-                <WebAssetIcon />
-            </IconButton>
-        </Badge>
-        <Badge
-            badgeContent={2}
-            primary={true}
-        >
-            <IconButton onClick={props.goToAppDetail}  tooltip="Pages">
-                <WebAssetIcon />
-            </IconButton>
-        </Badge>
-    </div>
-);
-
 function AppCard (props) {
     return (
         <Card>
-            <CardHeader title={props.backendSiteUri} />
+            <CardHeader title={props.backendSiteUri ? props.backendSiteUri : ''} />
             <CardText>
-                {props.devSiteUri}
-                {connections(props)}
+                {props.devSiteUri ? props.devSiteUri : ''}
+                {props.connections ? props.connections : ''}
                 {props.children}
             </CardText>
             <CardActions>{props.actions}</CardActions>

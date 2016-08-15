@@ -8,7 +8,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import { routerReducer, syncHistoryWithStore } from 'react-router-redux'
 import { browserHistory } from 'react-router'
-import { users as actions } from 'actions';
+import { users as actions } from 'actions'; //TODO: Don't think I need this here.
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
@@ -24,6 +24,10 @@ export const store = createStore(
         window.devToolsExtension ? window.devToolsExtension() : (f) => f
     )
 )
+
+//TODO: remove these. these are just here to assist with debugging temporarily.
+//localStorage.removeItem('auth')
+//localStorage.removeItem('user')
 
 // Retrieve auth string and turn it back into an object by using JSON.parse
 const authData = JSON.parse(localStorage.getItem('auth'))

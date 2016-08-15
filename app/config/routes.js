@@ -5,14 +5,19 @@ import {
     HomeContainer,
     DashboardContainer,
     SigninContainer,
-    FeedContainer,
+    AppListContainer,
     SignoutContainer,
     UserContainer,
-    AppDetailsContainer
+    AppDetailsContainer,
+    ConnectionsContainer,
+    ConnectionListContainer,
+    ConnectionContainer,
+    ConnectionDetailsContainer,
+    AddConnectionContainer
 } from 'containers'
 import {
     Billing,
-    Profile,
+    UserProfile,
     Settings
 } from 'views'
 import {
@@ -27,11 +32,15 @@ export default function getRoutes (history) {
                 <Route path='signin' component={SigninContainer} />
                 <Route path='signout' component={SignoutContainer} />
                 <Route path='dashboard' component={DashboardContainer} >
-                    <IndexRoute component={FeedContainer} />
+                    <IndexRoute component={AppListContainer} />
                     <Route path='user/:uid' component={UserContainer} />
                     <Route path='app/:appId' component={AppDetailsContainer} />
+                    <Route path='app/:appId/connections' component={ConnectionsContainer} >
+                        <IndexRoute component={ConnectionListContainer} />
+                        <Route path='connection/:connectionId' component={ConnectionDetailsContainer} />
+                        <Route path='add' component={AddConnectionContainer} />
+                    </Route>
                     <Route path='billing' component={Billing} />
-                    <Route path='profile' component={Profile} />
                     <Route path='settings' component={Settings} />
                 </Route>
             </Router>

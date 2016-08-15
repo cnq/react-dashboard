@@ -10,13 +10,16 @@ import {
 import {
     centeredContainer,
     errorMsg,
-    buttonContainer,
-    buttonLabel
+    buttonContainer
 } from 'shared/styles.css'
 import {
     formField,
-    formButtons
+    formButton
 } from './styles.css'
+
+const buttonStyles = {
+    color: '#ffffff'
+}
 
 const {
     string,
@@ -45,13 +48,12 @@ const validate = values => {
 }
 
 const renderTextField = field => (
-    <div className={formField}>
-        <TextField
-            key={field.name}
-            errorText={field.touched && field.error}
-            {...field.input}
-        />
-    </div>
+    <TextField
+        className={formField}
+        key={field.name}
+        errorText={field.touched && field.error}
+        {...field.input}
+    />
 )
 
 function FormSignin (props) {
@@ -75,16 +77,15 @@ function FormSignin (props) {
                     floatingLabelText={`Password`}
                     hintText={`Please enter your password`}
                 />
-                <div className={formButtons}>
-                    <RaisedButton
-                        className={buttonLabel}
-                        type="submit"
-                        disabled={pristine || submitting}
-                        fullWidth={true}
-                    >
-                        {`Sign In`}
-                    </RaisedButton>
-                </div>
+                <RaisedButton className={formButton}
+                    type="submit"
+                    disabled={pristine || submitting}
+                    fullWidth={false}
+                    backgroundColor="#7DC93A"
+                    labelStyle={buttonStyles}
+                >
+                    {`Sign In`}
+                </RaisedButton>
             </form>
         )
 

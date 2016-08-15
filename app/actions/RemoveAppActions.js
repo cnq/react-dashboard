@@ -35,9 +35,7 @@ export function removeAppComplete (appId) {
 }
 
 export function deleteAndHandleApp (appId, uid) {
-
     return function (dispatch) {
-        
         dispatch(removingApp(appId))
         deleteApp (appId, uid)
             .then(() => {
