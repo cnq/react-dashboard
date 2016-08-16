@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Paper from 'material-ui/Paper';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
+import CircularProgress from 'material-ui/CircularProgress';
 import { SocialSignin, FormSignin } from 'components'
 import { Signin } from 'views'
 import { users as actions } from 'actions'
@@ -13,14 +14,17 @@ import { paper, cardText, divider, footnote } from './styles.css'
 
 
 const SigninContainer = React.createClass({
+
     propTypes: {
         isFetching: PropTypes.bool.isRequired,
         error: PropTypes.string.isRequired,
         fetchAndHandleAuthenticatedUser: PropTypes.func.isRequired
     },
+
     contextTypes: {
         router: PropTypes.object.isRequired
     },
+
     handleAuth (authProvider, event) {
         event.preventDefault
         var authData
@@ -37,19 +41,39 @@ const SigninContainer = React.createClass({
 
     render () {
 
+        const loading = () => (
+            <CircularProgress size={2} />
+        )
+
         const socialAuthButtons = (props, handleAuth) => {
             // Are we in production?
             if (process.env.NODE_ENV !== 'production') {
                 return (
-                    <SocialSignin
-                        isFetching={props.isFetching}
-                        error={props.error}
-                        onAuth={handleAuth}
-                    />
+                    <div>
+                        <div className={divider}>– or –</div>
+                        <SocialSignin
+                            isFetching={props.isFetching}
+                            error={props.error}
+                            onAuth={handleAuth}
+                        />
+                    </div>
                 )
             }
         }
 
+        const login = (props, handleAuth) => {
+            return (
+                <div>
+                    <FormSignin
+                        isFetching={props.isFetching}
+                        formError={props.error}
+                        onAuth={handleAuth}
+                    />
+                    {socialAuthButtons(props, handleAuth)}
+                </div>
+            )
+        }
+        
         return ( 
             <Signin props={this.props}>
                 <Paper className={paper} zDepth={2}>
@@ -59,16 +83,14 @@ const SigninContainer = React.createClass({
                             subtitle="Login to get started"
                         />
                         <CardText className={cardText}>
-                            <FormSignin
-                                isFetching={this.props.isFetching}
-                                formError={this.props.error}
-                                onAuth={this.handleAuth}
-                            />
-                            <div className={divider}>– or –</div>
-                            {socialAuthButtons(this.props, this.handleAuth)}
+                            {
+                                this.props.isFetching
+                                    ? loading()
+                                    : login(this.props, this.handleAuth)
+                            }
                         </CardText>
                         <CardText className={`${footnote} ${cardText}`}>
-                            <p>By logging in, you agree to Paperhook's <br /> <a target="_blank" href="/terms-of-use">Terms of Use</a> and <a target="_blank" href="/privacy-policy">Privacy Policy</a></p>
+                            <p>{`By logging in, you agree to Paperhook's`} <br /> <a target="_blank" href="/terms-of-use">{`Terms of Use`}</a> {`and`} <a target="_blank" href="/privacy-policy">{`Privacy Policy`}</a></p>
                         </CardText>
                     </Card>
                 </Paper>

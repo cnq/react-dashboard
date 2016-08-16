@@ -1,8 +1,8 @@
 import { addApp as actions } from 'actions'
 
 const initialState = {
-    appDomain: '',
-    devDomain: '',
+    backendSiteUri: '',
+    uri: '',
     isActive: false
 }
 
@@ -18,15 +18,15 @@ export default function addApp ( state = initialState, action ) {
                 ...state,
                 isActive: false
             }
-        case actions.UPDATE_APP_DOMAIN:
+        case actions.UPDATE_BACKEND_SITE_URI:
             return {
                 ...state,
-                appDomain: action.newAppDomain
+                backendSiteUri: action.newBackendSiteUri
             }
-        case actions.UPDATE_DEV_DOMAIN:
+        case actions.UPDATE_URI:
             return {
                 ...state,
-                devDomain: action.newDevDomain
+                uri: action.newUri
             }
         default:
             return state

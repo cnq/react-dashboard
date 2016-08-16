@@ -45,6 +45,6 @@
     line-height: 25px;
 }
 
-.domain {
+.uri {
     composes: clickable from 'shared/styles.css';
 }

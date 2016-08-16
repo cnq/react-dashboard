@@ -6,13 +6,13 @@ import {
 } from 'actions'
 
 function mapStateToProps({addApp, users}) {
-    const appDomainLength = addApp.appDomain.length
+    const backendSiteUriLength = addApp.backendSiteUri.length
     return {
         user: users[users.authenticatedId] ? users[users.authenticatedId].info : {},
-        appDomain: addApp.appDomain,
-        devDomain: addApp.devDomain,
+        backendSiteUri: addApp.backendSiteUri,
+        uri: addApp.uri,
         isActive: addApp.isActive,
-        isSubmitDisabled: appDomainLength <= 0 || appDomainLength > 140
+        isSubmitDisabled: backendSiteUriLength <= 0 || backendSiteUriLength > 140
     }
 }
 

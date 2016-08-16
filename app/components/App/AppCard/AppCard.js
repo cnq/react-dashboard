@@ -15,19 +15,20 @@ const {
  */
 AppCard.propTypes = {
     backendSiteUri: string.isRequired,
-    devSiteUri: string.isRequired,
+    uri: string.isRequired,
     connections: object,
     goToAppDetail: func,
+    goToAppConnections: func,
     actions: object.isRequired
 }
 
 function AppCard (props) {
     return (
         <Card>
-            <CardHeader title={props.backendSiteUri ? props.backendSiteUri : ''} />
+            <CardHeader title={props.backendSiteUri} />
             <CardText>
-                {props.devSiteUri ? props.devSiteUri : ''}
-                {props.connections ? props.connections : ''}
+                {props.uri}
+                {props.connections}
                 {props.children}
             </CardText>
             <CardActions>{props.actions}</CardActions>

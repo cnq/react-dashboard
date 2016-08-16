@@ -27,8 +27,8 @@ function Connection(props) {
         const appId = props.connection.get('appId')
         return (
             <div>
-                <FlatButton label="Add Connection" />
-                <FlatButton onClick={(event) => deleteConnection(event, connectionId, appId)} label="Delete" />
+                <FlatButton label="View Connection Details" />
+                <FlatButton onClick={(event) => deleteConnection(event, connectionId, appId)} label="Delete Connection" />
             </div>
         )
     }

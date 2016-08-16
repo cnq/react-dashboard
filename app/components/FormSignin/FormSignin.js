@@ -29,7 +29,6 @@ const {
 
 FormSignin.propTypes = {
     formError: string.isRequired,
-    isFetching: bool.isRequired,
     onAuth: func.isRequired
 }
 
@@ -91,16 +90,12 @@ function FormSignin (props) {
 
     }
 
-    const { formError, isFetching } = props
+    const { formError } = props
 
     return (
         <div className={centeredContainer}>
             <br />
-            {
-                isFetching === true
-                    ?   <div>{'Loading'}</div>
-                    :   renderForm(props)
-            }
+            {renderForm(props)}
             {formError ? <p className={errorMsg}>{'Oops! Well this is embarrassing, we had an issue getting you logged in. Please try again.'}</p> : null}
         </div>
 

@@ -121,6 +121,6 @@ export function asyncValidate (values) {
         })
 }
 
-export function getDevDomain (devDomain) {
-    return `${(devDomain.split('.').join(''))}.tailspin.paperhook.com`
+export function getUri (uri) {
+    return `${(uri.split('.').join(''))}.tailspin.paperhook.com`
 }
