@@ -119,7 +119,15 @@ export function listenToConnectionList (callback, errorCallback) {
         }, errorCallback)
     } else {
         //Paperhook
-        // TODO: Connections listener needs to be added
+        return axios.get("/api/routes").then(function (response) {
+            const connectionList = response.data || {}
+            const sortedIds = Object.keys(connectionList).sort((a,b) => {
+                return connectionList[b].timestamp - connectionList[a].timestamp
+            })
+            callback({connectionList, sortedIds})
+        }).catch(function (response) {
+            errorCallback();
+        })
     }
 }
 
@@ -138,6 +146,8 @@ export function fetchConnection (connectionId) {
             ))
     } else {
         //Paperhook
-        //TODO: This needs to be done
+        return axios.get(`/api/routes/${connectionId}`).then(function (response) {
+            return response.data;
+        })
     }
 }
