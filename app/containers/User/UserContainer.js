@@ -9,7 +9,6 @@ import {
 } from 'actions'
 
 const UserContainer = React.createClass({
-
     propTypes: {
         noUser: PropTypes.bool.isRequired,
         name: PropTypes.string.isRequired,

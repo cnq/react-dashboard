@@ -14,7 +14,7 @@ const ConnectionContainer = React.createClass({
         deleteAndHandleConnection: func.isRequired
     },
     contextTypes: {
-        router: PropTypes.object.isRequired
+        router: object.isRequired
     },
     goToConnectionDetail (event) {
         event.stopPropagation()

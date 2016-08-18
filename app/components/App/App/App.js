@@ -1,6 +1,10 @@
 import React, { PropTypes } from 'react'
 import { Map, List } from 'immutable'
+import FontIcon from 'material-ui/FontIcon';
 import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
+import ActionDelete from 'material-ui/svg-icons/action/delete';
+import ActionSettings from 'material-ui/svg-icons/action/settings';
 import Badge from 'material-ui/Badge';
 import { AppCard } from 'components'
 import { formatTimestamp } from 'helpers/utils'
@@ -15,7 +19,7 @@ import {
     uri
 } from './styles.css'
 
-const {func} = PropTypes
+const {func, array, string, bool} = PropTypes
 
 /**
  * App() returns an individual app component
@@ -23,6 +27,9 @@ const {func} = PropTypes
  */
 App.propTypes = {
     app: PropTypes.instanceOf(Map),
+    connectionIds: array.isRequired,
+    error: string.isRequired,
+    isFetching: bool.isRequired,
     goToAppDetail: func.isRequired,
     goToAppConnections: func.isRequired,
     deleteApp: func.isRequired
@@ -30,37 +37,49 @@ App.propTypes = {
 
 function App(props) {
 
-    const renderActions = ({ deleteApp }) => {
+    const renderActions = ({deleteApp}) => {
         const appId = props.app.get('appId')
         const uid = props.app.get('uid')
+        const connectionCount = List(props.connectionIds).size
         return (
             <div>
                 <FlatButton onClick={props.goToAppConnections} label="View Connections" />
-                <FlatButton onClick={(event) => deleteApp(event, appId, uid)} label="Delete Site" />
+                <IconButton tooltip="Delete site" onClick={(event) => deleteApp(event, appId, uid)}>
+                    <ActionDelete />
+                </IconButton>
+                <Badge
+                    badgeContent={connectionCount}
+                    primary={true}
+                />
             </div>
         )
     }
 
-    const connections = (props) => {
-        const connectionCount = props.app.get('connections') != null ? List(props.app.get('connections')).size : 0
+    const renderSettings = ({deleteApp}) => {
+        const appId = props.app.get('appId')
+        const uid = props.app.get('uid')
         return (
-            <Badge
-                badgeContent={connectionCount}
-                primary={true}
-            />
+            <IconButton tooltip="Delete site" onClick={(event) => deleteApp(event, appId, uid)}>
+                <ActionSettings />
+            </IconButton>
         )
     }
 
     return (
-        <AppCard
-            className={appContainer}
-            backendSiteUri={props.app.get('backendSiteUri')}
-            uri={props.app.get('uri')}
-            connections={connections(props)}
-            goToAppDetail={props.goToAppDetail}
-            goToAppConnections={props.goToAppConnections}
-            actions={renderActions(props)}
-        />
+        props.isFetching === true
+            ?   <div></div>
+            :   <div>
+                    <AppCard
+                        className={appContainer}
+                        backendSiteUri={props.app.get('backendSiteUri')}
+                        uri={props.app.get('uri')}
+                        goToAppDetail={props.goToAppDetail}
+                        goToAppConnections={props.goToAppConnections}
+                        actions={renderActions(props)}
+                        settings={renderSettings(props)}
+                    />
+                    {props.error ? <p className={errorMsg}>{props.error}</p> : null}
+                </div>
     )
 
 }

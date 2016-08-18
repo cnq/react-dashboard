@@ -1,6 +1,6 @@
 import { appsConnections as actions } from 'actions'
 
-function appsConnections ( state = initialAppsConnectionState, action ) {
+function appsConnection ( state = initialAppsConnectionState, action ) {
     switch ( action.type ) {
         case actions.ADD_SINGLE_APPS_CONNECTION:
             return {

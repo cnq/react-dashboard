@@ -1,18 +1,29 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { App } from 'components'
-import { removeApp as actions } from 'actions'
+import {
+    removeApp as removeAppActions,
+    appsConnections as appsConnectionsActions
+} from 'actions'
 
-const { object, func } = PropTypes
+const { object, func, string, bool, array } = PropTypes
 
 //TODO: convert from using contextTypes router to wrapping component in withRouter hoc
 const AppContainer = React.createClass({
     propTypes: {
+        isFetching: bool.isRequired,
+        error: string.isRequired,
         app: object.isRequired,
-        deleteAndHandleApp: func.isRequired
+        connectionIds: array.isRequired,
+        deleteAndHandleApp: func.isRequired,
+        fetchAndHandleAppsConnections: func.isRequired
     },
     contextTypes: {
         router: PropTypes.object.isRequired
+    },
+    componentDidMount () {
+        const appId = this.props.appId
+        this.props.fetchAndHandleAppsConnections(appId)
     },
     goToAppDetail (event) {
         event.stopPropagation()
@@ -29,21 +40,29 @@ const AppContainer = React.createClass({
     render () {
         return (
             <App
+                isFetching={this.props.isFetching}
+                error={this.props.error}
+                app={this.props.app}
+                connectionIds={this.props.connectionIds}
                 goToAppDetail={this.goToAppDetail}
                 goToAppConnections={this.goToAppConnections}
                 deleteApp={this.deleteApp}
-                {...this.props}
             />
         )
     }
 })
 
-function mapStateToProps ({apps}, props) {
+function mapStateToProps ({apps, appsConnections}, props) {
+    const specificAppsConnections = appsConnections[props.appId]
     return {
-        app: apps.get(props.appId)
+        isFetching: apps.isFetching || appsConnections.isFetching ? true : false,
+        error: apps.error || appsConnections.error,
+        app: apps.get(props.appId),
+        connectionIds: specificAppsConnections ? specificAppsConnections.connectionIds : [],
     }
 }
 
 export default connect(
-    mapStateToProps, actions
+    mapStateToProps,
+    {...removeAppActions, ...appsConnectionsActions}
 )(AppContainer)

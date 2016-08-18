@@ -74,7 +74,7 @@ export function fetchAndHandleConnection (connectionId) {
                 dispatch(fetchingConnectionSuccess(connection))
             })
             .catch((error) => {
-                console.log('Error in fetchAndHandleApp: ', error)
+                console.log('Error in fetchAndHandleConnection: ', error)
                 dispatch(fetchingConnectionError(error))
             })
     }

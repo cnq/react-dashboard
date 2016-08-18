@@ -1,24 +1,31 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { connectionList as actions } from 'actions'
 import { ConnectionList } from 'components'
-import { List } from 'immutable'
+import {
+    apps as appsActions,
+    appsConnections as appsConnectionsActions
+} from 'actions'
+
+const { string, number, func, array, bool, object } = PropTypes
 
 const ConnectionListContainer = React.createClass({
     propTypes: {
-        connectionIds: PropTypes.instanceOf(List),
-        appId: PropTypes.string.isRequired,
-        newConnectionsAvailable: PropTypes.bool.isRequired,
-        error: PropTypes.string.isRequired,
-        isFetching: PropTypes.bool.isRequired,
-        setAndHandleConnectionListListener: PropTypes.func.isRequired,
-        resetNewConnectionsAvailable: PropTypes.func.isRequired
+        connectionIds: array.isRequired,
+        appId: string.isRequired,
+        error: string.isRequired,
+        isFetching: bool.isRequired,
+        fetchAndHandleApp: func.isRequired,
+        fetchAndHandleAppsConnections: func.isRequired,
+        lastUpdatedApp: number.isRequired,
+        lastUpdatedConnections: number.isRequired
     },
     contextTypes: {
-        router: PropTypes.object.isRequired
+        router: object.isRequired
     },
     componentDidMount () {
-        this.props.setAndHandleConnectionListListener()
+        const appId = this.props.appId
+        this.props.fetchAndHandleApp(appId)
+        this.props.fetchAndHandleAppsConnections(appId)
     },
     goToAddAppConnections (event) {
         event.stopPropagation()
@@ -30,23 +37,27 @@ const ConnectionListContainer = React.createClass({
                 connectionIds={this.props.connectionIds}
                 appId={this.props.appId}
                 goToAddAppConnections={this.goToAddAppConnections}
-                newConnectionsAvailable={this.props.newConnectionsAvailable}
                 error={this.props.error}
                 isFetching={this.props.isFetching}
-                resetNewConnectionsAvailable={this.props.resetNewConnectionsAvailable}
             />
         )
     }
 })
 
-function mapStateToProps({connectionList}, props) {
+function mapStateToProps ({apps, appsConnections}, props) {
+    const specificAppsConnections = appsConnections[props.params.appId]
+    const app = apps[props.params.appId]
     return {
-        newConnectionsAvailable: connectionList.get('newConnectionsAvailable'),
-        error: connectionList.get('error'),
-        isFetching: connectionList.get('isFetching'),
-        connectionIds: connectionList.get('connectionIds'),
+        isFetching: apps.isFetching || appsConnections.isFetching ? true : false,
+        error: apps.error || appsConnections.error,
+        connectionIds: specificAppsConnections ? specificAppsConnections.connectionIds : [],
+        lastUpdatedApp: app ? app.lastUpdated : 0,
+        lastUpdatedConnections: specificAppsConnections ? specificAppsConnections.lastUpdated : 0,
         appId: props.params.appId
     }
 }
 
-export default connect(mapStateToProps, actions)(ConnectionListContainer)
+export default connect(
+    mapStateToProps,
+    {...appsActions, ...appsConnectionsActions}
+)(ConnectionListContainer)

@@ -55,6 +55,7 @@ class AddConnection extends React.Component {
     }
 
     onClickCreateConnection = (props)  => {
+        console.log('Made it here')
         props.connectionFanout(
             formatConnection(
                 props.connectionUri,
@@ -64,6 +65,7 @@ class AddConnection extends React.Component {
                 props.app.get('backendSiteUri')
             )
         )
+        this.context.router.push('/dashboard/app/' + props.app.get('appId') + '/connections')
     }
 
     getStepContent = (stepIndex) => {
@@ -135,7 +137,7 @@ class AddConnection extends React.Component {
                 </Stepper>
                 <div className={centeredContainer}>
                     { finished
-                        ?   <FlatButton onTouchTap={this.onClickCreateConnection}>
+                        ?   <FlatButton onTouchTap={() => this.onClickCreateConnection(this.props)}>
                                 {`Connect`}
                             </FlatButton>
                         :   <div>
@@ -171,6 +173,10 @@ AddConnection.propTypes = {
     updateConnectionType: func.isRequired,
     updateConnectionName: func.isRequired,
     connectionFanout: func.isRequired
+}
+
+AddConnection.contextTypes = {
+    router: object.isRequired
 }
 
 export default AddConnection

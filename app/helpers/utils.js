@@ -1,7 +1,8 @@
 import {
     usersAppsExpirationLength,
     userExpirationLength,
-    repliesExpirationLength,
+    appExpirationLength,
+    appsConnectionsExpirationLength,
     FACEBOOK,
     GOOGLE,
     GITHUB,
@@ -64,7 +65,7 @@ function getMilliseconds(timestamp) {
 }
 
 export function staleUser (timestamp) {
-    return getMilliseconds(timestamp) > userExpirationLength;
+    return getMilliseconds(timestamp) > userExpirationLength
 }
 
 export function staleApps (timestamp) {

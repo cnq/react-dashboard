@@ -25,11 +25,10 @@ ConnectionCard.propTypes = {
 function ConnectionCard (props) {
     return (
         <Card>
-            <CardHeader title={props.title} />
+            <CardHeader title={props.connectionType} />
             <CardText>
-                {props.connectionUri}
-                {props.connectionName}
-                {props.children}
+                <div>{props.connectionName}</div>
+                <div>{props.connectionUri}</div>
             </CardText>
             <CardActions>{props.actions}</CardActions>
         </Card>
