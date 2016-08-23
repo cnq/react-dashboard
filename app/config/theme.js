@@ -8,7 +8,7 @@ import {
 import {fade} from 'material-ui/utils/colorManipulator';
 
 export const customTheme = getMuiTheme({
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: 'Raleway, sans-serif',
     palette: {
         primary1Color: cyan500,
         primary2Color: cyan700,

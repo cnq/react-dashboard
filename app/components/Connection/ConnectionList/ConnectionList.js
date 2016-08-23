@@ -3,7 +3,7 @@ import { ConnectionContainer } from 'containers'
 import FlatButton from 'material-ui/RaisedButton';
 import { Grid, GridItem } from 'components'
 import { header } from './styles.css'
-import { centeredContainer, breathingRoom, errorMsg } from 'shared/styles.css'
+import { centeredContainer, addContainer, breathingRoom, errorMsg } from 'shared/styles.css'
 
 const {
     string,
@@ -39,9 +39,9 @@ function ConnectionList (props) {
                                 </div>
                             :   null
                     }
-                    <div className={centeredContainer}>
-                        <FlatButton onClick={props.goToAddAppConnections} label="Connect" />
-                        <p>{`Click the 'Connect' button to begin connecting content to your website. It's easy.`}</p>
+                    <div className={`${centeredContainer}  ${props.connectionIds.size === 0 ? '' : addContainer}`}>
+                        <FlatButton onClick={props.goToAddAppConnections} label="Add Connection" />
+                        <p>{`Click the 'Add Connection' button to begin connecting content to your website. It's easy.`}</p>
                     </div>
                     <Grid>
                         {

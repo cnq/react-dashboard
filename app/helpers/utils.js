@@ -123,5 +123,5 @@ export function asyncValidate (values) {
 }
 
 export function getUri (uri) {
-    return `${(uri.split('.').join(''))}.tailspin.paperhook.com`
+    return `${(uri.split('.').join('-'))}.tailspin.paperhook.com`
 }

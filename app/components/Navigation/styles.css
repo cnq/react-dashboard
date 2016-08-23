@@ -11,12 +11,16 @@
     align-items: center;
     width: 100%;
     margin: 0px auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.19);
+    min-height: 65px;
 }
 
 .navContainer ul {
     display: flex;
     flex-direction: row;
     padding: 0;
+    margin: 9px 0 10px;
 }
 
 .navContainer li {
@@ -25,8 +29,9 @@
 }
 
 .link {
-    color: #a18aff;
+    color: #00DFFC;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .link:hover {

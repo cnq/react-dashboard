@@ -1,9 +1,27 @@
 import React, { PropTypes } from 'react'
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardText, CardTitle} from 'material-ui/Card';
 import {
     cardWrapper
 } from './styles.css'
 
+const styles = {
+    cardStyle: {
+        borderRadius: '10px'
+    },
+    headerStyle: {
+        padding: 0,
+        backgroundColor: '#767A7A',
+        borderRadius: '10px 10px 0 0'
+    },
+    textStyle: {
+        display: 'none',
+        paddingRight: '0'
+    },
+    cardTitleStyle: {
+        padding: '0',
+        color: '#ffffff'
+    }
+}
 const {
     object,
     string,
@@ -14,20 +32,22 @@ const {
  * AppCard() returns an UI Card component
  */
 AppCard.propTypes = {
-    backendSiteUri: string.isRequired,
     uri: string.isRequired,
     goToAppDetail: func,
     goToAppConnections: func,
     actions: object.isRequired,
-    settings: object.isRequired
 }
 
 function AppCard (props) {
-
+    const { cardStyle, headerStyle, textStyle, cardTitleStyle } = styles
     return (
-        <Card>
-            <CardHeader title={props.backendSiteUri}>
-                {props.settings}
+        <Card style={cardStyle}>
+            <CardHeader style={headerStyle} textStyle={textStyle}>
+                <CardTitle style={cardTitleStyle}>
+                    {props.menu}
+                    {props.backendSiteUri}
+                    {props.toggle}
+                </CardTitle>
             </CardHeader>
             <CardText>
                 <a href={props.uri} target="_blank">{props.uri}</a>

@@ -43,6 +43,10 @@ h4 {
     flex-direction: column;
 }
 
+.addContainer {
+    border: dashed 2px rgba(150, 150, 150, 0.3);
+}
+
 .breathingRoom {
     margin: 40px 15px;
 }
