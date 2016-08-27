@@ -115,7 +115,7 @@ class AddConnection extends Component {
                         hoverColor={'#00DFFC'}
                         onTouchTap={
                             () =>  {
-                                props.updateConnectionType('blog')
+                                props.updateConnectionType('directory')
                                 this.handleNext()
                             }
                         }
