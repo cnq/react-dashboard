@@ -109,7 +109,17 @@ export function deleteConnection (connectionId, appId) {
     } else {
         // TODO: This needs to be added
         
-        console.warn("TODO: deleteConnection has no implementation");
+        return axios({
+            method: 'delete',
+            url: `/api/apps/${appId}/routes/${connectionId}`,
+            timeout: 60000
+        })
+         .then(function (response) {
+             return response.data;
+         })
+         .catch(function (error) {
+             errorCallback(error);
+         })
     }
 }
 
