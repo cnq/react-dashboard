@@ -58,8 +58,8 @@ export function saveApp (app) {
             .then(function (response) {
                 return response.data;
             })
-            .catch(function (response) {
-                errorCallback();
+            .catch(function (error) {
+                errorCallback(error);
             })
     }
 }
@@ -119,8 +119,8 @@ export function deleteApp (appId, uid) {
             .then(function (response) {
                 return response.data;
             })
-            .catch(function (response) {
-                errorCallback();
+            .catch(function (error) {
+                errorCallback(error);
             })
     }
 }
@@ -149,8 +149,8 @@ export function listenToAppList (callback, errorCallback) {
                 return appList[b].timestamp - appList[a].timestamp
             })
             callback({appList, sortedIds});
-        }).catch(function (response) {
-            errorCallback();
+        }).catch(function (error) {
+            errorCallback(error);
         })
     }
 }
@@ -190,8 +190,8 @@ export function fetchAppsConnections (appId) {
                 snapshot.val() || {}
             ))
     } else {
-        //Paperhook
-        //TODO: This need to be added.
-        console.debug("fetchAppsConnections...")
+        return axios.get(`/api/apps/${appId}/routes`).then(function (response) {
+            return response.data;
+        })
     }
 }
