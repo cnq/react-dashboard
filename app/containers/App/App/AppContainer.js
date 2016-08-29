@@ -27,11 +27,11 @@ const AppContainer = React.createClass({
     },
     goToAppDetail (event) {
         event.stopPropagation()
-        this.context.router.push('/dashboard/app/' + this.props.app.get('appId'))
+        this.context.router.push('/dashboard/apps/app/' + this.props.app.get('appId'))
     },
     goToAppConnections (event) {
         event.stopPropagation()
-        this.context.router.push('/dashboard/app/' + this.props.app.get('appId') + '/connections')
+        this.context.router.push('/dashboard/apps/app/' + this.props.app.get('appId') + '/connections')
     },
     deleteApp (event, appId, uid) {
         event.stopPropagation()

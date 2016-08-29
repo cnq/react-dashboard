@@ -3,14 +3,12 @@ import { ConnectionDetails } from 'components'
 import { connect } from 'react-redux'
 import { connections as actions } from 'actions'
 
-//TODO: Refer to AppContainer for guidance.
 const ConnectionDetailsContainer = React.createClass({
     propTypes: {
-        appId: PropTypes.string.isRequired,
         connectionId: PropTypes.string.isRequired,
+        appId: PropTypes.string.isRequired,
         isFetching: PropTypes.bool.isRequired,
         error: PropTypes.string.isRequired,
-        connectionAlreadyFetched: PropTypes.bool.isRequired,
         removeConnectionFetching: PropTypes.func.isRequired,
         fetchAndHandleConnection: PropTypes.func.isRequired
     },
@@ -24,10 +22,11 @@ const ConnectionDetailsContainer = React.createClass({
     render () {
         return (
             <ConnectionDetails
-                appId = {this.props.appId}
-                connectionId = {this.props.connectionId}
-                isFetching = {this.props.isFetching}
-                error = {this.props.error}
+                connectionId={this.props.connectionId}
+                appId={this.props.appId}
+                isFetching={this.props.isFetching}
+                error={this.props.error}
+                connectionAlreadyFetched={this.props.connectionAlreadyFetched}
             />
         )
     }
@@ -37,7 +36,7 @@ function mapStateToProps({connections}, props) {
     return {
         isFetching: connections.get('isFetching'),
         error: connections.get('error'),
-        appId: props.routeParams.appId,
+        appId: connections.getIn([props.routeParams.connectionId, 'appId']),
         connectionId: props.routeParams.connectionId,
         connectionAlreadyFetched: !!connections.get(props.routeParams.connectionId)
     }

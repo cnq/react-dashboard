@@ -7,7 +7,8 @@ import {
 const {
     object,
     string,
-    func
+    func,
+    bool
 } = PropTypes
 
 /**
@@ -18,21 +19,37 @@ ConnectionCard.propTypes = {
     connectionUri: string.isRequired,
     connectionType: string.isRequired,
     connectionName: string.isRequired,
+    connectionDetails: bool.isRequired,
     goToConnectionDetail: func,
     actions: object.isRequired
 }
 
 function ConnectionCard (props) {
-    return (
-        <Card>
-            <CardHeader title={props.connectionType} />
-            <CardText>
-                <div>{props.connectionName}</div>
-                <div>{props.connectionUri}</div>
-            </CardText>
-            <CardActions>{props.actions}</CardActions>
-        </Card>
-    )
+    if (!props.connectionDetails) {
+        return (
+            <Card>
+                <CardHeader title={props.connectionType}/>
+                <CardText>
+                    <div>{props.connectionName}</div>
+                    <div>{props.connectionUri}</div>
+                </CardText>
+                <CardActions>{props.actions}</CardActions>
+            </Card>
+        )
+    } else {
+        return (
+            <Card>
+                <CardHeader title={`Connection Details`}/>
+                <CardText>
+                    <div>{props.connectionType}</div>
+                    <div>{props.connectionName}</div>
+                    <div>{props.connectionUri}</div>
+                </CardText>
+                <CardActions>{props.actions}</CardActions>
+            </Card>
+        )
+    }
+
 }
 
 export default ConnectionCard

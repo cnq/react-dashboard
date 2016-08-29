@@ -1,4 +1,4 @@
-import { addConnection as actions } from 'actions'
+import { updateConnection as actions } from 'actions'
 
 const initialState = {
     connectionUri: '',
@@ -7,18 +7,8 @@ const initialState = {
     isActive: true
 }
 
-export default function addConnection ( state = initialState, action ) {
+export default function updateConnection ( state = initialState, action ) {
     switch ( action.type ) {
-        case actions.ACTIVATE_ADD_CONNECTION:
-            return {
-                ...state,
-                isActive: true
-            }
-        case actions.DEACTIVATE_ADD_CONNECTION:
-            return {
-                ...state,
-                isActive: false
-            }
         case actions.UPDATE_CONNECTION_URI:
             return {
                 ...state,

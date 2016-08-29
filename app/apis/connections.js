@@ -10,7 +10,7 @@ import { fireDb } from 'config/constants'
  */
 function saveToConnections (connection) {
     //Firebase
-    const connectionId = fireDb.ref().child('connections').push().key //Have firebase generate the connectionId for us
+    const connectionId = connection.connectionId ? connection.connectionId : fireDb.ref().child('connections').push().key //Have firebase generate the connectionId for us
     const connectionPromise = fireDb.ref().child(`connections/${connectionId}`).set({...connection, connectionId})
     return {
         connectionId,

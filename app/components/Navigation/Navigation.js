@@ -22,7 +22,7 @@ function NavLinks ({isAuthenticated, isRestricted, user}) {
     return (
         isAuthenticated && isRestricted
             ?   <ul>
-                    <li><Link to='/dashboard' className={link}>{'Dashboard'}</Link></li>
+                    <li><Link to='/dashboard/apps' className={link}>{'Dashboard'}</Link></li>
                 </ul>
             :   <ul>
                     <li><Link to='/' className={link}>{'Home'}</Link></li>

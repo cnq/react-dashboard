@@ -81,6 +81,7 @@ export default class App extends Component {
             const connectionCount = List(props.connectionIds).size
             return (
                 <div>
+                    <FlatButton onClick={props.goToAppDetail} label="Edit App" />
                     <FlatButton onClick={props.goToAppConnections} label="View Connections" />
 
                     <Badge

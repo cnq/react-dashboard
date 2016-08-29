@@ -5,6 +5,7 @@ import {
     HomeContainer,
     DashboardContainer,
     SigninContainer,
+    AppsContainer,
     AppListContainer,
     SignoutContainer,
     UserContainer,
@@ -13,7 +14,8 @@ import {
     ConnectionListContainer,
     ConnectionContainer,
     ConnectionDetailsContainer,
-    AddConnectionContainer
+    AddConnectionContainer,
+    EditConnectionContainer
 } from 'containers'
 import {
     Billing,
@@ -32,14 +34,17 @@ export default function getRoutes (history) {
                 <Route path='signin' component={SigninContainer} />
                 <Route path='signout' component={SignoutContainer} />
                 <Route path='dashboard' component={DashboardContainer} >
-                    <IndexRoute component={AppListContainer} />
-                    <Route path='user/:uid' component={UserContainer} />
-                    <Route path='app/:appId' component={AppDetailsContainer} />
-                    <Route path='app/:appId/connections' component={ConnectionsContainer} >
-                        <IndexRoute component={ConnectionListContainer} />
-                        <Route path='connection/:connectionId' component={ConnectionDetailsContainer} />
-                        <Route path='add' component={AddConnectionContainer} />
+                    <Route path='apps' component={AppsContainer} >
+                        <IndexRoute component={AppListContainer} />
+                        <Route path='app/:appId' component={AppDetailsContainer} />
+                        <Route path='app/:appId/connections' component={ConnectionsContainer} >
+                            <IndexRoute component={ConnectionListContainer} />
+                            <Route path='connection/:connectionId' component={ConnectionDetailsContainer} />
+                            <Route path='connection/:connectionId/edit' component={EditConnectionContainer} />
+                            <Route path='add' component={AddConnectionContainer} />
+                        </Route>
                     </Route>
+                    <Route path='user/:uid' component={UserContainer} />
                     <Route path='billing' component={Billing} />
                     <Route path='settings' component={Settings} />
                 </Route>

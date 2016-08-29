@@ -7,7 +7,6 @@ import {
     StepLabel
 } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
-import { ConnectionCard } from 'components'
 import { formatConnection } from 'helpers/utils'
 import {
     centeredContainer,
@@ -91,6 +90,7 @@ class AddConnection extends Component {
     onClickCreateConnection = (props)  => {
         props.connectionFanout(
             formatConnection(
+                null,
                 props.connectionUri,
                 props.connectionType,
                 props.connectionName,
@@ -98,7 +98,7 @@ class AddConnection extends Component {
                 props.app.get('backendSiteUri')
             )
         )
-        this.context.router.push('/dashboard/app/' + props.app.get('appId') + '/connections')
+        this.context.router.push('/dashboard/apps/app/' + props.app.get('appId') + '/connections')
     }
 
     renderButtons = (props) => {
@@ -108,14 +108,14 @@ class AddConnection extends Component {
             <div className={`${centeredContainer} ${breathingRoom}`}>
                 <div>
                     <FlatButton
-                        label="Blog"
-                        style={props.connectionType === 'blog' ? buttonSelectedStyle : buttonStyle}
+                        label="Directory"
+                        style={props.connectionType === 'directory' ? buttonSelectedStyle : buttonStyle}
                         labelStyle={buttonLabelStyle}
                         rippleColor={'#00DFFC'}
                         hoverColor={'#00DFFC'}
                         onTouchTap={
                             () =>  {
-                                props.updateConnectionType('blog')
+                                props.updateConnectionType('directory')
                                 this.handleNext()
                             }
                         }
@@ -151,14 +151,14 @@ class AddConnection extends Component {
             case 1:
                 return (
                     <div className={`${centeredContainer} ${breathingRoom}`}>
-                        <h3>What would you like to name your {`${props.connectionType ? props.connectionType : 'content '}${props.connectionType === 'page' ? '' : `'s directory`}`}?</h3>
+                        <h3>What would you like to name your {`${props.connectionType ? props.connectionType : 'content '}`}?</h3>
                         <TextField
                             value={props.connectionName}
-                            maxLength={340}
+                            maxLength={480}
                             type="text"
-                            style={{width: '340px'}}
-                            floatingLabelText={`${props.connectionType ? props.connectionType : 'content'}${props.connectionType === 'page' ? '' : ` directory`} name`}
-                            hintText={`Enter a name for the ${props.connectionType ? props.connectionType : 'content '}${props.connectionType === 'page' ? '' : `'s directory`}`}
+                            style={{width: '480px'}}
+                            floatingLabelText={`${props.connectionType ? props.connectionType : 'content'} name`}
+                            hintText={`Enter a name for the ${props.connectionType ? props.connectionType : 'content'}${props.connectionType === 'page' ? ' (e.g. mypage.html)' : ' (e.g. blog, wiki, forum, etc.)'}`}
                             onChange={
                                     (event) =>  {
                                         props.updateConnectionName(event.target.value)
@@ -173,9 +173,9 @@ class AddConnection extends Component {
                         <h3>What is the URL where your {`${props.connectionType ? props.connectionType : 'content '}`} is located?</h3>
                         <TextField
                                 value={props.connectionUri}
-                                maxLength={340}
+                                maxLength={480}
                                 type="text"
-                                style={{width: '340px'}}
+                                style={{width: '480px'}}
                                 floatingLabelText={`${props.connectionType ? props.connectionType : 'content'} location`}
                                 hintText={`Enter the URL location for the ${props.connectionType ? props.connectionType : 'content '}`}
                                 onChange={
@@ -213,12 +213,20 @@ class AddConnection extends Component {
                     </Step>
                     <Step>
                         <StepLabel style={stepLabelStyle} onTouchTap={() => this.setState({stepIndex: 1, editing: true})}>
-                            {`${this.props.connectionName ? 'Directory name: /' : 'Set directory name'}${this.props.connectionName}`}
+                            {
+                                this.props.connectionType === 'page'
+                                    ?   `${this.props.connectionName ? 'Page name: /' : 'Set page name'}${this.props.connectionName}`
+                                    :   `${this.props.connectionName ? 'Directory name: /' : 'Set directory name'}${this.props.connectionName}`
+                            }
                         </StepLabel>
                     </Step>
                     <Step>
                         <StepLabel style={stepLabelStyle} onTouchTap={() => this.setState({stepIndex: 2, editing: true})}>
-                            {`${this.props.connectionUri ? 'Location: ' : 'Enter location'} ${this.props.connectionUri}`}
+                            {
+                                this.props.connectionType === 'page'
+                                    ?   `${this.props.connectionUri ? 'Page location: /' : 'Set page location'}${this.props.connectionUri}`
+                                    :   `${this.props.connectionUri ? 'Directory location: ' : 'Enter directory\'s location'} ${this.props.connectionUri}`
+                            }
                         </StepLabel>
                     </Step>
                 </Stepper>

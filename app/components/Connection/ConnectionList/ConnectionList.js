@@ -20,7 +20,8 @@ ConnectionList.propTypes = {
     appId: PropTypes.string.isRequired,
     error: string.isRequired,
     isFetching: bool.isRequired,
-    goToAddAppConnections: func.isRequired
+    goToAddAppConnections: func.isRequired,
+    connectionAlreadyFetched: bool.isRequired
 }
 
 function ConnectionList (props) {
@@ -51,6 +52,7 @@ function ConnectionList (props) {
                                     <ConnectionContainer
                                         connectionId={id}
                                         appId={props.appId}
+                                        connectionAlreadyFetched={props.connectionAlreadyFetched}
                                     />
                                 </GridItem>
                             ))

@@ -3,12 +3,10 @@ import { Map } from 'immutable'
 import { AddConnection } from 'components'
 import { connect } from 'react-redux'
 import {
-    addConnection as addConnectionActions,
+    updateConnection as updateConnectionActions,
     connections as connectionsActions,
     apps as appsActions
 } from 'actions'
-
-const { string } = PropTypes
 
 const AddConnectionContainer = React.createClass({
     render () {
@@ -20,17 +18,17 @@ const AddConnectionContainer = React.createClass({
     }
 })
 
-function mapStateToProps({addConnection, apps}, props) {
+function mapStateToProps({updateConnection, apps}, props) {
     return {
         app: apps.get(props.params.appId) ? apps.get(props.params.appId) : Map({}),
-        connectionUri: addConnection.connectionUri,
-        connectionType: addConnection.connectionType,
-        connectionName: addConnection.connectionName,
-        isActive: addConnection.isActive
+        connectionUri: updateConnection.connectionUri,
+        connectionType: updateConnection.connectionType,
+        connectionName: updateConnection.connectionName,
+        isActive: updateConnection.isActive
     }
 }
 
 export default connect(
     mapStateToProps,
-    {...addConnectionActions, ...connectionsActions, ...appsActions}
+    {...updateConnectionActions, ...connectionsActions, ...appsActions}
 )(AddConnectionContainer)

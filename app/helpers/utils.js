@@ -29,8 +29,9 @@ export function formatApp (backendSiteUri, uri, {name, avatar, uid}) {
     }
 }
 
-export function formatConnection (connectionUri, connectionType, connectionName, appId, backendSiteUri) {
+export function formatConnection (connectionId, connectionUri, connectionType, connectionName, appId, backendSiteUri) {
     return {
+        connectionId,
         connectionUri,
         connectionType,
         connectionName,
@@ -39,7 +40,6 @@ export function formatConnection (connectionUri, connectionType, connectionName,
         timestamp: Date.now()
     }
 }
-
 
 export function formatAuthData (provider = undefined, email = undefined, password = undefined, accessToken = undefined, idToken =undefined, secret = undefined) {
     return {

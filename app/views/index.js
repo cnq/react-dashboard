@@ -1,5 +1,6 @@
 export Home from './Home/Home'
 export Dashboard from './Dashboard/Dashboard'
+export Apps from './Apps/Apps'
 export Connections from './Connections/Connections'
 export Signin from './Signin/Signin'
 export Signout from './Signout/Signout'

@@ -20,14 +20,16 @@ const {
  * ConnectionDetails() returns a connection details component which displays
  * the settings for the currently selected connection.
  */
-// TODO: Only initial setup, refer to App Card for guidance.
+
 ConnectionDetails.propTypes = {
     connectionId: string.isRequired,
+    appId: string.isRequired,
     isFetching: bool.isRequired,
-    error: string.isRequired
+    error: string.isRequired,
+    connectionAlreadyFetched: bool.isRequired
 }
 
-function ConnectionDetails ({ connectionId, isFetching, error }) {
+function ConnectionDetails ({ connectionId, appId, isFetching, error, connectionAlreadyFetched }) {
     return (
         <div className={mainContainer}>
             {
@@ -37,6 +39,8 @@ function ConnectionDetails ({ connectionId, isFetching, error }) {
                             <div className={content}>
                                 <ConnectionContainer
                                     connectionId={connectionId}
+                                    appId={appId}
+                                    connectionAlreadyFetched={connectionAlreadyFetched}
                                 />
                             </div>
                         </div>

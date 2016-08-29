@@ -7,7 +7,7 @@ import {
     connectionWrapper
 } from './styles.css'
 
-const {func} = PropTypes
+const {func, bool} = PropTypes
 
 /**
  * Connection() returns an individual connection component
@@ -16,33 +16,59 @@ const {func} = PropTypes
 Connection.propTypes = {
     connection: PropTypes.instanceOf(Map),
     goToConnectionDetail: func,
-    deleteConnection: func
+    goToConnectionEdit: func,
+    deleteConnection: func,
+    connectionAlreadyFetched: bool
 }
 
-// TODO: Refer to App component for guidance.
 function Connection(props) {
 
-    const renderActions = ({ deleteConnection }) => {
+    const renderCardActions = ({ deleteConnection, goToConnectionDetail }) => {
         const connectionId = props.connection.get('connectionId')
         const appId = props.connection.get('appId')
         return (
             <div>
-                <FlatButton label="View Connection Details" />
+                <FlatButton onClick={goToConnectionDetail} label="View Details" />
                 <FlatButton onClick={(event) => deleteConnection(event, connectionId, appId)} label="Delete Connection" />
             </div>
         )
     }
 
-    return (
-        <ConnectionCard
-            className={connectionWrapper}
-            connectionUri={props.connection.get('connectionUri')}
-            connectionType={props.connection.get('connectionType')}
-            connectionName={props.connection.get('connectionName')}
-            goToConnectionDetail={props.goToConnectionDetail}
-            actions={renderActions(props)}
-        />
-    )
+    const renderDetailActions = ({ deleteConnection, goToConnectionEdit }) => {
+        const connectionId = props.connection.get('connectionId')
+        const appId = props.connection.get('appId')
+        return (
+            <div>
+                <FlatButton onClick={goToConnectionEdit} label="Edit Connection" />
+                <FlatButton onClick={(event) => deleteConnection(event, connectionId, appId)} label="Delete Connection" />
+            </div>
+        )
+    }
+
+    if (!props.connectionAlreadyFetched) {
+        return (
+            <ConnectionCard
+                className={connectionWrapper}
+                connectionUri={props.connection.get('connectionUri')}
+                connectionType={props.connection.get('connectionType')}
+                connectionName={props.connection.get('connectionName')}
+                goToConnectionDetail={props.goToConnectionDetail}
+                connectionDetails={false}
+                actions={renderCardActions(props)}
+            />
+        )
+    } else {
+        return (
+            <ConnectionCard
+                className={connectionWrapper}
+                connectionUri={props.connection.get('connectionUri')}
+                connectionType={props.connection.get('connectionType')}
+                connectionName={props.connection.get('connectionName')}
+                connectionDetails={true}
+                actions={renderDetailActions(props)}
+            />
+        )
+    }
 
 }
 

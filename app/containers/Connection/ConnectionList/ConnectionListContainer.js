@@ -29,7 +29,7 @@ const ConnectionListContainer = React.createClass({
     },
     goToAddAppConnections (event) {
         event.stopPropagation()
-        this.context.router.push('/dashboard/app/' + this.props.appId + '/connections/add')
+        this.context.router.push('/dashboard/apps/app/' + this.props.appId + '/connections/add')
     },
     render () {
         return (
@@ -39,6 +39,7 @@ const ConnectionListContainer = React.createClass({
                 goToAddAppConnections={this.goToAddAppConnections}
                 error={this.props.error}
                 isFetching={this.props.isFetching}
+                connectionAlreadyFetched={false}
             />
         )
     }

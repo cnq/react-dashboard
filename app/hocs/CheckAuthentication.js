@@ -34,7 +34,7 @@ export default function (ComposedComponent) {
                     router.push('/signout')
                 } else {
                     if (nextRouter.isActive('signin')) {
-                        router.push('/dashboard')
+                        router.push('/dashboard/apps')
                     }
                 }
             } else {
