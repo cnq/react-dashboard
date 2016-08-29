@@ -82,12 +82,12 @@ class EditConnection extends Component {
             <div className={`${centeredContainer} ${breathingRoom}`}>
                 <div>
                     <FlatButton
-                        label="Blog"
-                        style={props.connectionType === 'blog' ? buttonSelectedStyle : buttonStyle}
+                        label="Directory"
+                        style={props.connectionType === 'directory' ? buttonSelectedStyle : buttonStyle}
                         labelStyle={buttonLabelStyle}
                         rippleColor={'#00DFFC'}
                         hoverColor={'#00DFFC'}
-                        onTouchTap={() =>  {props.updateConnectionType('blog')}}
+                        onTouchTap={() =>  {props.updateConnectionType('directory')}}
                     />
                     <FlatButton
                         label="Page"
