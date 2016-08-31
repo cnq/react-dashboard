@@ -35,7 +35,7 @@ const SigninContainer = React.createClass({
         }
         this.props.fetchAndHandleAuthenticatedUser(authData)
             .then(() => {
-                this.context.router.replace('dashboard')
+                this.context.router.replace('dashboard/apps/')
             })
     },
 

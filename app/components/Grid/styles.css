@@ -1,9 +1,10 @@
 .grid {
     display:flex;
     flex-wrap:wrap;
-    height: 100vh;
+    min-height: 100vh;
     justify-content: center;
     align-content: flex-start;
+    flex-direction: row;
 }
 
 .gridItem {
