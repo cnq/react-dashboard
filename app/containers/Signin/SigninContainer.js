@@ -35,7 +35,7 @@ const SigninContainer = React.createClass({
         }
         this.props.fetchAndHandleAuthenticatedUser(authData)
             .then(() => {
-                this.context.router.replace('dashboard/apps/')
+                this.context.router.replace('/dashboard/apps/')
             })
     },
 
@@ -47,6 +47,7 @@ const SigninContainer = React.createClass({
 
         const socialAuthButtons = (props, handleAuth) => {
             // Are we in production?
+            console.log(process.env.NODE_ENV )
             if (process.env.NODE_ENV !== 'production') {
                 return (
                     <div>

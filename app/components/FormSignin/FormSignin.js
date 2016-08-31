@@ -72,6 +72,7 @@ function FormSignin (props) {
                 />
                 <Field
                     name="password"
+                    type="password"
                     component={renderTextField}
                     floatingLabelText={`Password`}
                     hintText={`Please enter your password`}

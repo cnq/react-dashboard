@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { Map, List } from 'immutable'
-import FontIcon from 'material-ui/FontIcon';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
-import Toggle from 'material-ui/Toggle';
 import ActionSettings from 'material-ui/svg-icons/action/settings';
 import ActionDownload from 'material-ui/svg-icons/file/file-download';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
@@ -37,17 +35,6 @@ const styles = {
     },
     innerDivStyle : {
         paddingLeft: '52px'
-    },
-    toggleStyle: {
-        marginBottom: '0',
-        display: 'inline-block',
-        position: 'relative',
-        width: '58px',
-        top: '-4px',
-        right: '-180px',
-        trackOnColor: {
-            backgroundColor: '#00000'
-        }
     }
 }
 
@@ -115,14 +102,6 @@ export default class App extends Component {
             )
         }
 
-        const renderToggle = () => (
-            <Toggle
-                label=""
-                defaultToggled={true}
-                style={styles.toggleStyle}
-            />
-        )
-
         return (
             props.isFetching === true
                 ?   <div></div>
@@ -135,7 +114,6 @@ export default class App extends Component {
                             goToAppConnections={props.goToAppConnections}
                             actions={renderActions(props)}
                             menu={renderMenu(props)}
-                            toggle={renderToggle(props)}
                         />
                         {this.props.error ? <p className={errorMsg}>{props.error}</p> : null}
                     </div>

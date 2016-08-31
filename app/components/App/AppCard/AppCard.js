@@ -46,7 +46,6 @@ function AppCard (props) {
                 <CardTitle style={cardTitleStyle}>
                     {props.menu}
                     {props.backendSiteUri}
-                    {props.toggle}
                 </CardTitle>
             </CardHeader>
             <CardText>
