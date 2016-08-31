@@ -47,7 +47,21 @@ export function saveConnection (connection) {
         ]).then(() => ({...connection, connectionId}))
     } else {
         //Paperhook
-        return axios({
+        if(connection.connectionId){
+            return axios({
+                method: 'put',
+                url: `/api/apps/${connection.appId}/routes/${connection.connectionId}`,
+                data: connection,
+                timeout: 60000 })
+            .then(function (response) {
+                return response.data;
+            })
+            .catch(function (error) {
+                errorCallback(error);
+            })
+        
+        } else {
+            return axios({
                 method: 'post',
                 url: `/api/apps/${connection.appId}/routes`,
                 data: connection,
@@ -58,6 +72,8 @@ export function saveConnection (connection) {
             .catch(function (error) {
                 errorCallback(error);
             })
+        }
+
     }
 }
 
