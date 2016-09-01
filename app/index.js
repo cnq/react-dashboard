@@ -13,19 +13,23 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
 
+const persistedState = {}
+
 export const store = createStore(
     combineReducers({
         ...reducers,
         form,
         routing: routerReducer
     }),
+    persistedState,
     compose (
         applyMiddleware(thunk),
         window.devToolsExtension ? window.devToolsExtension() : (f) => f
     )
 )
+console.log(store.getState()) //Have a look at initial state
 
-//TODO: remove these. these are just here to assist with debugging temporarily.
+//TODO: remove these. these are just here temporarily to assist with debugging.
 //localStorage.removeItem('auth')
 //localStorage.removeItem('user')
 

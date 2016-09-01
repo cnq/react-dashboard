@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { v4 } from 'node-uuid'
 import { Field, reduxForm, propTypes } from 'redux-form';
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton';
@@ -49,7 +50,7 @@ const validate = values => {
 const renderTextField = field => (
     <TextField
         className={formField}
-        key={field.name}
+        key={v4()}
         errorText={field.touched && field.error}
         {...field.input}
     />

@@ -31,7 +31,7 @@ const styles = {
         color: '#ffffff'
     },
     menuItemStyle : {
-        fontSize: '14'
+        fontSize: '14px'
     },
     innerDivStyle : {
         paddingLeft: '52px'
@@ -68,7 +68,7 @@ export default class App extends Component {
             const connectionCount = List(props.connectionIds).size
             return (
                 <div>
-                    <FlatButton onClick={props.goToAppDetail} label="Edit App" />
+                    {/*<FlatButton onClick={props.goToAppDetail} label="Edit App" />*/}
                     <FlatButton onClick={props.goToAppConnections} label="View Connections" />
 
                     <Badge

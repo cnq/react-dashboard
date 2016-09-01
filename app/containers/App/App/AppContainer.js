@@ -52,15 +52,12 @@ const AppContainer = React.createClass({
     }
 })
 
-function mapStateToProps ({apps, appsConnections}, props) {
-    const specificAppsConnections = appsConnections[props.appId]
-    return {
-        isFetching: apps.isFetching || appsConnections.isFetching ? true : false,
-        error: apps.error || appsConnections.error,
-        app: apps.get(props.appId),
-        connectionIds: specificAppsConnections ? specificAppsConnections.connectionIds : [],
-    }
-}
+const mapStateToProps = ({apps, appsConnections}, props) => ({
+    isFetching: apps.isFetching || appsConnections.isFetching ? true : false,
+    error: apps.error || appsConnections.error,
+    app: apps.get(props.appId),
+    connectionIds: appsConnections[props.appId] ? appsConnections[props.appId].connectionIds : []
+})
 
 export default connect(
     mapStateToProps,

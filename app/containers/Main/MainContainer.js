@@ -28,9 +28,11 @@ const MainContainer = React.createClass({
     }
 })
 
+const mapStateToProps = ({users}) => ({
+    isAuthenticated: users.isAuthenticated,
+    user: users[users.authenticatedId] ? users[users.authenticatedId].info : {}
+})
+
 export default connect(
-    ({users}) => ({
-        isAuthenticated: users.isAuthenticated,
-        user: users[users.authenticatedId] ? users[users.authenticatedId].info : {}
-    })
+    mapStateToProps
 )(MainContainer)

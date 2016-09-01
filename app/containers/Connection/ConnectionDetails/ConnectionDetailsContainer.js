@@ -32,15 +32,13 @@ const ConnectionDetailsContainer = React.createClass({
     }
 })
 
-function mapStateToProps({connections}, props) {
-    return {
-        isFetching: connections.get('isFetching'),
-        error: connections.get('error'),
-        appId: connections.getIn([props.routeParams.connectionId, 'appId']),
-        connectionId: props.routeParams.connectionId,
-        connectionAlreadyFetched: !!connections.get(props.routeParams.connectionId)
-    }
-}
+const mapStateToProps = ({connections}, props) => ({
+    isFetching: connections.get('isFetching'),
+    error: connections.get('error'),
+    appId: connections.getIn([props.routeParams.connectionId, 'appId']),
+    connectionId: props.routeParams.connectionId,
+    connectionAlreadyFetched: !!connections.get(props.routeParams.connectionId)
+})
 
 export default connect(
     mapStateToProps,

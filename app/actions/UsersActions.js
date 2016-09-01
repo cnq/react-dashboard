@@ -13,50 +13,38 @@ export const FETCHING_USER = 'FETCHING_USER'
 export const FETCHING_USER_ERROR = 'FETCHING_USER_ERROR'
 export const FETCHING_USER_SUCCESS = 'FETCHING_USER_SUCCESS'
 
-export function authUser (uid) {
-    return {
-        type: AUTH_USER,
-        uid
-    }
-}
 
-function unauthUser () {
-    return {
-        type: UNAUTH_USER
-    }
-}
+const unauthUser = () => ({
+    type: UNAUTH_USER
+})
 
-function fetchingUser () {
-    return {
-        type: FETCHING_USER
-    }
-}
+const fetchingUser = () => ({
+    type: FETCHING_USER
+})
 
-function fetchingUserError (error) {
-    console.warn(error)
-    return {
-        type: FETCHING_USER_ERROR,
-        error: 'Error fetching user'
-    }
-}
+const fetchingUserError = (error) => ({
+    type: FETCHING_USER_ERROR,
+    error: 'Error fetching user'
+})
 
-export function fetchingUserSuccess (uid, user, timestamp) {
-    return {
-        type: FETCHING_USER_SUCCESS,
-        uid,
-        user,
-        timestamp
-    }
-}
+export const authUser = (uid) => ({
+    type: AUTH_USER,
+    uid
+})
+
+export const fetchingUserSuccess = (uid, user, timestamp) => ({
+    type: FETCHING_USER_SUCCESS,
+    uid,
+    user,
+    timestamp
+})
 
 export function fetchAndHandleAuthenticatedUser (authData) {
-
     return function (dispatch) {
         dispatch(fetchingUser())
         return (
             auth(authData)
                 .then((results) => {
-
                     // Pull credentials and user data from result
                     const provider = results.credential.provider
                     const email = provider === EMAIL ? results.credential.email : null
@@ -65,7 +53,6 @@ export function fetchAndHandleAuthenticatedUser (authData) {
                     const idToken = provider === GOOGLE ? results.credential.idToken : null
                     const secret = provider === TWITTER ? results.credential.secret : null
                     const user = results.user
-
 
                     // Format auth data
                     const authData = formatAuthData(provider, email, password, accessToken, idToken, secret)
@@ -91,7 +78,6 @@ export function fetchAndHandleAuthenticatedUser (authData) {
 }
 
 export function signoutAndUnauth () {
-
     // Remove the credential data from local storage
     localStorage.removeItem('auth')
     localStorage.removeItem('user')
@@ -101,7 +87,6 @@ export function signoutAndUnauth () {
         signout()
         dispatch(unauthUser())
     }
-
 }
 
 export function fetchAndHandleUser (uid) {

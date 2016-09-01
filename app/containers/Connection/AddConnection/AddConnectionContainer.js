@@ -18,15 +18,13 @@ const AddConnectionContainer = React.createClass({
     }
 })
 
-function mapStateToProps({updateConnection, apps}, props) {
-    return {
-        app: apps.get(props.params.appId) ? apps.get(props.params.appId) : Map({}),
-        connectionUri: updateConnection.connectionUri,
-        connectionType: updateConnection.connectionType,
-        connectionName: updateConnection.connectionName,
-        isActive: updateConnection.isActive
-    }
-}
+const mapStateToProps = ({updateConnection, apps}, props) => ({
+    app: apps.get(props.params.appId) ? apps.get(props.params.appId) : Map({}),
+    connectionUri: updateConnection.connectionUri,
+    connectionType: updateConnection.connectionType,
+    connectionName: updateConnection.connectionName,
+    isActive: updateConnection.isActive
+})
 
 export default connect(
     mapStateToProps,

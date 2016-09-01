@@ -6,37 +6,28 @@ export const FETCHING_USERS_APPS_ERROR = 'FETCHING_USERS_APPS_ERROR'
 export const FETCHING_USERS_APPS_SUCCESS = 'FETCHING_USERS_APPS_SUCCESS'
 export const ADD_SINGLE_USERS_APP = 'ADD_SINGLE_USERS_APP'
 
-export function fetchingUsersApps (uid) {
-    return {
-        type: FETCHING_USERS_APPS,
-        uid
-    }
-}
+export const fetchingUsersApps = (uid) => ({
+    type: FETCHING_USERS_APPS,
+    uid
+})
 
-export function fetchingUsersAppsError (error) {
-    console.warn(error)
-    return {
-        type: FETCHING_USERS_APPS_ERROR,
-        error: 'Error fetching user apps'
-    }
-}
+export const fetchingUsersAppsError = (error) => ({
+    type: FETCHING_USERS_APPS_ERROR,
+    error: 'Error fetching user apps'
+})
 
-export function fetchingUsersAppsSuccess (uid, appIds, lastUpdated) {
-    return {
-        type: FETCHING_USERS_APPS_SUCCESS,
-        uid,
-        appIds,
-        lastUpdated
-    }
-}
+export const fetchingUsersAppsSuccess = (uid, appIds, lastUpdated) => ({
+    type: FETCHING_USERS_APPS_SUCCESS,
+    uid,
+    appIds,
+    lastUpdated
+})
 
-export function addSingleUsersApp (uid, appId) {
-    return {
-        type: ADD_SINGLE_USERS_APP,
-        uid,
-        appId
-    }
-}
+export const addSingleUsersApp = (uid, appId) => ({
+    type: ADD_SINGLE_USERS_APP,
+    uid,
+    appId
+})
 
 export function fetchAndHandleUsersApps (uid) {
     return function (dispatch) {

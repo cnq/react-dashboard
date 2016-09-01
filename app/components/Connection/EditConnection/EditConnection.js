@@ -55,12 +55,15 @@ class EditConnection extends Component {
     }
 
     componentWillUnmount() {
-        //clear the state once this component unmounts
+        //set to empty string when component mounts
         this.props.updateConnectionType('')
         this.props.updateConnectionName('')
         this.props.updateConnectionUri('')
+        //we've completted editing
+        this.props.editingConnectionUriComplete()
+        this.props.editingConnectionTypeComplete()
+        this.props.editingConnectionNameComplete()
     }
-    
 
     onClickUpdateConnection = (props)  => {
         props.connectionFanout(
@@ -128,9 +131,11 @@ class EditConnection extends Component {
                             floatingLabelText={`${this.props.connectionType ? this.props.connectionType : 'content'}${this.props.connectionType === 'page' ? '' : ` directory`} name`}
                             hintText={`Enter a name for the ${this.props.connectionType ? this.props.connectionType : 'content '}${this.props.connectionType === 'page' ? '' : `'s directory`}`}
                             onChange={
-                                    (event) =>  {this.props.updateConnectionName(event.target.value)
-                                    }
+                                (event) =>  {
+                                    this.props.editingConnectionName()
+                                    this.props.updateConnectionName(event.target.value)
                                 }
+                            }
                         />
                     </div>
                     <div className={`${centeredContainer} ${breathingRoom}`}>
@@ -144,6 +149,7 @@ class EditConnection extends Component {
                             hintText={`Enter the URL location for the ${this.props.connectionType ? this.props.connectionType : 'content '}`}
                             onChange={
                                 (event) =>  {
+                                    this.props.editingConnectionUri()
                                     this.props.updateConnectionUri(event.target.value)
                                 }
                             }
@@ -157,7 +163,12 @@ class EditConnection extends Component {
                                 labelStyle={buttonLabelStyle}
                                 rippleColor={'#00DFFC'}
                                 hoverColor={'#00DFFC'}
-                                onTouchTap={() => this.onClickUpdateConnection(this.props)}
+                                onTouchTap={
+                                    () => {
+                                        this.props.editingConnectionType()
+                                        this.onClickUpdateConnection(this.props)
+                                    }
+                                }
                             >
                                 {`Save`}
                             </FlatButton>

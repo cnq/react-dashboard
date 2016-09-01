@@ -47,7 +47,6 @@ const SigninContainer = React.createClass({
 
         const socialAuthButtons = (props, handleAuth) => {
             // Are we in production?
-            console.log(process.env.NODE_ENV )
             if (process.env.NODE_ENV !== 'production') {
                 return (
                     <div>
@@ -100,11 +99,12 @@ const SigninContainer = React.createClass({
     }
 })
 
-function mapStateToProps ({users}) {
-    return {
-        isFetching: users.isFetching,
-        error: users.error
-    }
-}
+const mapStateToProps = ({users}) => ({
+    isFetching: users.isFetching,
+    error: users.error
+})
 
-export default connect(mapStateToProps, actions)(SigninContainer)
+export default connect(
+    mapStateToProps,
+    actions
+)(SigninContainer)

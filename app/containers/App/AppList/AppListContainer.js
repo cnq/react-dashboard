@@ -29,27 +29,11 @@ const AppListContainer = React.createClass({
     }
 })
 
-function mapStateToProps({appList}) {
-
-    /* the immutable way */
-    return {
-        newAppsAvailable: appList.get('newAppsAvailable'),
-        error: appList.get('error'),
-        isFetching: appList.get('isFetching'),
-        appIds: appList.get('appIds')
-    }
-
-    /* The vanilla way:
-        const { newAppsAvailable, error, isFetching, appIds } = appList
-
-        return {
-            newAppsAvailable,
-            error,
-            isFetching,
-            appIds
-        }
-    */
-
-}
+const mapStateToProps = ({appList}) => ({
+    newAppsAvailable: appList.get('newAppsAvailable'),
+    error: appList.get('error'),
+    isFetching: appList.get('isFetching'),
+    appIds: appList.get('appIds')
+})
 
 export default connect(mapStateToProps, actions)(AppListContainer)

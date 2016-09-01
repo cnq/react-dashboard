@@ -5,16 +5,13 @@ import {
     apps as appsActions
 } from 'actions'
 
-function mapStateToProps({addApp, users}) {
-    const backendSiteUriLength = addApp.backendSiteUri.length
-    return {
-        user: users[users.authenticatedId] ? users[users.authenticatedId].info : {},
-        backendSiteUri: addApp.backendSiteUri,
-        uri: addApp.uri,
-        isActive: addApp.isActive,
-        isSubmitDisabled: backendSiteUriLength <= 0 || backendSiteUriLength > 140
-    }
-}
+const mapStateToProps = ({addApp, users}) => ({
+    user: users[users.authenticatedId] ? users[users.authenticatedId].info : {},
+    backendSiteUri: addApp.backendSiteUri,
+    uri: addApp.uri,
+    isActive: addApp.isActive,
+    isSubmitDisabled: addApp.backendSiteUri.length <= 0 || addApp.backendSiteUri.length > 140
+})
 
 export default connect(
     mapStateToProps,

@@ -8,46 +8,37 @@ export const REMOVE_CONNECTION_FETCHING = 'REMOVE_CONNECTION_FETCHING'
 export const ADD_CONNECTION = 'ADD_CONNECTION'
 export const ADD_MULTIPLE_CONNECTIONS = 'ADD_MULTIPLE_CONNECTIONS'
 
-// see apps actions for reference
-function fetchingConnection () {
-    return {
-        type: FETCHING_CONNECTION
-    }
-}
+const fetchingConnection = () => ({
+    type: FETCHING_CONNECTION
+})
 
-function fetchingConnectionError (error) {
-    onsole.warn(error)
-    return {
-        type: FETCHING_CONNECTION_ERROR,
-        error: 'Error fetching connection'
-    }
-}
+const fetchingConnectionError = (error) => ({
+    type: FETCHING_CONNECTION_ERROR,
+    error: 'Error fetching connection'
+})
 
-function fetchingConnectionSuccess (connection) {
-    return {
-        type: FETCHING_CONNECTION_SUCCESS,
-        connection
-    }
-}
+const fetchingConnectionSuccess = (connection) => ({
+    type: FETCHING_CONNECTION_SUCCESS,
+    connection
+})
 
-export function removeConnectionFetching () {
-    return {
-        type: REMOVE_CONNECTION_FETCHING
-    }
-}
+const addConnection = (connection) => ({
+    type: ADD_CONNECTION,
+    connection
+})
 
-function addConnection (connection) {
-    return {
-        type: ADD_CONNECTION,
-        connection
-    }
-}
+export const removeConnectionFetching = () => ({
+    type: REMOVE_CONNECTION_FETCHING
+})
+
+export const addMultipleConnections = (connections) => ({
+    type: ADD_MULTIPLE_CONNECTIONS,
+    connections
+})
 
 export function connectionFanout (connection) {
     return function (dispatch, getState) {
-
         const appId = getState().apps.appId
-
         saveConnection (connection)
             .then((connectionWithId) => {
                 dispatch(addConnection(connectionWithId))
@@ -56,13 +47,6 @@ export function connectionFanout (connection) {
             .catch((error) => {
                 console.log('Error in connectionFanout: ', error)
             })
-    }
-}
-
-export function addMultipleConnections (connections) {
-    return {
-        type: ADD_MULTIPLE_CONNECTIONS,
-        connections
     }
 }
 

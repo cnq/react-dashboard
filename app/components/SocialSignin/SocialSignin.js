@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { v4 } from 'node-uuid'
 import { AuthButton } from 'components'
 import { getProviderInfo } from 'helpers/utils'
 import {
@@ -39,9 +40,9 @@ function SocialSignin ({ onAuth, error }) {
 
         return (
             providers.map( provider =>
-                <li key={`${getProviderInfo(provider).name.toLowerCase()}Container`}>
+                <li key={v4()}>
                     <AuthButton
-                        key={getProviderInfo(provider).name.toLowerCase()}
+                        key={v4()}
                         onAuth={onAuth}
                         authProvider={provider}
                     />

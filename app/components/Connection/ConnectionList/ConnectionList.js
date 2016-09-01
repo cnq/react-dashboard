@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { v4 } from 'node-uuid'
 import { ConnectionContainer } from 'containers'
 import FlatButton from 'material-ui/RaisedButton';
 import { Grid, GridItem } from 'components'
@@ -48,7 +49,7 @@ function ConnectionList (props) {
                         {
                             // using immutable .map property
                             props.connectionIds.map( (id) => (
-                                <GridItem key={id}>
+                                <GridItem key={v4()}>
                                     <ConnectionContainer
                                         connectionId={id}
                                         appId={props.appId}

@@ -48,11 +48,9 @@ const ConnectionContainer = React.createClass({
     }
 })
 
-function mapStateToProps ({connections}, props) {
-    return {
-        connection: connections.get(props.connectionId)
-    }
-}
+const mapStateToProps = ({connections}, props) => ({
+    connection: connections.get(props.connectionId)
+})
 
 export default connect(
     mapStateToProps, actions

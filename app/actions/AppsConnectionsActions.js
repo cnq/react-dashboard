@@ -6,38 +6,28 @@ export const FETCHING_APPS_CONNECTIONS_ERROR = 'FETCHING_APPS_CONNECTIONS_ERROR'
 export const FETCHING_APPS_CONNECTIONS_SUCCESS = 'FETCHING_APPS_CONNECTIONS_SUCCESS'
 export const ADD_SINGLE_APPS_CONNECTION = 'ADD_SINGLE_APPS_CONNECTION'
 
-// see UsersAppsActions for reference
-export function fetchingAppsConnections (appId) {
-    return {
-        type: FETCHING_APPS_CONNECTIONS,
-        appId
-    }
-}
+export const fetchingAppsConnections = (appId) => ({
+    type: FETCHING_APPS_CONNECTIONS,
+    appId
+})
 
-export function fetchingAppsConnectionsError (error) {
-    console.warn(error)
-    return {
-        type: FETCHING_APPS_CONNECTIONS_ERROR,
-        error: 'Error fetching user apps'
-    }
-}
+export const fetchingAppsConnectionsError = (error) => ({
+    type: FETCHING_APPS_CONNECTIONS_ERROR,
+    error: 'Error fetching user apps'
+})
 
-export function fetchingAppsConnectionsSuccess (appId, connectionIds, lastUpdated) {
-    return {
-        type: FETCHING_APPS_CONNECTIONS_SUCCESS,
-        appId,
-        connectionIds,
-        lastUpdated
-    }
-}
+export const fetchingAppsConnectionsSuccess = (appId, connectionIds, lastUpdated) => ({
+    type: FETCHING_APPS_CONNECTIONS_SUCCESS,
+    appId,
+    connectionIds,
+    lastUpdated
+})
 
-export function addSingleAppsConnection (appId, connectionId) {
-    return {
-        type: ADD_SINGLE_APPS_CONNECTION,
-        appId,
-        connectionId
-    }
-}
+export const addSingleAppsConnection = (appId, connectionId) => ({
+    type: ADD_SINGLE_APPS_CONNECTION,
+    appId,
+    connectionId
+})
 
 export function fetchAndHandleAppsConnections (appId) {
     return function (dispatch) {

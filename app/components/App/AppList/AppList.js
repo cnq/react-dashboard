@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
+import { v4 } from 'node-uuid'
+import { List } from 'immutable'
 import { AddAppContainer, AppContainer } from 'containers'
 import { Grid, GridItem } from 'components'
-import { List } from 'immutable'
 import { newAppContainer, header } from './styles.css'
 import { errorMsg } from 'shared/styles.css'
 
@@ -58,7 +59,7 @@ function AppList (props) {
                     {
                         // immutable has a .map property also
                         props.appIds.map( (id) => (
-                            <GridItem key={id}>
+                            <GridItem key={v4()}>
                                 <AppContainer appId={id} />
                             </GridItem>
                         ))

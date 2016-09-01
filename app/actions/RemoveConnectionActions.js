@@ -5,34 +5,26 @@ export const REMOVE_CONNECTION_ERROR = 'REMOVE_CONNECTION_ERROR'
 export const REMOVE_CONNECTION_SUCCESS = 'REMOVE_CONNECTION_SUCCESS'
 export const REMOVE_CONNECTION_COMPLETE = 'REMOVE_CONNECTION_COMPLETE'
 
-function removingConnection (connectionId) {
-    return {
-        type: REMOVING_CONNECTION,
-        connectionId
-    }
-}
+const removingConnection = (connectionId) => ({
+    type: REMOVING_CONNECTION,
+    connectionId
+})
 
-function removeConnectionError (error, connectionId) {
-    return {
-        type: REMOVE_CONNECTION_ERROR,
-        error: 'Error removing app',
-        connectionId
-    }
-}
+const removeConnectionError = (error, connectionId) => ({
+    type: REMOVE_CONNECTION_ERROR,
+    error: 'Error removing app',
+    connectionId
+})
 
-function removeConnectionSuccess (connectionId) {
-    return {
-        type: REMOVE_CONNECTION_SUCCESS,
-        connectionId
-    }
-}
+const removeConnectionSuccess = (connectionId) => ({
+    type: REMOVE_CONNECTION_SUCCESS,
+    connectionId
+})
 
-export function removeConnectionComplete (connectionId) {
-    return {
-        type: REMOVE_CONNECTION_COMPLETE,
-        connectionId
-    }
-}
+export const removeConnectionComplete = (connectionId) => ({
+    type: REMOVE_CONNECTION_COMPLETE,
+    connectionId
+})
 
 export function deleteAndHandleConnection (connectionId, appId) {
     return function (dispatch) {

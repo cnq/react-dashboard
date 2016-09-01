@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { v4 } from 'node-uuid'
 import { userContainer, header } from './styles.css'
 import { errorMsg } from 'shared/styles.css'
 import { AppContainer } from 'containers'
@@ -26,7 +27,7 @@ export default function User (props) {
                                     </div>
                                     {
                                         props.appIds.map((appId) => (
-                                            <AppContainer appId={appId} key={appId} />
+                                            <AppContainer appId={appId} key={v4()} />
                                         ))
                                     }
                                     {

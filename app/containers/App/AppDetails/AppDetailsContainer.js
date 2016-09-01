@@ -32,15 +32,13 @@ const AppDetailsContainer = React.createClass({
     }
 })
 
-function mapStateToProps({apps, users}, props) {
-    return {
-        isFetching: apps.get('isFetching'),
-        error: apps.get('error'),
-        authenticatedUser: users[users.authenticatedId].info,
-        appId: props.routeParams.appId,
-        appAlreadyFetched: !!apps.get(props.routeParams.appId)
-    }
-}
+const mapStateToProps = ({apps, users}, props) => ({
+    isFetching: apps.get('isFetching'),
+    error: apps.get('error'),
+    authenticatedUser: users[users.authenticatedId].info,
+    appId: props.routeParams.appId,
+    appAlreadyFetched: !!apps.get(props.routeParams.appId)
+})
 
 export default connect(
     mapStateToProps,

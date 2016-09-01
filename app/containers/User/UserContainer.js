@@ -45,20 +45,15 @@ const UserContainer = React.createClass({
 
 })
 
-function mapStateToProps ({users, usersApps}, props) {
-    const specificUsersApps = usersApps[props.routeParams.uid]
-    const user = users[props.routeParams.uid]
-    const noUser = typeof user === 'undefined'
-    return {
-        noUser,
-        name: noUser ? '' : user.info.name,
-        isFetching: users.isFetching || usersApps.isFetching ? true : false,
-        error: users.error || usersApps.error,
-        appIds: specificUsersApps ? specificUsersApps.appIds : [],
-        lastUpdatedUser: user ? user.lastUpdated : 0,
-        lastUpdatedApps: specificUsersApps ? specificUsersApps.lastUpdated : 0
-    }
-}
+const mapStateToProps = ({users, usersApps}, props) => ({
+    noUser: typeof users[props.routeParams.uid] === 'undefined', //noUser (true/false): check whether this user exists
+    name: typeof users[props.routeParams.uid] === 'undefined' ? '' : users[props.routeParams.uid].info.name, //if user exists set name, otherwise set name to ''
+    isFetching: users.isFetching || usersApps.isFetching ? true : false,
+    error: users.error || usersApps.error,
+    appIds: usersApps[props.routeParams.uid] ? usersApps[props.routeParams.uid].appIds : [], //assign this user's apps to appIds
+    lastUpdatedUser: users[props.routeParams.uid] ? users[props.routeParams.uid].lastUpdated : 0,
+    lastUpdatedApps: usersApps[props.routeParams.uid] ? usersApps[props.routeParams.uid].lastUpdated : 0
+})
 
 export default connect(
     mapStateToProps,

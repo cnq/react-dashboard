@@ -116,11 +116,9 @@ function validate ( formProps ) {
 
 }
 
-function mapStateToProps ({users}) {
-    return {
-        error: users.error
-    }
-}
+const mapStateToProps = ({users}) => ({
+    error: users.error
+})
 
 export default reduxForm({
     form: 'signup',

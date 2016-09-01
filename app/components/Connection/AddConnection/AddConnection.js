@@ -64,7 +64,7 @@ class AddConnection extends Component {
     }
 
     componentWillUnmount() {
-        //clear the state once this component unmounts
+        //set to empty string when component mounts
         this.props.updateConnectionType('')
         this.props.updateConnectionName('')
         this.props.updateConnectionUri('')
@@ -224,7 +224,7 @@ class AddConnection extends Component {
                         <StepLabel style={stepLabelStyle} onTouchTap={() => this.setState({stepIndex: 2, editing: true})}>
                             {
                                 this.props.connectionType === 'page'
-                                    ?   `${this.props.connectionUri ? 'Page location: /' : 'Set page location'}${this.props.connectionUri}`
+                                    ?   `${this.props.connectionUri ? 'Page location: ' : 'Set page location'}${this.props.connectionUri}`
                                     :   `${this.props.connectionUri ? 'Directory location: ' : 'Enter directory\'s location'} ${this.props.connectionUri}`
                             }
                         </StepLabel>

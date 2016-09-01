@@ -45,18 +45,14 @@ const ConnectionListContainer = React.createClass({
     }
 })
 
-function mapStateToProps ({apps, appsConnections}, props) {
-    const specificAppsConnections = appsConnections[props.params.appId]
-    const app = apps[props.params.appId]
-    return {
-        isFetching: apps.isFetching || appsConnections.isFetching ? true : false,
-        error: apps.error || appsConnections.error,
-        connectionIds: specificAppsConnections ? specificAppsConnections.connectionIds : [],
-        lastUpdatedApp: app ? app.lastUpdated : 0,
-        lastUpdatedConnections: specificAppsConnections ? specificAppsConnections.lastUpdated : 0,
-        appId: props.params.appId
-    }
-}
+const mapStateToProps = ({apps, appsConnections}, props) => ({
+    isFetching: apps.isFetching || appsConnections.isFetching ? true : false,
+    error: apps.error || appsConnections.error,
+    connectionIds: appsConnections[props.params.appId] ? appsConnections[props.params.appId].connectionIds : [],
+    lastUpdatedApp: apps[props.params.appId] ? apps[props.params.appId].lastUpdated : 0,
+    lastUpdatedConnections: appsConnections[props.params.appId] ? appsConnections[props.params.appId].lastUpdated : 0,
+    appId: props.params.appId
+})
 
 export default connect(
     mapStateToProps,
