@@ -1,5 +1,6 @@
 import { fetchUser } from 'apis'
 import auth, { signout, saveUser } from 'helpers/auth'
+import { saveToLocalStorage, removeFromLocalStorage } from 'helpers/localStorage'
 import { formatAuthData, formatUserData } from 'helpers/utils'
 import {
     GOOGLE,
@@ -54,19 +55,15 @@ export function fetchAndHandleAuthenticatedUser (authData) {
                     const secret = provider === TWITTER ? results.credential.secret : null
                     const user = results.user
 
-                    // Format auth data
+                    // Format data
                     const authData = formatAuthData(provider, email, password, accessToken, idToken, secret)
-
-                    // Store the authData credentials in localStorage as a string by
-                    // using JSON.stringify
-                    localStorage.setItem('auth', JSON.stringify(authData))
-
-                    // Format user data
                     const userData = formatUserData(user.displayName, user.photoURL, user.uid)
 
-                    localStorage.setItem('user', JSON.stringify(userData))
+                    // Save data to local storage
+                    saveToLocalStorage('auth', authData)
+                    saveToLocalStorage('user', userData)
 
-                    // Fetch User
+                    // Fetch user
                     return dispatch(fetchingUserSuccess(user.uid, userData, Date.now()))
 
                 })
@@ -78,11 +75,11 @@ export function fetchAndHandleAuthenticatedUser (authData) {
 }
 
 export function signoutAndUnauth () {
-    // Remove the credential data from local storage
-    localStorage.removeItem('auth')
-    localStorage.removeItem('user')
+    // Remove data from local storage on signout
+    removeFromLocalStorage('auth')
+    removeFromLocalStorage('user')
 
-    // Signout and unauth user
+    // Signout and unauth the user
     return function (dispatch) {
         signout()
         dispatch(unauthUser())

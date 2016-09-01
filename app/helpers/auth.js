@@ -1,5 +1,6 @@
 import axios from 'axios';
 import firebase from 'firebase/firebase-browser'
+import { loadFromLocalStorage } from 'helpers/localStorage'
 import {
     fireApp,
     fireDb,
@@ -104,7 +105,7 @@ export default function auth (authData) {
         }
     }  else {
         //paperhook
-        var user = JSON.parse(localStorage.getItem('user'))
+        var user = loadFromLocalStorage('user')
 
         if (user) {
             return (
@@ -137,7 +138,7 @@ export function checkIfAuthenticated (isAuthenticated, nextIsAuthenticated) {
     const user =
         process.env.NODE_ENV !== 'production'
             ? fireAuth.currentUser  //firebase
-            : JSON.parse(localStorage.getItem('user')) //paperhook
+            : loadFromLocalStorage('user') //paperhook
     
     //Is the user authenticated?
     if (user === null){
