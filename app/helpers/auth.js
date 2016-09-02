@@ -13,9 +13,11 @@ import {
 } from 'config/constants'
 import { formatUserData } from 'helpers/utils'
 import { users as actions } from 'actions'
-import { store } from '../index.js'
+import configureStore from 'config/store'
+
 
 function getProvider (authData) {
+
     const {provider, accessToken, idToken, secret, email, password} = authData.credential
 
     switch (provider) {
@@ -134,11 +136,13 @@ export default function auth (authData) {
 }
 
 export function checkIfAuthenticated (isAuthenticated, nextIsAuthenticated) {
+    const store = configureStore()
+
     //TODO:  This needs to be supported with an api call to check if the user is truely authenticated
     const user =
         process.env.NODE_ENV !== 'production'
             ? fireAuth.currentUser  //firebase
-            : loadFromLocalStorage('user') //paperhook
+            : JSON.parse(localStorage.getItem('user')) //paperhook
     
     //Is the user authenticated?
     if (user === null){
