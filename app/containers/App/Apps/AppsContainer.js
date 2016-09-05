@@ -1,8 +1,12 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Apps } from 'views'
 
-const AppsContainer = React.createClass({
+/**
+ * AppsContainer() wraps everything in the Apps view
+ * and passes props down to children.
+ **/
+class AppsContainer extends Component {
     render () {
         return (
             <Apps props={this.props}>
@@ -10,6 +14,6 @@ const AppsContainer = React.createClass({
             </Apps>
         )
     }
-})
+}
 
 export default connect()(AppsContainer)

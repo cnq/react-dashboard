@@ -71,10 +71,10 @@ export default function (ComposedComponent) {
         }
     }
 
-    return connect(
+    return withRouter(connect(
         mapStateToProps,
         actions
-    )(withRouter(CheckAuthentication))
+    )(CheckAuthentication))
 
 }
 

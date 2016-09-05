@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { User } from 'components'
 import { UserProfile } from 'views'
@@ -8,18 +8,20 @@ import {
     usersApps as usersAppsActions
 } from 'actions'
 
-const UserContainer = React.createClass({
-    propTypes: {
-        noUser: PropTypes.bool.isRequired,
-        name: PropTypes.string.isRequired,
-        isFetching: PropTypes.bool.isRequired,
-        error: PropTypes.string.isRequired,
-        appIds: PropTypes.array.isRequired,
-        fetchAndHandleUser: PropTypes.func.isRequired,
-        fetchAndHandleUsersApps: PropTypes.func.isRequired,
-        lastUpdatedUser: PropTypes.number.isRequired,
-        lastUpdatedApps: PropTypes.number.isRequired
-    },
+const {
+    bool,
+    string,
+    array,
+    func,
+    number
+} = PropTypes
+
+/**
+ * UserContainer() passes state to the props of
+ * the User component.
+ **/
+class UserContainer extends Component {
+
     componentDidMount () {
         const uid = this.props.routeParams.uid
         if (this.props.noUser === true || staleUser(this.props.lastUpdatedUser)) {
@@ -28,7 +30,8 @@ const UserContainer = React.createClass({
         if (this.props.noUser === true || staleApps(this.props.lastUpdatedApps)) {
             this.props.fetchAndHandleUsersApps(uid)
         }
-    },
+    }
+
     render () {
         return (
             <UserProfile>
@@ -43,7 +46,19 @@ const UserContainer = React.createClass({
         )
     }
 
-})
+}
+
+UserContainer.propTypes = {
+    noUser: bool.isRequired,
+    name: string.isRequired,
+    isFetching: bool.isRequired,
+    error: string.isRequired,
+    appIds: array.isRequired,
+    fetchAndHandleUser: func.isRequired,
+    fetchAndHandleUsersApps: func.isRequired,
+    lastUpdatedUser: number.isRequired,
+    lastUpdatedApps: number.isRequired
+}
 
 const mapStateToProps = ({users, usersApps}, props) => ({
     noUser: typeof users[props.routeParams.uid] === 'undefined', //noUser (true/false): check whether this user exists

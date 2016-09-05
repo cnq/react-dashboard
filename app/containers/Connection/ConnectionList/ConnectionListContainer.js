@@ -1,36 +1,38 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { ConnectionList } from 'components'
 import {
     apps as appsActions,
     appsConnections as appsConnectionsActions
 } from 'actions'
 
-const { string, number, func, array, bool, object } = PropTypes
+const {
+    string,
+    number,
+    func,
+    array,
+    bool
+} = PropTypes
 
-const ConnectionListContainer = React.createClass({
-    propTypes: {
-        connectionIds: array.isRequired,
-        appId: string.isRequired,
-        error: string.isRequired,
-        isFetching: bool.isRequired,
-        fetchAndHandleApp: func.isRequired,
-        fetchAndHandleAppsConnections: func.isRequired,
-        lastUpdatedApp: number.isRequired,
-        lastUpdatedConnections: number.isRequired
-    },
-    contextTypes: {
-        router: object.isRequired
-    },
+/**
+ * ConnectionListContainer() passes necessary state to the props of
+ * the ConnectionList component.
+ */
+class ConnectionListContainer extends Component {
+
     componentDidMount () {
+        //TODO: there is an issue on reload that appId is not available
         const appId = this.props.appId
         this.props.fetchAndHandleApp(appId)
         this.props.fetchAndHandleAppsConnections(appId)
-    },
-    goToAddAppConnections (event) {
+    }
+
+    goToAddAppConnections = (event) => {
         event.stopPropagation()
-        this.context.router.push('/dashboard/apps/app/' + this.props.appId + '/connections/add')
-    },
+        this.props.router.push('/dashboard/apps/app/' + this.props.appId + '/connections/add')
+    }
+
     render () {
         return (
             <ConnectionList
@@ -43,7 +45,19 @@ const ConnectionListContainer = React.createClass({
             />
         )
     }
-})
+
+}
+
+ConnectionListContainer.propTypes = {
+    connectionIds: array.isRequired,
+    appId: string.isRequired,
+    error: string.isRequired,
+    isFetching: bool.isRequired,
+    fetchAndHandleApp: func.isRequired,
+    fetchAndHandleAppsConnections: func.isRequired,
+    lastUpdatedApp: number.isRequired,
+    lastUpdatedConnections: number.isRequired
+}
 
 const mapStateToProps = ({apps, appsConnections}, props) => ({
     isFetching: apps.isFetching || appsConnections.isFetching ? true : false,
@@ -54,7 +68,7 @@ const mapStateToProps = ({apps, appsConnections}, props) => ({
     appId: props.params.appId
 })
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     {...appsActions, ...appsConnectionsActions}
-)(ConnectionListContainer)
+)(ConnectionListContainer))

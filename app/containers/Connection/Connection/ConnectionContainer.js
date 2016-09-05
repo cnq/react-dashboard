@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { Connection } from 'components'
 import { removeConnection as actions } from 'actions'
 
@@ -10,31 +11,30 @@ const {
     bool
 } = PropTypes
 
-//TODO: convert from using contextTypes router to wrapping component in withRouter hoc
-const ConnectionContainer = React.createClass({
-    propTypes: {
-        connection: object.isRequired,
-        connectionId: string.isRequired,
-        appId: PropTypes.string.isRequired,
-        deleteAndHandleConnection: func.isRequired,
-        connectionAlreadyFetched: bool.isRequired
-    },
-    contextTypes: {
-        router: object.isRequired
-    },
-    goToConnectionDetail (event) {
+/**
+ * ConnectionContainer() passes necessary state to the props of
+ * the Connection component and sets up methods for handling
+ * connection deletion and navigation between connection detail
+ * and edit screens.
+ **/
+class ConnectionContainer extends Component {
+
+    goToConnectionDetail = (event) => {
         event.stopPropagation()
-        this.context.router.push(`/dashboard/apps/app/${this.props.appId}/connections/connection/${this.props.connection.get('connectionId')}`)
-    },
-    goToConnectionEdit (event) {
+        this.props.router.push(`/dashboard/apps/app/${this.props.appId}/connections/connection/${this.props.connection.get('connectionId')}`)
+    }
+
+    goToConnectionEdit = (event) => {
         event.stopPropagation()
-        this.context.router.push(`/dashboard/apps/app/${this.props.appId}/connections/connection/${this.props.connection.get('connectionId')}/edit`)
-    },
-    deleteConnection (event, connectionId, appId) {
+        this.props.router.push(`/dashboard/apps/app/${this.props.appId}/connections/connection/${this.props.connection.get('connectionId')}/edit`)
+    }
+
+    deleteConnection = (event, connectionId, appId) => {
         event.stopPropagation()
         this.props.deleteAndHandleConnection(connectionId, appId)
-        this.context.router.push(`/dashboard/apps/app/${appId}/connections`)
-    },
+        this.props.router.push(`/dashboard/apps/app/${appId}/connections`)
+    }
+
     render () {
         return (
             <Connection
@@ -46,12 +46,22 @@ const ConnectionContainer = React.createClass({
             />
         )
     }
-})
+
+}
+
+ConnectionContainer.propTypes = {
+    connection: object.isRequired,
+    connectionId: string.isRequired,
+    appId: string.isRequired,
+    deleteAndHandleConnection: func.isRequired,
+    connectionAlreadyFetched: bool.isRequired
+}
 
 const mapStateToProps = ({connections}, props) => ({
     connection: connections.get(props.connectionId)
 })
 
-export default connect(
-    mapStateToProps, actions
-)(ConnectionContainer)
+export default withRouter(connect(
+    mapStateToProps,
+    actions
+)(ConnectionContainer))

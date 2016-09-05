@@ -1,8 +1,11 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Connections } from 'views'
 
-const ConnectionsContainer = React.createClass({
+/**
+ * ConnectionsContainer() wraps everything in the Connections view.
+ */
+class ConnectionsContainer extends Component {
     render () {
         return (
             <Connections props={this.props}>
@@ -10,6 +13,6 @@ const ConnectionsContainer = React.createClass({
             </Connections>
         )
     }
-})
+}
 
 export default connect()(ConnectionsContainer)

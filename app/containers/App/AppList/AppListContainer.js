@@ -1,21 +1,25 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { appList as actions } from 'actions'
 import { AppList } from 'components'
 import { List } from 'immutable'
 
-const AppListContainer = React.createClass({
-    propTypes: {
-        appIds: PropTypes.instanceOf(List),
-        newAppsAvailable: PropTypes.bool.isRequired,
-        error: PropTypes.string.isRequired,
-        isFetching: PropTypes.bool.isRequired,
-        setAndHandleAppListListener: PropTypes.func.isRequired,
-        resetNewAppsAvailable: PropTypes.func.isRequired
-    },
+const {
+    bool,
+    string,
+    func
+} = PropTypes
+
+/**
+ * AppListContainer() passes state to the props of
+ * the AppList component.
+ **/
+class AppListContainer extends Component {
+
     componentDidMount () {
         this.props.setAndHandleAppListListener()
-    },
+    }
+
     render () {
         return (
             <AppList
@@ -27,7 +31,17 @@ const AppListContainer = React.createClass({
             />
         )
     }
-})
+
+}
+
+AppListContainer.propTypes = {
+    appIds: PropTypes.instanceOf(List),
+    newAppsAvailable: bool.isRequired,
+    error: string.isRequired,
+    isFetching: bool.isRequired,
+    setAndHandleAppListListener: func.isRequired,
+    resetNewAppsAvailable: func.isRequired
+}
 
 const mapStateToProps = ({appList}) => ({
     newAppsAvailable: appList.get('newAppsAvailable'),
@@ -36,4 +50,7 @@ const mapStateToProps = ({appList}) => ({
     appIds: appList.get('appIds')
 })
 
-export default connect(mapStateToProps, actions)(AppListContainer)
+export default connect(
+    mapStateToProps,
+    actions
+)(AppListContainer)

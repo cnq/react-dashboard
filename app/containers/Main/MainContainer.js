@@ -1,15 +1,20 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Navigation } from 'components'
 import { connect } from 'react-redux'
 import { container, innerContainer } from './styles.css'
 import { customTheme } from 'config/theme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-const MainContainer = React.createClass({
-    propTypes: {
-        isAuthenticated: PropTypes.bool.isRequired,
-        user: PropTypes.object.isRequired
-    },
+const {
+    bool,
+    object
+} = PropTypes
+
+/**
+ * MainContainer() establishes basic layout and passes state to the props of
+ * the children components.
+ **/
+class MainContainer extends Component {
     render () {
         return (
             <MuiThemeProvider muiTheme={customTheme}>
@@ -26,7 +31,12 @@ const MainContainer = React.createClass({
             </MuiThemeProvider>
         )
     }
-})
+}
+
+MainContainer.propTypes = {
+    isAuthenticated: bool.isRequired,
+    user: object.isRequired
+}
 
 const mapStateToProps = ({users}) => ({
     isAuthenticated: users.isAuthenticated,

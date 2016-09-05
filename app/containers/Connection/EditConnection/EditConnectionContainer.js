@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Map } from 'immutable'
 import { EditConnection } from 'components'
 import { connect } from 'react-redux'
@@ -8,7 +8,11 @@ import {
     apps as appsActions
 } from 'actions'
 
-const EditConnectionContainer = React.createClass({
+/**
+ * EditConnectionContainer() passes necessary state to the props of
+ * the EditConnection component.
+ */
+class EditConnectionContainer extends Component {
     render () {
         return (
             <EditConnection
@@ -16,7 +20,7 @@ const EditConnectionContainer = React.createClass({
             />
         )
     }
-})
+}
 
 const mapStateToProps = ({updateConnection, editingConnection, connections, apps}, props) => ({
     connectionId: props.params.connectionId,

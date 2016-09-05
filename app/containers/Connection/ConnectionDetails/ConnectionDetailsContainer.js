@@ -1,24 +1,28 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { ConnectionDetails } from 'components'
 import { connect } from 'react-redux'
 import { connections as actions } from 'actions'
 
-const ConnectionDetailsContainer = React.createClass({
-    propTypes: {
-        connectionId: PropTypes.string.isRequired,
-        appId: PropTypes.string.isRequired,
-        isFetching: PropTypes.bool.isRequired,
-        error: PropTypes.string.isRequired,
-        removeConnectionFetching: PropTypes.func.isRequired,
-        fetchAndHandleConnection: PropTypes.func.isRequired
-    },
+const {
+    string,
+    bool,
+    func
+} = PropTypes
+
+/**
+ * ConnectionDetailsContainer() passes necessary state to the props of
+ * the ConnectionDetails component.
+ */
+class ConnectionDetailsContainer extends Component {
+
     componentDidMount () {
         if (this.props.connectionAlreadyFetched === false) {
             this.props.fetchAndHandleConnection(this.props.connectionId)
         } else {
             this.props.removeConnectionFetching()
         }
-    },
+    }
+
     render () {
         return (
             <ConnectionDetails
@@ -30,7 +34,17 @@ const ConnectionDetailsContainer = React.createClass({
             />
         )
     }
-})
+
+}
+
+ConnectionDetailsContainer.propTypes = {
+    connectionId: string.isRequired,
+    appId: string.isRequired,
+    isFetching: bool.isRequired,
+    error: string.isRequired,
+    removeConnectionFetching: func.isRequired,
+    fetchAndHandleConnection: func.isRequired
+}
 
 const mapStateToProps = ({connections}, props) => ({
     isFetching: connections.get('isFetching'),

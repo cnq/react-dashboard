@@ -1,8 +1,12 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Dashboard } from 'views'
 
-const DashboardContainer = React.createClass({
+/**
+ * DashboardContainer() wraps everything in the Dashboard view
+ * and passes props down to children.
+ **/
+class DashboardContainer extends Component {
     render () {
         return (
             <Dashboard props={this.props}>
@@ -10,6 +14,6 @@ const DashboardContainer = React.createClass({
             </Dashboard>
         )
     }
-})
+}
 
 export default connect()(DashboardContainer)

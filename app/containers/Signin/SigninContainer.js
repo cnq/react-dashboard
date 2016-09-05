@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import Paper from 'material-ui/Paper';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -12,21 +13,20 @@ import {
 } from 'config/constants'
 import { paper, cardText, divider, footnote } from './styles.css'
 
+const {
+    bool,
+    string,
+    func
+} = PropTypes
 
-const SigninContainer = React.createClass({
+/**
+ * SigninContainer() returns component that displays necessary
+ * input fields for signing into the app.
+ */
+class SigninContainer extends Component {
 
-    propTypes: {
-        isFetching: PropTypes.bool.isRequired,
-        error: PropTypes.string.isRequired,
-        fetchAndHandleAuthenticatedUser: PropTypes.func.isRequired
-    },
-
-    contextTypes: {
-        router: PropTypes.object.isRequired
-    },
-
-    handleAuth (authProvider, event) {
-        event.preventDefault
+    handleAuth = (authProvider, event) => {
+        event.preventDefault()
         var authData
         if(authProvider.provider === EMAIL){
             authData = formatAuthData(authProvider, event.email, event.password)
@@ -35,9 +35,9 @@ const SigninContainer = React.createClass({
         }
         this.props.fetchAndHandleAuthenticatedUser(authData)
             .then(() => {
-                this.context.router.replace('/dashboard/apps/')
+                this.props.router.replace('/dashboard/apps/')
             })
-    },
+    }
 
     render () {
 
@@ -97,14 +97,20 @@ const SigninContainer = React.createClass({
             </Signin>
         )
     }
-})
+}
+
+SigninContainer.propTypes = {
+    isFetching: bool.isRequired,
+    error: string.isRequired,
+    fetchAndHandleAuthenticatedUser: func.isRequired
+}
 
 const mapStateToProps = ({users}) => ({
     isFetching: users.isFetching,
     error: users.error
 })
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     actions
-)(SigninContainer)
+)(SigninContainer))
