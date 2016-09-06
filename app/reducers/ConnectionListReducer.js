@@ -15,7 +15,16 @@ export default function connectionList ( state = initialState, action ) {
             return state.merge({
                 isFetching: true
             })
+        case actions.REMOVING_CONNECTION_LIST_LISTENER:
+            return state.merge({
+                isFetching: false
+            })
         case actions.SETTING_CONNECTION_LIST_LISTENER_ERROR:
+            return state.merge({
+                isFetching: false,
+                error: action.error
+            })
+        case actions.REMOVING_CONNECTION_LIST_LISTENER_ERROR:
             return state.merge({
                 isFetching: false,
                 error: action.error
@@ -26,6 +35,11 @@ export default function connectionList ( state = initialState, action ) {
                 error: '',
                 connectionIds: action.connectionIds,
                 newConnectionsAvailable: false
+            })
+        case actions.REMOVING_CONNECTION_LIST_LISTENER_SUCCESS:
+            return state.merge({
+                isFetching: false,
+                error: ''
             })
         case actions.ADD_NEW_CONNECTION_ID_TO_CONNECTION_LIST:
             return state.merge({

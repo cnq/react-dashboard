@@ -146,23 +146,41 @@ export function deleteConnection (connectionId, appId) {
  * listenToConnectionList() listens to app connections for updates
  *
  * @param {String} appId
+ * @param {Bool} listenerOn
  * @param {Function} callback
  * @param {Function} errorCallback
  * @return {Function} callback, {Function} errorCallback
  */
-export function listenToConnectionList (appId, callback, errorCallback) {
+export function listenToConnectionList (appId, listenerOn, callback, errorCallback) {
     console.log('appId::::', appId)
+    console.log('listenerOn::::', listenerOn)
     if (process.env.NODE_ENV !== 'production') {
+
         //Firebase
         //If an appId is available, then we will return connections associated with that one
         //app, otherwise we will return all connection.
-        fireDb.ref().child(appId ? `appsConnections/${appId}` : `connections`).on('value', (snapshot) => {
+        const endpoint = appId ? `appsConnections/${appId}` : `connections`
+        const onValueChange = (snapshot) => {
             const connectionList = snapshot.val() || {}
             const sortedIds = Object.keys(connectionList).sort((a,b) => {
                 return connectionList[b].timestamp - connectionList[a].timestamp
             })
             callback({connectionList, sortedIds})
-        }, errorCallback)
+        }
+
+        //If onListener is true then we'll create a listener to firebase
+        if (listenerOn) {
+           fireDb.ref().child(endpoint).on('value', onValueChange, errorCallback)
+        //If onListener is false then we'll remove the listener from firebase
+        } else {
+            try {
+                fireDb.ref().child(endpoint).off('value', onValueChange)
+                callback({null, null}) //return the callback so that the function will continue running
+            } catch (error) {
+                errorCallback(error)
+            }
+        }
+
     } else {
         //Paperhook
         return axios.get("/api/routes").then(function (response) {

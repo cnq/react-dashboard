@@ -7,6 +7,11 @@ export default function listeners ( state = {}, action ) {
                 ...state,
                 [action.listenerId]: true
             }
+        case actions.REMOVE_LISTENER:
+            return {
+                ...state,
+                [action.listenerId]: false
+            }
         default:
             return state
     }

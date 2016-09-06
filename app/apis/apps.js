@@ -128,12 +128,15 @@ export function deleteApp (appId, uid) {
 /**
  * listenToAppList() listens to app list for updates
  *
- * @param {Function} callback, {Function} errorCallback
+ * @param {Function} callback
+ * @param {Function} errorCallback
  * @return {Function} callback, {Function} errorCallback
  */
 export function listenToAppList (callback, errorCallback) {
     if (process.env.NODE_ENV !== 'production') {
         //Firebase
+        //TODO: add a condition here to return user specific apps if a userid is specified or return
+        //all apps if it is not (look at the connections listener for details
         fireDb.ref().child('apps').on('value', (snapshot) => {
             const appList = snapshot.val() || {}
             const sortedIds = Object.keys(appList).sort((a,b) => {

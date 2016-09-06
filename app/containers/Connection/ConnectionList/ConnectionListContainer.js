@@ -9,9 +9,7 @@ import {
 
 const {
     string,
-    number,
     func,
-    array,
     bool
 } = PropTypes
 
@@ -21,9 +19,12 @@ const {
  */
 class ConnectionListContainer extends Component {
 
-    componentDidMount () {
-        const appId = this.props.params.appId
-        this.props.setAndHandleConnectionListListener(appId)
+    componentWillMount () {
+        this.props.handleConnectionListListener(this.props.params.appId, true) //Pass in appId and whether Listener should be on or off
+    }
+
+    componentWillUnmount () {
+        this.props.handleConnectionListListener(this.props.params.appId, false) //Pass in appId and whether Listener should be on or off
     }
 
     goToAddAppConnections = (event) => {
@@ -51,7 +52,7 @@ ConnectionListContainer.propTypes = {
     error: string.isRequired,
     appId: string.isRequired,
     connectionIds: PropTypes.instanceOf(List),
-    setAndHandleConnectionListListener: func.isRequired
+    handleConnectionListListener: func.isRequired
 }
 
 const mapStateToProps = ({connectionList}, {params}) => ({

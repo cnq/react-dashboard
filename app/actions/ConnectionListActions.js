@@ -1,10 +1,14 @@
 import { addListener } from './ListenersActions'
+import { removeListener } from './ListenersActions'
 import { addMultipleConnections } from './ConnectionsActions'
 import { listenToConnectionList } from 'apis'
 
 export const SETTING_CONNECTION_LIST_LISTENER = 'SETTING_CONNECTION_LIST_LISTENER'
+export const REMOVING_CONNECTION_LIST_LISTENER = 'REMOVING_CONNECTION_LIST_LISTENER'
 export const SETTING_CONNECTION_LIST_LISTENER_ERROR = 'SETTING_CONNECTION_LIST_LISTENER_ERROR'
+export const REMOVING_CONNECTION_LIST_LISTENER_ERROR = 'REMOVING_CONNECTION_LIST_LISTENER_ERROR'
 export const SETTING_CONNECTION_LIST_LISTENER_SUCCESS = 'SETTING_CONNECTION_LIST_LISTENER_SUCCESS'
+export const REMOVING_CONNECTION_LIST_LISTENER_SUCCESS = 'REMOVING_CONNECTION_LIST_LISTENER_SUCCESS'
 export const ADD_NEW_CONNECTION_ID_TO_CONNECTION_LIST = 'ADD_NEW_CONNECTION_ID_TO_CONNECTION_LIST'
 export const RESET_NEW_CONNECTIONS_AVAILABLE = 'RESET_NEW_CONNECTIONS_AVAILABLE'
 
@@ -12,6 +16,12 @@ export const RESET_NEW_CONNECTIONS_AVAILABLE = 'RESET_NEW_CONNECTIONS_AVAILABLE'
 function settingConnectionListListener () {
     return {
         type: SETTING_CONNECTION_LIST_LISTENER
+    }
+}
+
+function removingConnectionListListener () {
+    return {
+        type: REMOVING_CONNECTION_LIST_LISTENER
     }
 }
 
@@ -23,10 +33,24 @@ function settingConnectionListListenerError (error) {
     }
 }
 
+function removingConnectionListListenerError (error) {
+    console.warn(error)
+    return {
+        type: REMOVING_CONNECTION_LIST_LISTENER_ERROR,
+        error: error
+    }
+}
+
 function settingConnectionListListenerSuccess (connectionIds) {
     return {
         type: SETTING_CONNECTION_LIST_LISTENER_SUCCESS,
         connectionIds
+    }
+}
+
+function removingConnectionListListenerSuccess () {
+    return {
+        type: REMOVING_CONNECTION_LIST_LISTENER_SUCCESS
     }
 }
 
@@ -43,30 +67,43 @@ export function resetNewConnectionsAvailable () {
     }
 }
 
-export function setAndHandleConnectionListListener (appId) {
+export function handleConnectionListListener (appId, listenerOn) {
 
     let initialFetch = true
 
     return function (dispatch, getState) {
 
-        if (getState().listeners.connectionList === true) {
-            console.log('Already a listener')
-            //return
-            //TODO: find out the implications, if any, of creating multiple listeners.
+        if (getState().listeners.connectionList === true && listenerOn) {
+            return
         }
 
-        dispatch(addListener('connectionList'))
-        dispatch(settingConnectionListListener())
+        if (listenerOn) {
+            dispatch(addListener('connectionList'))
+            dispatch(settingConnectionListListener())
+        } else {
+            dispatch(removeListener('connectionList'))
+            dispatch(removingConnectionListListener())
+        }
 
-        listenToConnectionList(appId,({connectionList, sortedIds}) => {
-
-            dispatch(addMultipleConnections(connectionList))
-
-            initialFetch  === true
-                ? dispatch(settingConnectionListListenerSuccess(sortedIds))
-                : dispatch(addNewConnectionIdToConnectionList(sortedIds[0]))
-
-        }, (error) => dispatch(settingConnectionListListenerError(error)))
+        listenToConnectionList(
+            appId, //If we pass in an appId, then we will listen for connections specific to that app
+            listenerOn, //Turn listener on or off
+            ({connectionList, sortedIds}) => { //callback function to get our connection list.
+                if (listenerOn) {
+                    dispatch(addMultipleConnections(connectionList))
+                    initialFetch === true
+                        ? dispatch(settingConnectionListListenerSuccess(sortedIds))
+                        : dispatch(addNewConnectionIdToConnectionList(sortedIds[0]))
+                } else {
+                    dispatch(removingConnectionListListenerSuccess())
+                }
+            },
+            (error) => {
+                listenerOn
+                    ?   dispatch(settingConnectionListListenerError(error))
+                    :   dispatch(removingConnectionListListenerError(error))
+            }
+        )
 
     }
 
