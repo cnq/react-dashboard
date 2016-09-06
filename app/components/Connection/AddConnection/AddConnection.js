@@ -106,7 +106,7 @@ class AddConnection extends Component {
 
     renderButtons = (props) => {
         const { buttonSelectedStyle, buttonStyle, buttonLabelStyle } = styles
-        console.log('type',props.connectionType)
+        //console.log('type',props.connectionType)
         return (
             <div className={`${centeredContainer} ${breathingRoom}`}>
                 <div>

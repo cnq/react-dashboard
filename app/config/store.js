@@ -2,13 +2,19 @@
 import * as reducers from 'reducers'
 import { reducer as form } from 'redux-form';
 import thunk from 'redux-thunk'
+import promise from 'redux-promise'
+import logger from 'redux-logger'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import { loadFromLocalStorage, saveToLocalStorage } from 'helpers/localStorage'
 
-
 const configureStore = () => {
     //const persistedState = loadFromLocalStorage('state')
+    const middlewares = [thunk, promise]
+
+    if (process.env.NODE_ENV != 'production') {
+        middlewares.push(logger())
+    }
 
     const store = createStore(
         combineReducers({
@@ -18,12 +24,12 @@ const configureStore = () => {
         }),
         //persistedState,
         compose (
-            applyMiddleware(thunk),
+            applyMiddleware(...middlewares),
             window.devToolsExtension ? window.devToolsExtension() : (f) => f
         )
     )
 
-    //TODO: work on persisting state to the local storage
+    //TODO: work on persisting state to the local storage. Reference Idiomatic Redux on egghead.io
     //save the state anytime it changes
     //only want to persist the data, not the ui state
     //using throttle to avoid updating local storage every time there is a change in state
