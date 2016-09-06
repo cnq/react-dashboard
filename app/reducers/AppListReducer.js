@@ -15,7 +15,16 @@ export default function appList ( state = initialState, action ) {
             return state.merge({
                 isFetching: true
             })
+        case actions.REMOVING_APP_LIST_LISTENER:
+            return state.merge({
+                isFetching: false
+            })
         case actions.SETTING_APP_LIST_LISTENER_ERROR:
+            return state.merge({
+                isFetching: false,
+                error: action.error
+            })
+        case actions.REMOVING_APP_LIST_LISTENER_ERROR:
             return state.merge({
                 isFetching: false,
                 error: action.error
@@ -26,6 +35,11 @@ export default function appList ( state = initialState, action ) {
                 error: '',
                 appIds: action.appIds,
                 newAppsAvailable: false
+            })
+        case actions.REMOVING_APP_LIST_LISTENER_SUCCESS:
+            return state.merge({
+                isFetching: false,
+                error: ''
             })
         case actions.ADD_NEW_APP_ID_TO_APP_LIST:
             return state.merge({

@@ -132,18 +132,31 @@ export function deleteApp (appId, uid) {
  * @param {Function} errorCallback
  * @return {Function} callback, {Function} errorCallback
  */
-export function listenToAppList (callback, errorCallback) {
+export function listenToAppList (userId, listenerOn, callback, errorCallback) {
     if (process.env.NODE_ENV !== 'production') {
         //Firebase
-        //TODO: add a condition here to return user specific apps if a userid is specified or return
-        //all apps if it is not (look at the connections listener for details
-        fireDb.ref().child('apps').on('value', (snapshot) => {
+        //If a userId is available, then we will return apps associated with that one
+        //user, otherwise we will return all apps.
+        const endpoint = userId ? `usersApps/${userId}` : `apps`
+        const onValueChange = (snapshot) => {
             const appList = snapshot.val() || {}
             const sortedIds = Object.keys(appList).sort((a,b) => {
                 return appList[b].timestamp - appList[a].timestamp
             })
             callback({appList, sortedIds})
-        }, errorCallback)
+        }
+        //If listenerOn is true then we'll create a listener to firebase
+        if (listenerOn) {
+            fireDb.ref().child(endpoint).on('value', onValueChange, errorCallback)
+            //If listenerOn is false then we'll remove the listener from firebase
+        } else {
+            try {
+                fireDb.ref().child(endpoint).off('value', onValueChange)
+                callback({null, null}) //return the callback so that the function will continue running
+            } catch (error) {
+                errorCallback(error)
+            }
+        }
     } else {
         //Paperhook
         return axios.get("/api/apps").then(function (response) {

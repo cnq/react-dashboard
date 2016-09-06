@@ -152,10 +152,7 @@ export function deleteConnection (connectionId, appId) {
  * @return {Function} callback, {Function} errorCallback
  */
 export function listenToConnectionList (appId, listenerOn, callback, errorCallback) {
-    console.log('appId::::', appId)
-    console.log('listenerOn::::', listenerOn)
     if (process.env.NODE_ENV !== 'production') {
-
         //Firebase
         //If an appId is available, then we will return connections associated with that one
         //app, otherwise we will return all connection.
@@ -167,11 +164,10 @@ export function listenToConnectionList (appId, listenerOn, callback, errorCallba
             })
             callback({connectionList, sortedIds})
         }
-
-        //If onListener is true then we'll create a listener to firebase
+        //If listenerOn is true then we'll create a listener to firebase
         if (listenerOn) {
            fireDb.ref().child(endpoint).on('value', onValueChange, errorCallback)
-        //If onListener is false then we'll remove the listener from firebase
+        //If listenerOn is false then we'll remove the listener from firebase
         } else {
             try {
                 fireDb.ref().child(endpoint).off('value', onValueChange)
@@ -180,7 +176,6 @@ export function listenToConnectionList (appId, listenerOn, callback, errorCallba
                 errorCallback(error)
             }
         }
-
     } else {
         //Paperhook
         return axios.get("/api/routes").then(function (response) {

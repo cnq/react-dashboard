@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
-import { users as actions } from 'actions'
+import { users as usersActions } from 'actions'
 import { checkIfAuthenticated } from 'helpers/auth'
 
 export default function (ComposedComponent) {
@@ -73,7 +73,7 @@ export default function (ComposedComponent) {
 
     return withRouter(connect(
         mapStateToProps,
-        actions
+        usersActions
     )(CheckAuthentication))
 
 }

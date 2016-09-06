@@ -1,5 +1,4 @@
-import { addListener } from './ListenersActions'
-import { removeListener } from './ListenersActions'
+import { addListener, removeListener } from './ListenersActions'
 import { addMultipleConnections } from './ConnectionsActions'
 import { listenToConnectionList } from 'apis'
 
@@ -11,7 +10,6 @@ export const SETTING_CONNECTION_LIST_LISTENER_SUCCESS = 'SETTING_CONNECTION_LIST
 export const REMOVING_CONNECTION_LIST_LISTENER_SUCCESS = 'REMOVING_CONNECTION_LIST_LISTENER_SUCCESS'
 export const ADD_NEW_CONNECTION_ID_TO_CONNECTION_LIST = 'ADD_NEW_CONNECTION_ID_TO_CONNECTION_LIST'
 export const RESET_NEW_CONNECTIONS_AVAILABLE = 'RESET_NEW_CONNECTIONS_AVAILABLE'
-
 
 function settingConnectionListListener () {
     return {

@@ -2,12 +2,16 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { List } from 'immutable'
 import { AppList } from 'components'
-import { appList as actions } from 'actions'
+import {
+    users as usersActions,
+    appList as appListActions 
+} from 'actions'
 
 const {
     bool,
     string,
-    func
+    func,
+    object
 } = PropTypes
 
 /**
@@ -16,8 +20,12 @@ const {
  **/
 class AppListContainer extends Component {
 
-    componentDidMount () {
-        this.props.setAndHandleAppListListener()
+    componentWillMount () {
+        this.props.handleAppListListener(this.props.userId, true) //Pass in appId and whether Listener should be on or off
+    }
+
+    componentWillUnmount () {
+        this.props.handleAppListListener(this.props.userId, false) //Pass in appId and whether Listener should be on or off
     }
 
     render () {
@@ -36,21 +44,23 @@ class AppListContainer extends Component {
 
 AppListContainer.propTypes = {
     appIds: PropTypes.instanceOf(List),
+    userId: string.isRequired,
     newAppsAvailable: bool.isRequired,
     error: string.isRequired,
     isFetching: bool.isRequired,
-    setAndHandleAppListListener: func.isRequired,
+    handleAppListListener: func.isRequired,
     resetNewAppsAvailable: func.isRequired
 }
 
-const mapStateToProps = ({appList}) => ({
+const mapStateToProps = ({users, appList}) => ({
     newAppsAvailable: appList.get('newAppsAvailable'),
     error: appList.get('error'),
     isFetching: appList.get('isFetching'),
-    appIds: appList.get('appIds')
+    appIds: appList.get('appIds'),
+    userId: users[users.authenticatedId] ? users[users.authenticatedId].info.uid : ''
 })
 
 export default connect(
     mapStateToProps,
-    actions
+    {...usersActions, ...appListActions}
 )(AppListContainer)
