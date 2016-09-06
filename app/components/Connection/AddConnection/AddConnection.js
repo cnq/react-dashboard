@@ -57,13 +57,16 @@ const {
  */
 class AddConnection extends Component {
 
-    state = {
-        finished: false,
-        editing: false,
-        stepIndex: 0,
+    constructor(props) {
+        super(props);
+        this.state = {
+            finished: false,
+            editing: false,
+            stepIndex: 0
+        }
     }
 
-    componentWillUnmount() {
+    componentWillUnmount () {
         //set to empty string when component mounts
         this.props.updateConnectionType('')
         this.props.updateConnectionName('')
@@ -71,7 +74,7 @@ class AddConnection extends Component {
     }
 
     handleNext = () => {
-        console.log('in handleNext  ')
+        //console.log('in handleNext  ')
         const {stepIndex, editing} = this.state;
         this.setState({
             stepIndex: stepIndex + 1,
@@ -193,11 +196,11 @@ class AddConnection extends Component {
 
     //TODO: Set this up so that it is leading text of connectionUri with ${backendSiteUri}
     render () {
-        console.log('--------------------------')
-        console.log('index: ', this.state.stepIndex)
-        console.log(this.state.finished ? 'finished' : 'not finished')
-        console.log(this.state.editing ? 'editing' : 'not editing')
-        console.log('--------------------------')
+        //console.log('--------------------------')
+        //console.log('index: ', this.state.stepIndex)
+        //console.log(this.state.finished ? 'finished' : 'not finished')
+        //console.log(this.state.editing ? 'editing' : 'not editing')
+        //console.log('--------------------------')
         const { buttonStyle, stepLabelStyle, buttonLabelStyle } = styles
         const {finished, editing, stepIndex} = this.state
         return (

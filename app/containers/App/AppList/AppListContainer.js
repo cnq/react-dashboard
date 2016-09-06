@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { appList as actions } from 'actions'
-import { AppList } from 'components'
 import { List } from 'immutable'
+import { AppList } from 'components'
+import { appList as actions } from 'actions'
 
 const {
     bool,

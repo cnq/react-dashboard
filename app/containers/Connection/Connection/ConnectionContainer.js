@@ -32,7 +32,8 @@ class ConnectionContainer extends Component {
     deleteConnection = (event, connectionId, appId) => {
         event.stopPropagation()
         this.props.deleteAndHandleConnection(connectionId, appId)
-        this.props.router.push(`/dashboard/apps/app/${appId}/connections`)
+
+        //this.props.router.push(`/dashboard/apps/app/${appId}/connections`)
     }
 
     render () {

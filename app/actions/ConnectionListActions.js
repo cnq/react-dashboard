@@ -43,20 +43,22 @@ export function resetNewConnectionsAvailable () {
     }
 }
 
-export function setAndHandleConnectionListListener () {
+export function setAndHandleConnectionListListener (appId) {
 
     let initialFetch = true
 
     return function (dispatch, getState) {
 
         if (getState().listeners.connectionList === true) {
-            return
+            console.log('Already a listener')
+            //return
+            //TODO: find out the implications, if any, of creating multiple listeners.
         }
 
         dispatch(addListener('connectionList'))
         dispatch(settingConnectionListListener())
 
-        listenToConnectionList( ({connectionList, sortedIds}) => {
+        listenToConnectionList(appId,({connectionList, sortedIds}) => {
 
             dispatch(addMultipleConnections(connectionList))
 

@@ -38,7 +38,12 @@ const styles = {
     }
 }
 
-const {func, array, string, bool} = PropTypes
+const {
+    func,
+    array,
+    string,
+    bool
+} = PropTypes
 
 /**
  * App() returns an individual app component

@@ -60,14 +60,14 @@ UserContainer.propTypes = {
     lastUpdatedApps: number.isRequired
 }
 
-const mapStateToProps = ({users, usersApps}, props) => ({
-    noUser: typeof users[props.routeParams.uid] === 'undefined', //noUser (true/false): check whether this user exists
-    name: typeof users[props.routeParams.uid] === 'undefined' ? '' : users[props.routeParams.uid].info.name, //if user exists set name, otherwise set name to ''
+const mapStateToProps = ({users, usersApps}, {routeParams}) => ({
+    noUser: typeof users[routeParams.uid] === 'undefined', //noUser (true/false): check whether this user exists
+    name: typeof users[routeParams.uid] === 'undefined' ? '' : users[routeParams.uid].info.name, //if user exists set name, otherwise set name to ''
     isFetching: users.isFetching || usersApps.isFetching ? true : false,
     error: users.error || usersApps.error,
-    appIds: usersApps[props.routeParams.uid] ? usersApps[props.routeParams.uid].appIds : [], //assign this user's apps to appIds
-    lastUpdatedUser: users[props.routeParams.uid] ? users[props.routeParams.uid].lastUpdated : 0,
-    lastUpdatedApps: usersApps[props.routeParams.uid] ? usersApps[props.routeParams.uid].lastUpdated : 0
+    appIds: usersApps[routeParams.uid] ? usersApps[routeParams.uid].appIds : [], //assign this user's apps to appIds
+    lastUpdatedUser: users[routeParams.uid] ? users[routeParams.uid].lastUpdated : 0,
+    lastUpdatedApps: usersApps[routeParams.uid] ? usersApps[routeParams.uid].lastUpdated : 0
 })
 
 export default connect(

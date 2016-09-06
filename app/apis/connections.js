@@ -22,7 +22,8 @@ function saveToConnections (connection) {
  * saveToAppsConnections() saves, to Firebase, a reference to the connection along with
  * pertinent data under the app's object and returns a firebase reference
  *
- * @param {Object} connection, {String} connectionId
+ * @param {Object} connection
+ * @param {String} connectionId
  * @return firebase.ref()
  */
 function saveToAppsConnections (connection, connectionId) {
@@ -34,7 +35,7 @@ function saveToAppsConnections (connection, connectionId) {
 /**
  * saveConnection() saves the connection to Firebase or Paperhook
  *
- * @param {Object} app
+ * @param {Object} connection
  * @return {Object} connection, {String} connectionId
  */
 export function saveConnection (connection) {
@@ -94,7 +95,8 @@ function deleteFromConnections (connectionId) {
 /**
  * deleteFromAppsConnections() deletes the reference to the connection from the app object on Firebase
  *
- * @param {String} connectionId, {String} appId
+ * @param {String} connectionId
+ * @param {String} appId
  * @return firebase.ref()
  */
 function deleteFromAppsConnections (connectionId, appId) {
@@ -105,7 +107,8 @@ function deleteFromAppsConnections (connectionId, appId) {
 /**
  * deleteConnection() deletes the connection from Firebase or Paperhook
  *
- * @param {String} connectionId, {String} appId
+ * @param {String} connectionId
+ * @param {String} appId
  * @return {Promise} connectionPromise, {String} error
  */
 export function deleteConnection (connectionId, appId) {
@@ -142,13 +145,18 @@ export function deleteConnection (connectionId, appId) {
 /**
  * listenToConnectionList() listens to app connections for updates
  *
- * @param {Function} callback, {Function} errorCallback
+ * @param {String} appId
+ * @param {Function} callback
+ * @param {Function} errorCallback
  * @return {Function} callback, {Function} errorCallback
  */
-export function listenToConnectionList (callback, errorCallback) {
+export function listenToConnectionList (appId, callback, errorCallback) {
+    console.log('appId::::', appId)
     if (process.env.NODE_ENV !== 'production') {
         //Firebase
-        fireDb.ref().child('connections').on('value', (snapshot) => {
+        //If an appId is available, then we will return connections associated with that one
+        //app, otherwise we will return all connection.
+        fireDb.ref().child(appId ? `appsConnections/${appId}` : `connections`).on('value', (snapshot) => {
             const connectionList = snapshot.val() || {}
             const sortedIds = Object.keys(connectionList).sort((a,b) => {
                 return connectionList[b].timestamp - connectionList[a].timestamp

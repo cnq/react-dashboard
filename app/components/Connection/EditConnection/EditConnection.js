@@ -48,14 +48,8 @@ const {
  */
 class EditConnection extends Component {
 
-    state = {
-        finished: false,
-        editing: false,
-        stepIndex: 0,
-    }
-
-    componentWillUnmount() {
-        //set to empty string when component mounts
+    componentWillUnmount () {
+        //set to empty string when component unmounts
         this.props.updateConnectionType('')
         this.props.updateConnectionName('')
         this.props.updateConnectionUri('')
@@ -108,11 +102,6 @@ class EditConnection extends Component {
 
     //TODO: Set this up so that it is leading text of connectionUri with ${backendSiteUri}
     render () {
-        //console.log('--------------------------')
-        //console.log('index: ', this.state.stepIndex)
-        //console.log(this.state.finished ? 'finished' : 'not finished')
-        //console.log(this.state.editing ? 'editing' : 'not editing')
-        //console.log('--------------------------')
         const { buttonStyle, buttonLabelStyle } = styles
         return (
             <div style={{width: '100%', maxWidth: 1200, margin: 'auto'}}>

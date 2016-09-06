@@ -17,20 +17,20 @@ const {
 class AppDetailsContainer extends Component {
 
     componentDidMount () {
-        if (this.props.appAlreadyFetched === false) {
-            this.props.fetchAndHandleApp(this.props.appId)
+        if (this.appAlreadyFetched === false) {
+            this.fetchAndHandleApp(this.appId)
         } else {
-            this.props.removeAppFetching()
+            this.removeAppFetching()
         }
     }
 
     render () {
         return (
             <AppDetails
-                authenticatedUser = {this.props.authenticatedUser}
-                appId = {this.props.appId}
-                isFetching = {this.props.isFetching}
-                error = {this.props.error}
+                authenticatedUser = {this.authenticatedUser}
+                appId = {this.appId}
+                isFetching = {this.isFetching}
+                error = {this.error}
             />
         )
     }
@@ -47,12 +47,12 @@ AppDetailsContainer.propTypes = {
     fetchAndHandleApp: func.isRequired
 }
 
-const mapStateToProps = ({apps, users}, props) => ({
+const mapStateToProps = ({apps, users}, {routeParams}) => ({
     isFetching: apps.get('isFetching'),
     error: apps.get('error'),
     authenticatedUser: users[users.authenticatedId].info,
-    appId: props.routeParams.appId,
-    appAlreadyFetched: !!apps.get(props.routeParams.appId)
+    appId: routeParams.appId,
+    appAlreadyFetched: !!apps.get(routeParams.appId)
 })
 
 export default connect(

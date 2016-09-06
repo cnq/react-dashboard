@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton';
 import { AppCard } from 'components'
@@ -22,6 +22,59 @@ const {
  * AddApp() returns component that displays necessary
  * input fields for adding new apps.
  */
+
+class AddApp extends Component {
+
+    render () {
+
+        const onClickCreateApp = ()  => {
+            this.props.appFanout(formatApp(this.props.backendSiteUri, this.props.uri, this.props.user))
+            this.props.updateBackendSiteUri('')
+            this.props.updateUri('')
+        }
+
+        const renderActions = ({ isActive, isSubmitDisabled }) => {
+            return (
+                <FlatButton
+                    className={isActive ? `enabled` : `disabled`}
+                    primary={true}
+                    disabled={isSubmitDisabled}
+                    onTouchTap={onClickCreateApp}
+                >
+                    {'Create New Site'}
+                </FlatButton>
+            )
+        }
+
+        return (
+            <AppCard
+                title="Create New App"
+                backendSiteUri=""
+                uri=""
+                actions={renderActions(this.props)}
+                onClick={this.props.activateAddApp}
+            >
+                <div className={newAppInputContainer}>
+                    <TextField
+                        value={this.props.backendSiteUri}
+                        maxLength={140}
+                        type="text"
+                        floatingLabelText={`Website URL`}
+                        hintText={`Please enter your website URL`}
+                        onChange={
+                                (event) =>  {
+                                    this.props.updateBackendSiteUri(event.target.value)
+                                    this.props.updateUri(getUri(event.target.value))
+                                }
+                            }
+                    />
+                </div>
+            </AppCard>
+        )
+    }
+
+}
+
 AddApp.propTypes = {
     backendSiteUri: string.isRequired,
     uri: string.isRequired,
@@ -33,52 +86,6 @@ AddApp.propTypes = {
     updateBackendSiteUri: func.isRequired,
     updateUri: func.isRequired,
     appFanout: func.isRequired
-}
-
-function AddApp(props) {
-
-    const onClickCreateApp = ()  => {
-        props.appFanout(formatApp(props.backendSiteUri, props.uri, props.user))
-    }
-
-    const renderActions = ({ isActive, isSubmitDisabled }) => {
-        return (
-            <FlatButton
-                className={isActive ? `enabled` : `disabled`}
-                primary={true}
-                disabled={isSubmitDisabled}
-                onTouchTap={onClickCreateApp}
-            >
-                {'Create New Site'}
-            </FlatButton>
-        )
-    }
-
-return (
-    <AppCard
-        title="Create New App"
-        backendSiteUri=""
-        uri=""
-        actions={renderActions(props)}
-        onClick={props.activateAddApp}
-    >
-        <div className={newAppInputContainer}>
-                <TextField
-                    value={props.backendSiteUri}
-                    maxLength={140}
-                    type="text"
-                    floatingLabelText={`Website URL`}
-                    hintText={`Please enter your website URL`}
-                    onChange={
-                        (event) =>  {
-                            props.updateBackendSiteUri(event.target.value)
-                            props.updateUri(getUri(event.target.value))
-                        }
-                    }
-                />
-            </div>
-        </AppCard>
-    )
 }
 
 export default AddApp 

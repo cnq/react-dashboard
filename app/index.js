@@ -9,7 +9,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 const store = configureStore()
-console.log(store)
+//console.log(store)
 //TODO: remove these. these are just here temporarily to assist with debugging.
 //removeFromLocalStorage('auth')
 //removeFromLocalStorage('user')

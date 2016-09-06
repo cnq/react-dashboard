@@ -104,10 +104,10 @@ export function deleteApp (appId, uid) {
             deleteFromUsersApps(appId, uid)
         ])
             .then(() => {
-                console.log("Delete succeeded.")
+                console.log("App delete succeeded.")
             })
             .catch((error) => {
-                console.log("Delete failed: " + error.message)
+                console.log("App delete failed: " + error.message)
             })
     } else {
         //Paperhook

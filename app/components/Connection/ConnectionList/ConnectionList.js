@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { v4 } from 'node-uuid'
+import { List } from 'immutable'
 import { ConnectionContainer } from 'containers'
 import FlatButton from 'material-ui/RaisedButton';
 import { Grid, GridItem } from 'components'
@@ -9,15 +10,14 @@ import { centeredContainer, addContainer, breathingRoom, errorMsg } from 'shared
 const {
     string,
     func,
-    bool,
-    array,
+    bool
 } = PropTypes
 
 /**
  * ConnectionList() displays a list of all connections created for an app.
  */
 ConnectionList.propTypes = {
-    connectionIds: array.isRequired,
+    connectionIds: PropTypes.instanceOf(List),
     appId: PropTypes.string.isRequired,
     error: string.isRequired,
     isFetching: bool.isRequired,

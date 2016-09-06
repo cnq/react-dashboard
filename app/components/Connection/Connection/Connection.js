@@ -13,14 +13,6 @@ const {func, bool} = PropTypes
  * Connection() returns an individual connection component
  * which contains the ConnectionCard.
  */
-Connection.propTypes = {
-    connection: PropTypes.instanceOf(Map),
-    goToConnectionDetail: func,
-    goToConnectionEdit: func,
-    deleteConnection: func,
-    connectionAlreadyFetched: bool
-}
-
 function Connection(props) {
 
     const renderCardActions = ({ deleteConnection, goToConnectionDetail }) => {
@@ -70,6 +62,14 @@ function Connection(props) {
         )
     }
 
+}
+
+Connection.propTypes = {
+    connection: PropTypes.instanceOf(Map),
+    goToConnectionDetail: func,
+    goToConnectionEdit: func,
+    deleteConnection: func,
+    connectionAlreadyFetched: bool
 }
 
 export default Connection

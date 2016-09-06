@@ -46,12 +46,12 @@ ConnectionDetailsContainer.propTypes = {
     fetchAndHandleConnection: func.isRequired
 }
 
-const mapStateToProps = ({connections}, props) => ({
+const mapStateToProps = ({connections}, {routeParams}) => ({
     isFetching: connections.get('isFetching'),
     error: connections.get('error'),
-    appId: connections.getIn([props.routeParams.connectionId, 'appId']),
-    connectionId: props.routeParams.connectionId,
-    connectionAlreadyFetched: !!connections.get(props.routeParams.connectionId)
+    appId: connections.getIn([routeParams.connectionId, 'appId']),
+    connectionId: routeParams.connectionId,
+    connectionAlreadyFetched: !!connections.get(routeParams.connectionId)
 })
 
 export default connect(

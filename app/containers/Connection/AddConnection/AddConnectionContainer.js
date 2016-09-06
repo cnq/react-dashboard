@@ -22,8 +22,8 @@ class AddConnectionContainer extends Component {
     }
 }
 
-const mapStateToProps = ({updateConnection, apps}, props) => ({
-    app: apps.get(props.params.appId) ? apps.get(props.params.appId) : Map({}),
+const mapStateToProps = ({updateConnection, apps}, {params}) => ({
+    app: apps.get(params.appId) ? apps.get(params.appId) : Map({}),
     connectionUri: updateConnection.connectionUri,
     connectionType: updateConnection.connectionType,
     connectionName: updateConnection.connectionName,

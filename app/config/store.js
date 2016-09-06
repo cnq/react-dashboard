@@ -39,7 +39,7 @@ const configureStore = () => {
         //) //pass current state to saveState
     //}, 1000)
 
-    console.log(store.getState()) //Have a look at initial state
+    //console.log(store.getState()) //Have a look at initial state
 
     return store;
 
