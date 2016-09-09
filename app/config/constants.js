@@ -1,3 +1,4 @@
+import axios from 'axios'
 import firebase from 'firebase/firebase-browser'
 import {
     apiKey,
@@ -5,6 +6,13 @@ import {
     databaseURL,
     storageBucket
 } from '../../config.js'
+
+// Paperhook Config Data
+export const ajax = axios.create({
+    baseURL: 'http://tailspin.demo.ncnq.io',
+    timeout: 6000,
+    withCredentials: true
+})
 
 // Firebase Config Data
 const config = {

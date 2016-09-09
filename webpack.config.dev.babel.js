@@ -15,7 +15,7 @@ const PATHS = {
 
 const LAUNCH_COMMAND = process.env.npm_lifecycle_event
 
-const isDevelopment = LAUNCH_COMMAND === 'start'
+const isDevelopment = LAUNCH_COMMAND === 'firebase'
 
 const developmentPlugin = new webpack.DefinePlugin({
     'process.env':{

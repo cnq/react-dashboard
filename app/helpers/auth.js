@@ -1,7 +1,7 @@
-import axios from 'axios';
 import firebase from 'firebase/firebase-browser'
 import { loadFromLocalStorage } from 'helpers/localStorage'
 import {
+    ajax,
     fireApp,
     fireDb,
     fireAuth,
@@ -111,7 +111,7 @@ export default function auth (authData) {
 
         if (user) {
             return (
-                axios.get("/api/auth/authenticateduser").then(function (response) {
+                ajax.get("/api/auth/authenticateduser").then(function (response) {
                     if(response.data.isAuthenticated) {
                         return {credential: authData.credential, user: response.data}
                     } else {
@@ -122,7 +122,7 @@ export default function auth (authData) {
                 )
             } else {
             return (
-                axios.post("/api/auth/signin", {
+                ajax.post("/api/auth/signin", {
                     userName: email,
                     password: password
                 }

@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { fireDb } from 'config/constants'
+import { fireDb, ajax } from 'config/constants'
 
 /**
  * saveToConnections() saves a connection to Firebase and returns a
@@ -49,7 +48,7 @@ export function saveConnection (connection) {
     } else {
         //Paperhook
         if(connection.connectionId){
-            return axios({
+            return ajax({
                 method: 'put',
                 url: `/api/apps/${connection.appId}/routes/${connection.connectionId}`,
                 data: connection,
@@ -62,7 +61,7 @@ export function saveConnection (connection) {
             })
         
         } else {
-            return axios({
+            return ajax({
                 method: 'post',
                 url: `/api/apps/${connection.appId}/routes`,
                 data: connection,
@@ -128,7 +127,7 @@ export function deleteConnection (connectionId, appId) {
     } else {
         // TODO: This needs to be added
         
-        return axios({
+        return ajax({
             method: 'delete',
             url: `/api/apps/${appId}/routes/${connectionId}`,
             timeout: 60000
@@ -178,7 +177,7 @@ export function listenToConnectionList (appId, listenerOn, callback, errorCallba
         }
     } else {
         //Paperhook
-        return axios.get("/api/routes").then(function (response) {
+        return ajax.get("/api/routes").then(function (response) {
             const connectionList = response.data || {}
             const sortedIds = Object.keys(connectionList).sort((a,b) => {
                 return connectionList[b].timestamp - connectionList[a].timestamp
@@ -205,7 +204,7 @@ export function fetchConnection (connectionId) {
             ))
     } else {
         //Paperhook
-        return axios.get(`/api/routes/${connectionId}`).then(function (response) {
+        return ajax.get(`/api/routes/${connectionId}`).then(function (response) {
             return response.data;
         })
     }

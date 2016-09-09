@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { fireDb } from 'config/constants'
+import { fireDb, ajax } from 'config/constants'
 
 /**
  * fetchUser() fetches user data from Firebase or Paperhook
@@ -16,7 +15,7 @@ export function fetchUser (uid) {
             ))
     } else {
         //Paperhook
-        return axios.get("/api/auth/authenticateduser").then(function (response) {
+        return ajax.get("/api/auth/authenticateduser").then(function (response) {
             return response.data;
         })
     }

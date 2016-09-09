@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { fireDb } from 'config/constants'
+import { fireDb, ajax } from 'config/constants'
 
 /**
  * saveToApps() saves an app to Firebase and returns an
@@ -47,7 +46,7 @@ export function saveApp (app) {
         ]).then(() => ({...app, appId}))
     } else {
         //Paperhook
-        return axios({
+        return ajax({
             method: 'post',
             url: '/api/apps',
             data: {
@@ -111,7 +110,7 @@ export function deleteApp (appId, uid) {
             })
     } else {
         //Paperhook
-        return axios({
+        return ajax({
             method: 'delete',
             url: `/api/apps/${appId}`,
             timeout: 60000
@@ -159,7 +158,7 @@ export function listenToAppList (userId, listenerOn, callback, errorCallback) {
         }
     } else {
         //Paperhook
-        return axios.get("/api/apps").then(function (response) {
+        return ajax.get("/api/apps").then(function (response) {
             const appList = response.data || {}
             const sortedIds = Object.keys(appList).sort((a, b) => {
                 return appList[b].timestamp - appList[a].timestamp
@@ -186,7 +185,7 @@ export function fetchApp (appId) {
             ))
     } else {
         //Paperhook
-        return axios.get(`/api/apps/${appId}`).then(function (response) {
+        return ajax.get(`/api/apps/${appId}`).then(function (response) {
             return response.data;
         })
     }
@@ -206,7 +205,7 @@ export function fetchAppsConnections (appId) {
                 snapshot.val() || {}
             ))
     } else {
-        return axios.get(`/api/apps/${appId}/routes`).then(function (response) {
+        return ajax.get(`/api/apps/${appId}/routes`).then(function (response) {
             return response.data;
         })
     }
