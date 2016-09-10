@@ -49,7 +49,7 @@ const {
  * App() returns an individual app component
  * which contains the AppCard.
  */
-export default class App extends Component {
+class App extends Component {
 
     constructor(props) {
         super(props);
