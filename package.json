@@ -1,6 +1,6 @@
 {
   "name": "react-dashboard",
-  "version": "0.0.3",
+  "version": "0.1.1",
   "description": "A starter dashboard that can be used on any project.",
   "main": "index.js",
   "scripts": {
