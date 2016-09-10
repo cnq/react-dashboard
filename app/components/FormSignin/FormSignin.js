@@ -50,7 +50,6 @@ const validate = values => {
 const renderTextField = field => (
     <TextField
         className={formField}
-        key={v4()}
         errorText={field.touched && field.error}
         {...field.input}
     />
@@ -67,6 +66,7 @@ function FormSignin (props) {
             <form onSubmit={handleSubmit((event) => onAuth({provider: EMAIL}, event))}>
                 <Field
                     name="email"
+                    type="text"
                     component={renderTextField}
                     floatingLabelText={`Email Address`}
                     hintText={`Please enter your email address`}
