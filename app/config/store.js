@@ -13,7 +13,7 @@ const configureStore = () => {
     const middlewares = [thunk, promise]
 
     if (process.env.NODE_ENV != 'production') {
-        middlewares.push(logger())
+        //middlewares.push(logger())
     }
 
     const store = createStore(

@@ -48,18 +48,18 @@ function getProvider (authData) {
         case EMAIL:
             return (
                 email && password
-                    ?  provider
-                    :  console.log('there was an issue logging in with email') // TODO: Handle email login issue
+                    ?  EMAIL
+                    :  null
             )
         default:
             return null
     }
+
 }
 
 export default function auth (authData) {
 
     const { accessToken, email, password } = authData.credential
-    
 
     if (process.env.NODE_ENV !== 'production') {
         const user = fireAuth.currentUser
@@ -71,6 +71,7 @@ export default function auth (authData) {
                 // If we have a token, authenticate with token and attach the
                 // returned user object and pass it on with the authData object
                 if (provider !== EMAIL) {
+                    console.log(provider)
                     //authenticate via federated identity provider
                     return (
                         fireAuth.signInWithCredential(provider)
@@ -138,7 +139,7 @@ export default function auth (authData) {
 export function checkIfAuthenticated (isAuthenticated, nextIsAuthenticated) {
     const store = configureStore()
 
-    //TODO:  This needs to be supported with an api call to check if the user is truely authenticated
+    //TODO: This needs to be supported with an api call to check if the user is truely authenticated
     const user =
         process.env.NODE_ENV !== 'production'
             ? fireAuth.currentUser  //firebase

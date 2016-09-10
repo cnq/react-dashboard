@@ -7,7 +7,6 @@ const initialState = Map({
 })
 
 export default function connections ( state = initialState, action ) {
-    //console.log('connections state: ', state)
     switch ( action.type ) {
         case actions.FETCHING_CONNECTION:
             return state.merge({

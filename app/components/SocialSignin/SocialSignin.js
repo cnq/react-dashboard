@@ -55,7 +55,7 @@ function SocialSignin ({ onAuth, error }) {
     return (
         <div className={centeredContainer}>
             <ul className={socialButtonsList}>{renderSocialButtons(onAuth)}</ul>
-            {error ? <p className={errorMsg}>{'Oops! Well this is embarrassing, we had an issue getting you logged in. Please try again.'}</p> : null}
+            {error ? <p className={errorMsg}>{'Oh, boy! This is embarrassing, we had an issue getting you logged in via that social account. Please try again.'}</p> : null}
         </div>
     )
 

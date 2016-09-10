@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { v4 } from 'node-uuid'
-import { Field, reduxForm, propTypes } from 'redux-form';
+import capitalize from 'lodash/capitalize'
+import { Field, reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton';
-import { getProviderInfo, asyncValidate } from 'helpers/utils'
+import { getProviderInfo } from 'helpers/utils'
 import { AuthButton } from 'components';
 import {
     EMAIL
@@ -24,61 +25,62 @@ const buttonStyles = {
 
 const {
     string,
-    bool,
     func
 } = PropTypes
-
-FormSignin.propTypes = {
-    formError: string.isRequired,
-    onAuth: func.isRequired
-}
 
 const validate = values => {
     const errors = {}
     const requiredFields = [ 'email', 'password' ]
     requiredFields.forEach(field => {
         if (!values[ field ]) {
-            errors[ field ] = 'Required'
+            errors[ field ] = capitalize(field) + ' required'
         }
     })
     if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
+        errors.email = 'Enter a valid email address'
     }
     return errors
 }
 
-const renderTextField = field => (
-    <TextField
-        className={formField}
-        errorText={field.touched && field.error}
-        {...field.input}
-    />
-)
+class FormSignin extends Component {
 
-function FormSignin (props) {
+    renderTextField = field => {
+        return (
+            <TextField
+                className={formField}
+                key={field.name}
+                floatingLabelText={field.floatingLabelText}
+                hintText={field.hintText}
+                errorText={field.meta.touched && field.meta.error ? field.meta.error : ''}
+                {...field.input}
+            />
+        )}
 
-    const renderForm = (props) => {
-        
-        const { handleSubmit, pristine, submitting, onAuth } = props
+    renderForm = (props) => {
+
+        const { handleSubmit, pristine, submitting, onSubmit} = props
 
         return (
 
-            <form onSubmit={handleSubmit((event) => onAuth({provider: EMAIL}, event))}>
+            <form onSubmit={handleSubmit((event) => onSubmit(EMAIL, event))}>
                 <Field
                     name="email"
                     type="text"
-                    component={renderTextField}
+                    ref={(ref) => this.emailField = ref}
+                    component={this.renderTextField}
                     floatingLabelText={`Email Address`}
-                    hintText={`Please enter your email address`}
+                    hintText={`Enter your email address`}
                 />
                 <Field
                     name="password"
                     type="password"
-                    component={renderTextField}
+                    ref={(ref) => this.passwordField = ref}
+                    component={this.renderTextField}
                     floatingLabelText={`Password`}
-                    hintText={`Please enter your password`}
+                    hintText={`Enter your password`}
                 />
-                <RaisedButton className={formButton}
+                <RaisedButton
+                    className={formButton}
                     type="submit"
                     disabled={pristine || submitting}
                     fullWidth={false}
@@ -92,21 +94,36 @@ function FormSignin (props) {
 
     }
 
-    const { formError } = props
-
-    return (
-        <div className={centeredContainer}>
-            <br />
-            {renderForm(props)}
-            {formError ? <p className={errorMsg}>{'Oops! Well this is embarrassing, we had an issue getting you logged in. Please try again.'}</p> : null}
+    renderError = () => (
+        <div>
+            <p className={errorMsg}>{'Oops! We had an issue getting you logged in. We think you may have mistyped either your email address or password.'}</p>
+            <p className={errorMsg}>{'Please try again.'}</p>
         </div>
+    )
 
-     )
+    render () {
+        const { formError } = this.props
+        return (
+            <div className={centeredContainer}>
+                <br />
+                {this.renderForm(this.props)}
+                {
+                    formError
+                        ?   this.renderError()
+                        :   null
+                }
+            </div>
+        )
+    }
 
+}
+
+FormSignin.propTypes = {
+    formError: string.isRequired,
+    onSubmit: func.isRequired
 }
 
 export default reduxForm({
     form: 'signin',
     validate
-    //asyncValidate
 })(FormSignin)

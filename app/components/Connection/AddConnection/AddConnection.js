@@ -74,7 +74,6 @@ class AddConnection extends Component {
     }
 
     handleNext = () => {
-        //console.log('in handleNext  ')
         const {stepIndex, editing} = this.state;
         this.setState({
             stepIndex: stepIndex + 1,
@@ -106,7 +105,6 @@ class AddConnection extends Component {
 
     renderButtons = (props) => {
         const { buttonSelectedStyle, buttonStyle, buttonLabelStyle } = styles
-        //console.log('type',props.connectionType)
         return (
             <div className={`${centeredContainer} ${breathingRoom}`}>
                 <div>

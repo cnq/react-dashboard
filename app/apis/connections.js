@@ -125,8 +125,6 @@ export function deleteConnection (connectionId, appId) {
                 console.log("Connection delete failed: " + error.message)
             })
     } else {
-        // TODO: This needs to be added
-        
         return ajax({
             method: 'delete',
             url: `/api/apps/${appId}/routes/${connectionId}`,
@@ -177,7 +175,7 @@ export function listenToConnectionList (appId, listenerOn, callback, errorCallba
         }
     } else {
         //Paperhook
-        return ajax.get("/api/routes").then(function (response) {
+        return ajax.get(`/api/apps/${appId}/routes`).then(function (response) {
             const connectionList = response.data || {}
             const sortedIds = Object.keys(connectionList).sort((a,b) => {
                 return connectionList[b].timestamp - connectionList[a].timestamp
@@ -204,7 +202,7 @@ export function fetchConnection (connectionId) {
             ))
     } else {
         //Paperhook
-        return ajax.get(`/api/routes/${connectionId}`).then(function (response) {
+        return ajax.get(`/api/apps/${appId}/routes/${connectionId}`).then(function (response) {
             return response.data;
         })
     }
