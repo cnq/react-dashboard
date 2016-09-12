@@ -49,6 +49,8 @@ class FormSignin extends Component {
             <TextField
                 className={formField}
                 key={field.name}
+                name={field.name}
+                type={field.type}
                 floatingLabelText={field.floatingLabelText}
                 hintText={field.hintText}
                 errorText={field.meta.touched && field.meta.error ? field.meta.error : ''}
@@ -96,7 +98,7 @@ class FormSignin extends Component {
 
     renderError = () => (
         <div>
-            <p className={errorMsg}>{'Oops! We had an issue getting you logged in. We think you may have mistyped either your email address or password.'}</p>
+            <p className={errorMsg}>{'We had an issue getting you logged in. We think you may have mistyped either your email address or password.'}</p>
             <p className={errorMsg}>{'Please try again.'}</p>
         </div>
     )

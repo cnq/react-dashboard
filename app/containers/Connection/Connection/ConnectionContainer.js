@@ -32,8 +32,9 @@ class ConnectionContainer extends Component {
     deleteConnection = (event, connectionId, appId) => {
         event.stopPropagation()
         this.props.deleteAndHandleConnection(connectionId, appId)
-
-        //this.props.router.push(`/dashboard/apps/app/${appId}/connections`)
+        //redirect user to dashboard if we are in the details view
+        if (this.props.router.isActive({ pathname: `/dashboard/apps/app/${this.props.appId}/connections/connection/${this.props.connection.get('connectionId')}`}))
+            this.props.router.push(`/dashboard/apps/app/${appId}/connections`)
     }
 
     render () {
