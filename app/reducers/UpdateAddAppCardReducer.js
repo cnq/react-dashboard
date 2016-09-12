@@ -1,4 +1,4 @@
-import { addApp as actions } from 'actions'
+import { updateAddAppCard as actions } from 'actions'
 
 const initialState = {
     backendSiteUri: '',
@@ -6,14 +6,14 @@ const initialState = {
     isActive: false
 }
 
-export default function addApp ( state = initialState, action ) {
+export default function updateAddAppCard ( state = initialState, action ) {
     switch ( action.type ) {
-        case actions.ACTIVATE_ADD_APP:
+        case actions.ACTIVATE_ADD_APP_CARD:
             return {
                 ...state,
                 isActive: true
             }
-        case actions.DEACTIVATE_ADD_APP:
+        case actions.DEACTIVATE_ADD_APP_CARD:
             return {
                 ...state,
                 isActive: false

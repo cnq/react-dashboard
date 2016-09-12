@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { v4 } from 'node-uuid'
 import { List } from 'immutable'
-import { AddAppContainer, AppContainer } from 'containers'
+import { AddAppCardContainer, AppContainer } from 'containers'
 import { Grid, GridItem } from 'components'
 import { newAppContainer, header } from './styles.css'
 import { errorMsg } from 'shared/styles.css'
@@ -48,7 +48,7 @@ function AppList (props) {
             :   <Grid>
                     {props.newAppsAvailable ? <NewAppsAvailable handleClick={props.resetNewAppsAvailable} /> : null}
                     <GridItem>
-                        <AddAppContainer />
+                        <AddAppCardContainer />
                     </GridItem>
                     {
                         //  immutable uses .size instead of .length

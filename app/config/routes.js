@@ -14,7 +14,7 @@ import {
     ConnectionListContainer,
     ConnectionContainer,
     ConnectionDetailsContainer,
-    AddConnectionContainer,
+    AddConnectionStepperContainer,
     EditConnectionContainer
 } from 'containers'
 import {
@@ -41,7 +41,7 @@ export default function getRoutes (history) {
                             <IndexRoute component={ConnectionListContainer} />
                             <Route path='connection/:connectionId' component={ConnectionDetailsContainer} />
                             <Route path='connection/:connectionId/edit' component={EditConnectionContainer} />
-                            <Route path='add' component={AddConnectionContainer} />
+                            <Route path='add' component={AddConnectionStepperContainer} />
                         </Route>
                     </Route>
                     <Route path='user/:uid' component={UserContainer} />

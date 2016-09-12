@@ -52,10 +52,10 @@ const {
 } = PropTypes
 
 /**
- * AddConnection() returns component that displays necessary
+ * AddConnectionStepper() returns component that displays necessary
  * input fields for adding new connections.
  */
-class AddConnection extends Component {
+class AddConnectionStepper extends Component {
 
     constructor(props) {
         super(props);
@@ -286,7 +286,7 @@ class AddConnection extends Component {
 
 }
 
-AddConnection.propTypes = {
+AddConnectionStepper.propTypes = {
     connectionUri: string.isRequired,
     connectionType: string.isRequired,
     connectionName: string.isRequired,
@@ -297,8 +297,8 @@ AddConnection.propTypes = {
     connectionFanout: func.isRequired
 }
 
-AddConnection.contextTypes = {
+AddConnectionStepper.contextTypes = {
     router: object.isRequired
 }
 
-export default AddConnection
+export default AddConnectionStepper

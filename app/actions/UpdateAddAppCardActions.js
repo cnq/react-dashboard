@@ -1,14 +1,14 @@
-export const ACTIVATE_ADD_APP = 'ACTIVATE_ADD_APP'
-export const DEACTIVATE_ADD_APP = 'DEACTIVATE_ADD_APP'
+export const ACTIVATE_ADD_APP_CARD = 'ACTIVATE_ADD_APP_CARD'
+export const DEACTIVATE_ADD_APP_CARD = 'DEACTIVATE_ADD_APP_CARD'
 export const UPDATE_BACKEND_SITE_URI = 'UPDATE_BACKEND_SITE_URI'
 export const UPDATE_URI = 'UPDATE_URI'
 
-export const activateAddApp = () => ({
-    type: ACTIVATE_ADD_APP
+export const activateAddAppCard = () => ({
+    type: ACTIVATE_ADD_APP_CARD
 })
 
-export const deactivateAddApp = () => ({
-    type: DEACTIVATE_ADD_APP
+export const deactivateAddAppCard = () => ({
+    type: DEACTIVATE_ADD_APP_CARD
 })
 
 export const updateBackendSiteUri = (newBackendSiteUri) => ({

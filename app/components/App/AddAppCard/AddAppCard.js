@@ -19,18 +19,18 @@ const {
 } = PropTypes
 
 /**
- * AddApp() returns component that displays necessary
+ * AddAppCard() returns component that displays necessary
  * input fields for adding new apps.
  */
 
-class AddApp extends Component {
-
+class AddAppCard extends Component {
+    
     render () {
 
         const onClickCreateApp = ()  => {
-            this.props.appFanout(formatApp(this.props.backendSiteUri, this.props.uri, this.props.user))
             this.props.updateBackendSiteUri('')
             this.props.updateUri('')
+            this.props.appFanout(formatApp(this.props.backendSiteUri, this.props.uri, this.props.user))
         }
 
         const renderActions = ({ isActive, isSubmitDisabled }) => {
@@ -52,7 +52,7 @@ class AddApp extends Component {
                 backendSiteUri=""
                 uri=""
                 actions={renderActions(this.props)}
-                onClick={this.props.activateAddApp}
+                onClick={this.props.activateAddAppCard}
             >
                 <div className={newAppInputContainer}>
                     <TextField
@@ -75,17 +75,17 @@ class AddApp extends Component {
 
 }
 
-AddApp.propTypes = {
+AddAppCard.propTypes = {
     backendSiteUri: string.isRequired,
     uri: string.isRequired,
     isActive: bool.isRequired,
     user: object.isRequired,
     isSubmitDisabled: bool.isRequired,
-    activateAddApp: func.isRequired,
-    deactivateAddApp: func.isRequired,
+    activateAddAppCard: func.isRequired,
+    deactivateAddAppCard: func.isRequired,
     updateBackendSiteUri: func.isRequired,
     updateUri: func.isRequired,
     appFanout: func.isRequired
 }
 
-export default AddApp 
+export default AddAppCard 

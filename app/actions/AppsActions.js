@@ -1,5 +1,5 @@
 import { saveApp, fetchApp } from 'apis'
-import { deactivateAddApp } from './AddAppActions'
+import { deactivateAddAppCard } from './UpdateAddAppCardActions'
 import { addSingleUsersApp } from './UsersAppsActions'
 
 export const FETCHING_APP = 'FETCHING_APP'
@@ -43,7 +43,7 @@ export function appFanout (app) {
         saveApp (app)
             .then((appWithId) => {
                 dispatch(addApp(appWithId))
-                dispatch(deactivateAddApp())
+                dispatch(deactivateAddAppCard())
                 dispatch(addSingleUsersApp(uid, appWithId.appId))
             })
             .catch((error) => {

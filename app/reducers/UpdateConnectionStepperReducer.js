@@ -1,4 +1,4 @@
-import { updateConnection as actions } from 'actions'
+import { updateConnectionStepper as actions } from 'actions'
 
 const initialState = {
     connectionUri: '',
@@ -10,7 +10,7 @@ const initialState = {
     isEditingConnectionName: false
 }
 
-export default function updateConnection ( state = initialState, action ) {
+export default function updateConnectionStepper ( state = initialState, action ) {
     switch ( action.type ) {
         case actions.UPDATE_CONNECTION_URI:
             return {
