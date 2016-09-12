@@ -20,7 +20,7 @@ export default function User (props) {
             :   <div>
                     {
                         props.isFetching === true
-                            ?   <p className={header}>{'Loading'}</p>
+                            ?   <div></div>
                             :   <div>
                                     <div className={userContainer}>
                                         <div>{props.name}</div>

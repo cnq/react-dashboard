@@ -44,7 +44,7 @@ function AppList (props) {
     return (
 
         props.isFetching === true
-            ?   <h1 className={header}>{'Fetching'}</h1>
+            ?   <div></div>
             :   <Grid>
                     {props.newAppsAvailable ? <NewAppsAvailable handleClick={props.resetNewAppsAvailable} /> : null}
                     <GridItem>

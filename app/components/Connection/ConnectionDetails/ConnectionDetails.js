@@ -34,7 +34,7 @@ function ConnectionDetails ({ connectionId, appId, isFetching, error, connection
         <div className={mainContainer}>
             {
                 isFetching === true
-                    ?   <p className={subHeader}>{'Fetching'}</p>
+                    ?   <div></div>
                     :   <div className={container}>
                             <div className={content}>
                                 <ConnectionContainer
