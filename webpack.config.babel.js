@@ -16,7 +16,7 @@ const base = {
     target: 'web',
     output: {
         path: PATHS.build,
-        publicPath: isProduction ? '' : '/',
+        publicPath: isProduction ? './' : '/',
         filename: 'bundle.js'
     },
     module: {
