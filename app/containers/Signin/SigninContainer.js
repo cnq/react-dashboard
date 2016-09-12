@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import Paper from 'material-ui/Paper';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
-import CircularProgress from 'material-ui/CircularProgress';
-import { SocialSignin, FormSignin } from 'components'
+import { SocialSignin, FormSignin, LoadingIndicator } from 'components'
 import { Signin } from 'views'
-import { users as actions } from 'actions'
+import { users as usersActions } from 'actions'
 import { formatAuthData } from 'helpers/utils'
 import {
     EMAIL
@@ -37,10 +36,6 @@ class SigninContainer extends Component {
                 this.props.router.replace('/dashboard/apps/')
             })
     }
-
-    loading = () => (
-        <CircularProgress size={2} />
-    )
 
     socialAuthButtons = (props, handleAuth) => {
         // Are we in production?
@@ -82,9 +77,11 @@ class SigninContainer extends Component {
                         />
                         <CardText className={cardText}>
                             {
-                                this.props.isFetching
-                                    ? this.loading()
-                                    : this.login(this.props, this.handleAuth)
+                                this.props.isAuthenticating
+                                    ?   <LoadingIndicator
+                                            size={2}
+                                        />
+                                    :   this.login(this.props, this.handleAuth)
                             }
                         </CardText>
                         <CardText className={`${footnote} ${cardText}`}>
@@ -105,10 +102,11 @@ SigninContainer.propTypes = {
 
 const mapStateToProps = ({users}) => ({
     isFetching: users.isFetching,
+    isAuthenticating: users.isAuthenticating,
     error: users.error
 })
 
 export default withRouter(connect(
     mapStateToProps,
-    actions
+    usersActions
 )(SigninContainer))

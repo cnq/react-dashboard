@@ -10,8 +10,7 @@ import {
 const {
     bool,
     string,
-    func,
-    object
+    func
 } = PropTypes
 
 /**

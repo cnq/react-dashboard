@@ -26,6 +26,7 @@ function user ( state = initialUserState, action ) {
 const initialState = {
     isFetching: false,
     error: '',
+    isAuthenticating: false,
     isAuthenticated: false,
     authenticatedId: ''
 }
@@ -36,6 +37,7 @@ export default function users ( state = initialState, action ) {
             return {
                 ...state,
                 isAuthenticated: true,
+                isAuthenticating: false,
                 authenticatedId: action.uid
             }
         case actions.UNAUTH_USER:
@@ -43,6 +45,11 @@ export default function users ( state = initialState, action ) {
                 ...state,
                 isAuthenticated: false,
                 authenticatedId: ''
+            }
+        case actions.AUTHENTICATING_USER:
+            return {
+                ...state,
+                isAuthenticating: true
             }
         case actions.FETCHING_USER:
             return {

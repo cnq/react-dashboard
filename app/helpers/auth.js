@@ -71,7 +71,6 @@ export default function auth (authData) {
                 // If we have a token, authenticate with token and attach the
                 // returned user object and pass it on with the authData object
                 if (provider !== EMAIL) {
-                    console.log(provider)
                     //authenticate via federated identity provider
                     return (
                         fireAuth.signInWithCredential(provider)

@@ -30,7 +30,7 @@ function AppDetails ({ appId, isFetching, error }) {
     return (
         <div className={mainContainer}>
             {
-                isFetching === true
+                isFetching === true && !appId.length
                     ?   <p className={subHeader}>{'Fetching'}</p>
                     :   <div className={container}>
                             <div className={content}>

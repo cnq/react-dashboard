@@ -10,6 +10,7 @@ import {
 
 export const AUTH_USER = 'AUTH_USER'
 export const UNAUTH_USER = 'UNAUTH_USER'
+export const AUTHENTICATING_USER = 'AUTHENTICATING_USER'
 export const FETCHING_USER = 'FETCHING_USER'
 export const FETCHING_USER_ERROR = 'FETCHING_USER_ERROR'
 export const FETCHING_USER_SUCCESS = 'FETCHING_USER_SUCCESS'
@@ -33,6 +34,10 @@ export const authUser = (uid) => ({
     uid
 })
 
+export const authenticatingUser = () => ({
+    type: AUTHENTICATING_USER
+})
+
 export const fetchingUserSuccess = (uid, user, timestamp) => ({
     type: FETCHING_USER_SUCCESS,
     uid,
@@ -42,6 +47,7 @@ export const fetchingUserSuccess = (uid, user, timestamp) => ({
 
 export function fetchAndHandleAuthenticatedUser (authData) {
     return function (dispatch) {
+        dispatch(authenticatingUser())
         dispatch(fetchingUser())
         return (
             auth(authData)
