@@ -4,12 +4,13 @@ import {
     apiKey,
     authDomain,
     databaseURL,
-    storageBucket
+    storageBucket,
+    apiBaseUrl
 } from '../../config.js'
 
 // Paperhook Config Data
 export const ajax = axios.create({
-    baseURL: 'http://tailspin.demo.ncnq.io',
+    baseURL: apiBaseUrl,
     timeout: 6000,
     withCredentials: true
 })
