@@ -1,4 +1,6 @@
 import { fireDb, ajax } from 'config/constants'
+import Rx from 'rxjs/Rx'
+import isEqual from 'lodash/isEqual'
 
 /**
  * saveToApps() saves an app to Firebase and returns an
@@ -158,15 +160,55 @@ export function listenToAppList (userId, listenerOn, callback, errorCallback) {
         }
     } else {
         //Paperhook
-        return ajax.get("/api/apps").then(function (response) {
-            const appList = response.data || {}
-            const sortedIds = Object.keys(appList).sort((a, b) => {
-                return appList[b].timestamp - appList[a].timestamp
-            })
-            callback({appList, sortedIds});
-        }).catch(function (error) {
-            errorCallback(error);
-        })
+        //Create Observable stream to watch the app endpoint for updates
+        let appStream$ = new Rx.Observable.create(
+            observer => {
+                let interval = setInterval( () => {
+                    ajax.get('/api/apps')
+                        .then(
+                            response => {
+                                const appList = response.data || {}
+                                const sortedIds = Object.keys(appList).sort((a, b) => {
+                                    appList[b].timestamp - appList[a].timestamp
+                                })
+                                let apps = {appList, sortedIds}
+                                observer.next(apps)
+                            }
+                        )
+                    }, 2000)
+                return () => {
+                    //Clean up the stream on unsubscribe
+                    clearInterval(interval)
+                }
+            }
+        )
+        .retry(3)
+
+        //Create disposable stream so that we can unsubscribe and clean up the stream later
+        let disposable = appStream$
+            //Only allow through if the current list of sortedIds is not equal to the previous list of sortedIds
+            .distinctUntilChanged(
+                (a,b) => {
+                    return isEqual(a.sortedIds,b.sortedIds)
+                },
+                apps => {
+                    return apps
+                }
+            )
+            //Subscribe to the stream
+            .subscribe(
+                apps => {
+                    callback(apps)
+                },
+                error => {
+                    errorCallback('The following error occurred: ', error)
+                }
+            )
+
+        if (!listenerOn && disposable) {
+            //Unsubscribe from the stream
+            disposable.unsubscribe()
+        }
     }
 }
 

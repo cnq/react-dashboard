@@ -36,30 +36,26 @@ export const addMultipleConnections = (connections) => ({
     connections
 })
 
-export function connectionFanout (connection) {
-    return function (dispatch, getState) {
-        const appId = getState().apps.appId
-        saveConnection (connection)
-            .then((connectionWithId) => {
-                dispatch(addConnection(connectionWithId))
-                dispatch(addSingleAppsConnection(appId, connectionWithId.connectionId))
-            })
-            .catch((error) => {
-                console.log('Error in connectionFanout: ', error)
-            })
-    }
+export const connectionFanout = (connection) => (dispatch, getState) => {
+    const appId = getState().apps.appId
+    saveConnection (connection)
+        .then((connectionWithId) => {
+            dispatch(addConnection(connectionWithId))
+            dispatch(addSingleAppsConnection(appId, connectionWithId.connectionId))
+        })
+        .catch((error) => {
+            console.log('Error in connectionFanout: ', error)
+        })
 }
 
-export function fetchAndHandleConnection (connectionId) {
-    return function (dispatch) {
-        dispatch(fetchingConnection())
-        fetchConnection (connectionId)
-            .then((connection) => {
-                dispatch(fetchingConnectionSuccess(connection))
-            })
-            .catch((error) => {
-                console.log('Error in fetchAndHandleConnection: ', error)
-                dispatch(fetchingConnectionError(error))
-            })
-    }
+export const fetchAndHandleConnection = (connectionId) => (dispatch) => {
+    dispatch(fetchingConnection())
+    fetchConnection (connectionId)
+        .then((connection) => {
+            dispatch(fetchingConnectionSuccess(connection))
+        })
+        .catch((error) => {
+            console.log('Error in fetchAndHandleConnection: ', error)
+            dispatch(fetchingConnectionError(error))
+        })
 }

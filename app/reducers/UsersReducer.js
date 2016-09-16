@@ -66,16 +66,16 @@ export default function users ( state = initialState, action ) {
             return (
                 action.user === null
                     ?   {
-                    ...state,
-                    error: '',
-                    isFetching: false
-                }
+                            ...state,
+                            isFetching: false,
+                            error: ''
+                        }
                     :   {
-                    ...state,
-                    isFetching: false,
-                    error: '',
-                    [action.uid]: user( state[action.uid], action )
-                }
+                            ...state,
+                            isFetching: false,
+                            error: '',
+                            [action.uid]: user( state[action.uid], action )
+                        }
             )
         default:
             return state

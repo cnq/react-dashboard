@@ -1,5 +1,10 @@
 import { usersApps as actions } from 'actions'
 
+const initialUsersAppState = {
+    lastUpdated: 0,
+    appIds: []
+}
+
 function usersApp ( state = initialUsersAppState, action ) {
     switch ( action.type ) {
         case actions.ADD_SINGLE_USERS_APP:

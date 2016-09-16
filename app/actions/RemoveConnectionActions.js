@@ -26,17 +26,15 @@ export const removeConnectionComplete = (connectionId) => ({
     connectionId
 })
 
-export function deleteAndHandleConnection (connectionId, appId) {
-    return function (dispatch) {
-        dispatch(removingConnection(connectionId))
-        deleteConnection (connectionId, appId)
-            .then(() => {
-                dispatch(removeConnectionSuccess(connectionId))
-                dispatch(removeConnectionComplete(connectionId))
-            })
-            .catch((error) => {
-                console.log('Error in deleteAndHandleConnection: ', error)
-                dispatch(removeConnectionError(error, connectionId))
-            })
-    }
+export const deleteAndHandleConnection = (connectionId, appId) => (dispatch) => {
+    dispatch(removingConnection(connectionId))
+    deleteConnection (connectionId, appId)
+        .then(() => {
+            dispatch(removeConnectionSuccess(connectionId))
+            dispatch(removeConnectionComplete(connectionId))
+        })
+        .catch((error) => {
+            console.log('Error in deleteAndHandleConnection: ', error)
+            dispatch(removeConnectionError(error, connectionId))
+        })
 }

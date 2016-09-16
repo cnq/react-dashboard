@@ -29,20 +29,18 @@ export const addSingleUsersApp = (uid, appId) => ({
     appId
 })
 
-export function fetchAndHandleUsersApps (uid) {
-    return function (dispatch) {
-        dispatch(fetchingUsersApps(uid))
-        return (
-            fetchUsersApps(uid)
-                .then((apps) => dispatch(addMultipleApps(apps)))
-                .then(({apps}) => dispatch(
-                    fetchingUsersAppsSuccess(
-                        uid,
-                        Object.keys(apps).sort((a,b) => apps[b].timestamp - apps[a].timestamp),
-                        Date.now()
-                    ))
-                )
-                .catch((error) => dispatch(fetchingUsersAppsError(error)))
-        )
-    }
+export const fetchAndHandleUsersApps = (uid) => (dispatch) => {
+    dispatch(fetchingUsersApps(uid))
+    return (
+        fetchUsersApps(uid)
+            .then((apps) => dispatch(addMultipleApps(apps)))
+            .then(({apps}) => dispatch(
+                fetchingUsersAppsSuccess(
+                    uid,
+                    Object.keys(apps).sort((a,b) => apps[b].timestamp - apps[a].timestamp),
+                    Date.now()
+                ))
+            )
+            .catch((error) => dispatch(fetchingUsersAppsError(error)))
+    )
 }

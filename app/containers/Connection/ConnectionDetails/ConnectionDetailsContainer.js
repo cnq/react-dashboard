@@ -42,6 +42,7 @@ ConnectionDetailsContainer.propTypes = {
     appId: string.isRequired,
     isFetching: bool.isRequired,
     error: string.isRequired,
+    connectionAlreadyFetched: bool.isRequired,
     removeConnectionFetching: func.isRequired,
     fetchAndHandleConnection: func.isRequired
 }

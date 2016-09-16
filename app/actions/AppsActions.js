@@ -37,31 +37,27 @@ export const addMultipleApps = (apps) => ({
     apps
 })
 
-export function appFanout (app) {
-    return function (dispatch, getState) {
-        const uid = getState().users.authenticatedId
-        saveApp (app)
-            .then((appWithId) => {
-                dispatch(addApp(appWithId))
-                dispatch(deactivateAddAppCard())
-                dispatch(addSingleUsersApp(uid, appWithId.appId))
-            })
-            .catch((error) => {
-                console.log('Error in appFanout: ', error)
-            })
-    }
+export const appFanout = (app) => (dispatch, getState) => {
+    const uid = getState().users.authenticatedId
+    saveApp (app)
+        .then((appWithId) => {
+            dispatch(addApp(appWithId))
+            dispatch(deactivateAddAppCard())
+            dispatch(addSingleUsersApp(uid, appWithId.appId))
+        })
+        .catch((error) => {
+            console.log('Error in appFanout: ', error)
+        })
 }
 
-export function fetchAndHandleApp (appId){
-    return function (dispatch) {
-        dispatch(fetchingApp())
-        fetchApp (appId)
-            .then((app) => {
-                dispatch(fetchingAppSuccess(app))
-            })
-            .catch((error) => {
-                console.log('Error in fetchAndHandleApp: ', error)
-                dispatch(fetchingAppError(error))
-            })
-    }
+export const fetchAndHandleApp = (appId) => (dispatch) => {
+    dispatch(fetchingApp())
+    fetchApp (appId)
+        .then((app) => {
+            dispatch(fetchingAppSuccess(app))
+        })
+        .catch((error) => {
+            console.log('Error in fetchAndHandleApp: ', error)
+            dispatch(fetchingAppError(error))
+        })
 }

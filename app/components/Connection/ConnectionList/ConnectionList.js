@@ -16,24 +16,16 @@ const {
 /**
  * ConnectionList() displays a list of all connections created for an app.
  */
-ConnectionList.propTypes = {
-    connectionIds: PropTypes.instanceOf(List),
-    appId: PropTypes.string.isRequired,
-    error: string.isRequired,
-    isFetching: bool.isRequired,
-    goToAddAppConnections: func.isRequired,
-    connectionAlreadyFetched: bool.isRequired
-}
-
 function ConnectionList (props) {
-
+    console.log('---------------------------')
+    console.log('Size:', props.connectionIds.size)
+    console.log('---------------------------')
     return (
 
         props.isFetching === true
             ?   <div></div>
             :   <div>
                     {
-                        //  immutable uses .size instead of .length
                         props.connectionIds.size === 0
                             ?   <div className={`${centeredContainer} ${breathingRoom}`}>
                                     <h1>{'Oops!! This is unfortunate.'}</h1>
@@ -47,7 +39,6 @@ function ConnectionList (props) {
                     </div>
                     <Grid>
                         {
-                            // using immutable .map property
                             props.connectionIds.map( (id) => (
                                 <GridItem key={v4()}>
                                     <ConnectionContainer
@@ -63,6 +54,15 @@ function ConnectionList (props) {
                 </div>
 
     )
+}
+
+ConnectionList.propTypes = {
+    connectionIds: PropTypes.instanceOf(List),
+    appId: PropTypes.string.isRequired,
+    error: string.isRequired,
+    isFetching: bool.isRequired,
+    goToAddAppConnections: func.isRequired,
+    connectionAlreadyFetched: bool.isRequired
 }
 
 export default ConnectionList

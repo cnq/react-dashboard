@@ -45,39 +45,46 @@ export const fetchingUserSuccess = (uid, user, timestamp) => ({
     timestamp
 })
 
-export function fetchAndHandleAuthenticatedUser (authData) {
-    return function (dispatch) {
-        dispatch(authenticatingUser())
-        dispatch(fetchingUser())
-        return (
-            auth(authData)
-                .then((results) => {
-                    // Pull credentials and user data from result
-                    const provider = results.credential.provider
-                    const email = provider === EMAIL ? results.credential.email : null
-                    const password = provider === EMAIL ? results.credential.password : null
-                    const accessToken = provider !== EMAIL ? results.credential.accessToken : null
-                    const idToken = provider === GOOGLE ? results.credential.idToken : null
-                    const secret = provider === TWITTER ? results.credential.secret : null
-                    const user = results.user
+export const fetchAndHandleAuthenticatedUser = (authData) => (dispatch) => {
+    dispatch(authenticatingUser())
+    dispatch(fetchingUser())
+    return (
+        auth(authData)
+            .then((results) => {
+                // Pull credentials and user data from result
+                const provider = results.credential.provider
+                const email = provider === EMAIL ? results.credential.email : null
+                const password = provider === EMAIL ? results.credential.password : null
+                const accessToken = provider !== EMAIL ? results.credential.accessToken : null
+                const idToken = provider === GOOGLE ? results.credential.idToken : null
+                const secret = provider === TWITTER ? results.credential.secret : null
+                const user = results.user
 
-                    // Format data
-                    const authData = formatAuthData(provider, email, password, accessToken, idToken, secret)
-                    const userData = formatUserData(user.displayName, user.photoURL, user.uid)
+                // Format data
+                const authData = formatAuthData(provider, email, password, accessToken, idToken, secret)
+                const userData = formatUserData(user.displayName, user.photoURL, user.uid)
 
-                    // Save data to local storage
-                    saveToLocalStorage('auth', authData)
-                    saveToLocalStorage('user', userData)
+                // Save data to local storage
+                saveToLocalStorage('auth', authData)
+                saveToLocalStorage('user', userData)
 
-                    // Fetch user
-                    return dispatch(fetchingUserSuccess(user.uid, userData, Date.now()))
+                // Fetch user
+                return dispatch(fetchingUserSuccess(user.uid, userData, Date.now()))
 
-                })
-                .then(({user}) => saveUser(user))
-                .then((user) => dispatch(authUser(user.uid)))
-                .catch((error) => dispatch(fetchingUserError(error)))
-        )
-    }
+            })
+            .then(({user}) => saveUser(user))
+            .then((user) => dispatch(authUser(user.uid)))
+            .catch((error) => dispatch(fetchingUserError(error)))
+    )
+}
+
+export const fetchAndHandleUser = (uid) => (dispatch) => {
+   dispatch(fetchingUser())
+    return (
+        fetchUser(uid)
+            .then((user) => dispatch(fetchingUserSuccess(uid, user, Date.now())))
+            .catch((error) => dispatch(fetchingUserError(error)))
+    )
 }
 
 export function signoutAndUnauth () {
@@ -89,16 +96,5 @@ export function signoutAndUnauth () {
     return function (dispatch) {
         signout()
         dispatch(unauthUser())
-    }
-}
-
-export function fetchAndHandleUser (uid) {
-    return function (dispatch) {
-       dispatch(fetchingUser())
-        return (
-            fetchUser(uid)
-                .then((user) => dispatch(fetchingUserSuccess(uid, user, Date.now())))
-                .catch((error) => dispatch(fetchingUserError(error)))
-        )
     }
 }

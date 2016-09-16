@@ -26,17 +26,15 @@ export const removeAppComplete = (appId) => ({
     appId
 })
 
-export function deleteAndHandleApp (appId, uid) {
-    return function (dispatch) {
-        dispatch(removingApp(appId))
-        deleteApp (appId, uid)
-            .then(() => {
-                dispatch(removeAppSuccess(appId))
-                dispatch(removeAppComplete(appId))
-            })
-            .catch((error) => {
-                console.log('Error in deleteAndHandleApp: ', error)
-                dispatch(removeAppError(error, appId))
-            })
-    }
+export const deleteAndHandleApp = (appId, uid) => (dispatch) => {
+    dispatch(removingApp(appId))
+    deleteApp (appId, uid)
+        .then(() => {
+            dispatch(removeAppSuccess(appId))
+            dispatch(removeAppComplete(appId))
+        })
+        .catch((error) => {
+            console.log('Error in deleteAndHandleApp: ', error)
+            dispatch(removeAppError(error, appId))
+        })
 }

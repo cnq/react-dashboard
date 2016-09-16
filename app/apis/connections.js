@@ -1,4 +1,6 @@
 import { fireDb, ajax } from 'config/constants'
+import Rx from 'rxjs/Rx'
+import isEqual from 'lodash/isEqual'
 
 /**
  * saveToConnections() saves a connection to Firebase and returns a
@@ -175,15 +177,55 @@ export function listenToConnectionList (appId, listenerOn, callback, errorCallba
         }
     } else {
         //Paperhook
-        return ajax.get(`/api/apps/${appId}/routes`).then(function (response) {
-            const connectionList = response.data || {}
-            const sortedIds = Object.keys(connectionList).sort((a,b) => {
-                return connectionList[b].timestamp - connectionList[a].timestamp
-            })
-            callback({connectionList, sortedIds})
-        }).catch(function (response) {
-            errorCallback();
-        })
+        //Create Observable stream to watch the app endpoint for updates
+        let connectionStream$ = new Rx.Observable.create(
+            observer => {
+                let interval = setInterval(() => {
+                    ajax.get(`/api/apps/${appId}/routes`)
+                        .then(
+                            response => {
+                                const connectionList = response.data || {}
+                                const sortedIds = Object.keys(connectionList).sort((a, b) => {
+                                    connectionList[b].timestamp - connectionList[a].timestamp
+                                })
+                                let connections = {connectionList, sortedIds}
+                                observer.next(connections)
+                            }
+                        )
+                }, 2000)
+                return () => {
+                    //Clean up the stream on unsubscribe
+                    clearInterval(interval)
+                }
+            }
+        )
+        .retry(3)
+        
+        //Create disposable stream so that we can unsubscribe and clean up the stream later
+        let disposable = connectionStream$
+        //Only allow through if the current list of sortedIds is not equal to the previous list of sortedIds
+            .distinctUntilChanged(
+                (a,b) => {
+                    return isEqual(a.sortedIds,b.sortedIds)
+                },
+                connections => {
+                    return connections
+                }
+            )
+            //Subscribe to the stream
+            .subscribe(
+                connections => {
+                    callback(connections)
+                },
+                error => {
+                    errorCallback('The following error occurred: ', error)
+                }
+            )
+
+        if (!listenerOn && disposable) {
+            //Unsubscribe from the stream
+            disposable.unsubscribe()
+        }
     }
 }
 

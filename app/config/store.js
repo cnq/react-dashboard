@@ -1,20 +1,31 @@
 //import throttle from 'lodash/throttle'
 import * as reducers from 'reducers'
+import * as epics from 'epics'
 import { reducer as form } from 'redux-form';
 import thunk from 'redux-thunk'
-import promise from 'redux-promise'
 import logger from 'redux-logger'
+import { createEpicMiddleware } from 'redux-observable';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
+
 import { routerReducer } from 'react-router-redux'
 import { loadFromLocalStorage, saveToLocalStorage } from 'helpers/localStorage'
 
 const configureStore = () => {
-    //const persistedState = loadFromLocalStorage('state')
-    const middlewares = [thunk, promise]
 
-    if (process.env.NODE_ENV != 'production') {
+    // TODO: Add epics to control action order
+    // const epicMiddleware = createEpicMiddleware(
+    //     combineEpics(
+    //         ...epics
+    //     )
+    // );
+
+    //const persistedState = loadFromLocalStorage('state')
+    //const middlewares = [thunk, epicMiddleware]
+    const middlewares = [thunk]
+
+    //if (process.env.NODE_ENV != 'production') {
         //middlewares.push(logger())
-    }
+    //}
 
     const store = createStore(
         combineReducers({
@@ -28,6 +39,10 @@ const configureStore = () => {
             window.devToolsExtension ? window.devToolsExtension() : (f) => f
         )
     )
+
+    if (window.devToolsExtension) {
+        window.devToolsExtension.updateStore(store);
+    }
 
     //TODO: work on persisting state to the local storage. Reference Idiomatic Redux on egghead.io
     //save the state anytime it changes

@@ -29,20 +29,18 @@ export const addSingleAppsConnection = (appId, connectionId) => ({
     connectionId
 })
 
-export function fetchAndHandleAppsConnections (appId) {
-    return function (dispatch) {
-        dispatch(fetchingAppsConnections(appId))
-        return (
-            fetchAppsConnections(appId)
-                .then((connections) => dispatch(addMultipleConnections(connections)))
-                .then(({connections}) => dispatch(
-                    fetchingAppsConnectionsSuccess(
-                        appId,
-                        Object.keys(connections).sort((a,b) => connections[b].timestamp - connections[a].timestamp),
-                        Date.now()
-                    ))
-                )
-                .catch((error) => dispatch(fetchingAppsConnectionsError(error)))
-        )
-    }
+export const fetchAndHandleAppsConnections = (appId) => (dispatch) => {
+    dispatch(fetchingAppsConnections(appId))
+    return (
+        fetchAppsConnections(appId)
+            .then((connections) => dispatch(addMultipleConnections(connections)))
+            .then(({connections}) => dispatch(
+                fetchingAppsConnectionsSuccess(
+                    appId,
+                    Object.keys(connections).sort((a,b) => connections[b].timestamp - connections[a].timestamp),
+                    Date.now()
+                ))
+            )
+            .catch((error) => dispatch(fetchingAppsConnectionsError(error)))
+    )
 }

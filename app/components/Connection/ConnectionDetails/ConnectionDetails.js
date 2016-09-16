@@ -20,15 +20,6 @@ const {
  * ConnectionDetails() returns a connection details component which displays
  * the settings for the currently selected connection.
  */
-
-ConnectionDetails.propTypes = {
-    connectionId: string.isRequired,
-    appId: string.isRequired,
-    isFetching: bool.isRequired,
-    error: string.isRequired,
-    connectionAlreadyFetched: bool.isRequired
-}
-
 function ConnectionDetails ({ connectionId, appId, isFetching, error, connectionAlreadyFetched }) {
     return (
         <div className={mainContainer}>
@@ -52,6 +43,14 @@ function ConnectionDetails ({ connectionId, appId, isFetching, error, connection
             }
         </div>
     )
+}
+
+ConnectionDetails.propTypes = {
+    connectionId: string.isRequired,
+    appId: string.isRequired,
+    isFetching: bool.isRequired,
+    error: string.isRequired,
+    connectionAlreadyFetched: bool.isRequired
 }
 
 export default ConnectionDetails

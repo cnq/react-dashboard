@@ -2,7 +2,7 @@ import { apps as actions } from 'actions'
 import { Map, fromJS } from 'immutable'
 
 const initialState = Map({
-    isFetching: true, //TODO: check whether this should be defaulted to true
+    isFetching: true,
     error: ''
 })
 
