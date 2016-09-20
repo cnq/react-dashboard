@@ -30,7 +30,8 @@ export default {
         PATHS.app
     ],
     noInfo: false,
-    devtool: 'cheap-module-inline-source-map',
+    //devtool: 'cheap-module-inline-source-map',
+    devtool: 'source-map',
     devServer: {
         historyApiFallback: true,
         contentBase: PATHS.build,

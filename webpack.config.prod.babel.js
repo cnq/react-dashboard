@@ -22,7 +22,8 @@ export default {
     entry: [
         PATHS.app
     ],
-    devtool: 'cheap-module-source-map',
+    //devtool: 'cheap-module-inline-source-map', //TODO: remove sourcemap in production to reduce app size
+    devtool: 'source-map',
     plugins: [
         // TODO: add ExtractTextPlugin to extract styles.css
         HtmlWebpackPluginConfig,
