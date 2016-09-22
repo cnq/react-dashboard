@@ -19,13 +19,15 @@ const configureStore = () => {
     //     )
     // );
 
+    //TODO: Enable persisted state of certain data
     //const persistedState = loadFromLocalStorage('state')
+
     //const middlewares = [thunk, epicMiddleware]
     const middlewares = [thunk]
 
-    //if (process.env.NODE_ENV != 'production') {
-        //middlewares.push(logger())
-    //}
+    if (process.env.NODE_ENV != 'production') {
+        middlewares.push(logger())
+    }
 
     const store = createStore(
         combineReducers({
