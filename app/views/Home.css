@@ -1,0 +1,7 @@
+﻿.container {
+    composes: centeredContainer from 'styles.css';
+}
+
+.title {
+    composes: largeHeader from 'styles.css';
+}
