@@ -1,4 +1,5 @@
 export MainContainer from './MainContainer'
 export HomeContainer from './HomeContainer'
+export DashboardContainer from './DashboardContainer'
 
 //export <TYPE>Container from './PATH-TO-CONTAINER-WITHOUT-EXTENSION'
