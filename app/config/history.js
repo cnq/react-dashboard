@@ -4,6 +4,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 const configureHistory = (history, routes, store) => {
     history.listen(location => {
         match({ routes, location }, (error, redirectLocation, renderProps) => {
+            if(redirectLocation != null) return;
             const locals = {
                 path: renderProps.location.pathname,
                 query: renderProps.location.query,
