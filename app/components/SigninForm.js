@@ -11,25 +11,19 @@ const buttonStyles = { color: '#ffffff' }
 
 const { string, func } = PropTypes
 
+
+
 const validate = values => {
     const errors = {}
-    const requiredFields = [ 'email', 'password' ]
-    requiredFields.forEach(field => {
-        if (!values[ field ]) {
-            errors[ field ] = capitalize(field) + ' required'
-        }
-    })
-    if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Enter a valid email address'
-    }
+
     return errors
 }
 
-class FormSignin extends Component {
+class SigninForm extends Component {
 
     renderTextField = field => {
         return (
-            <TextField
+           <TextField
                 className={formField}
                 key={field.name}
                 name={field.name}
@@ -47,37 +41,34 @@ class FormSignin extends Component {
 
             return (
 
-                <form onSubmit={handleSubmit((event) => onSubmit(EMAIL, event))}>
+                <form onSubmit={handleSubmit((event) => onSubmit(event))}>
                     <Field
-        name="email"
-        type="text"
-        ref={(ref) => this.emailField = ref}
-        component={this.renderTextField}
-        floatingLabelText={`Email Address`}
-    hintText={`Enter your email address`}
-/>
-<Field
-    name="password"
-    type="password"
-    ref={(ref) => this.passwordField = ref}
-    component={this.renderTextField}
-    floatingLabelText={`Password`}
-    hintText={`Enter your password`}
-/>
-<RaisedButton
-    className={formButton}
-    type="submit"
-    disabled={pristine || submitting}
-    fullWidth={false}
-    backgroundColor="#7DC93A"
-    labelStyle={buttonStyles}
->
-    {`Sign In`}
-</RaisedButton>
-</form>
-)
+                        name="email"
+                        type="text"
+                        ref={(ref) => this.emailField = ref}
+                        component={this.renderTextField}
+                        floatingLabelText={`Email Address`}
+                        hintText={`Enter your email address`}/>
+                    <Field
+                        name="password"
+                        type="password"
+                        ref={(ref) => this.passwordField = ref}
+                        component={this.renderTextField}
+                        floatingLabelText={`Password`}
+                        hintText={`Enter your password`}
+                    />
+                    <RaisedButton
+                        className={formButton}
+                        type="submit"
+                        fullWidth={false}
+                        backgroundColor="#7DC93A"
+                        labelStyle={buttonStyles}>
+                        {`Sign In`}
+                    </RaisedButton>
+                </form>
+            )
 
-    }
+        }
 
         renderError = () => (
             <div>
@@ -86,24 +77,24 @@ class FormSignin extends Component {
             </div>
         )
 
-                    render () {
-                        const { formError } = this.props
-                        return (
-                            <div className={centeredContainer}>
-                                <br />
-                                {this.renderForm(this.props)}
+        render () {
+            const { formError } = this.props
+            return (
+                <div className={centeredContainer}>
+                <br />
+                    {this.renderForm(this.props)}
                     {
                         formError
                             ?   this.renderError()
                             :   null
                     }
-                    </div>
+                </div>
             )
-                }
+        }
 
 }
 
-FormSignin.propTypes = {
+SigninForm.propTypes = {
     formError: string.isRequired,
     onSubmit: func.isRequired
 }
@@ -111,4 +102,4 @@ FormSignin.propTypes = {
 export default reduxForm({
     form: 'signin',
     validate
-})(FormSignin)
+})(SigninForm)

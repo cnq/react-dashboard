@@ -4,8 +4,8 @@ import { withRouter } from 'react-router'
 import Paper from 'material-ui/Paper';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import { SigninForm, LoadingIndicator } from 'components'
-import { users as usersActions } from 'actions'
-import { EMAIL } from 'config/constants'
+import { provideHooks } from 'redial';
+import { signin as signinActions } from 'actions'
 import s from './SigninContainer.css'
 import { centeredContainer } from '../styles.css'
 
@@ -20,21 +20,22 @@ const Signin = React.createClass({
                 {this.props.children}
             </div>
         )
-    }
+}
 })
 
 class SigninContainer extends Component {
 
-    handleAuth = (authProvider, event) => {
+    handleAuth = (event) => {
         console.log('Login button clicked');
+        this.props.signIn(event)
     }
 
 
-    login = (props, handleAuth) => {
-        return (
-            <div>
-                <SigninForm isFetching={props.isFetching} formError={props.error} onSubmit={handleAuth} />
-            </div>
+        login = (props, handleAuth) => {
+            return (
+                <div>
+                    <SigninForm isFetching={props.isFetching} formError={props.error} onSubmit={handleAuth} />
+                </div>
         )
     }
 
@@ -45,27 +46,27 @@ class SigninContainer extends Component {
                     <Card>
                         <CardHeader title="Nice to see you again!" subtitle="Login to get started" />
                         <CardText className={s.cardText}>
-                            {
+                {
                                 this.props.isAuthenticating
                                     ?   <LoadingIndicator size={2} />
                                     :   this.login(this.props, this.handleAuth)
-                            }
+                }
                         </CardText>
-                        <CardText className={`${s.footnote} ${s.cardText}`}>
+                    <CardText className={`${s.footnote} ${s.cardText}`}>
                             <p>{`By logging in, you agree to Paperhook's`} <br /> <a target="_blank" href="/terms-of-use">{`Terms of Use`}</a> {`and`} <a target="_blank" href="/privacy-policy">{`Privacy Policy.`}</a></p>
                         </CardText>
                     </Card>
                 </Paper>
             </Signin>
         )
-     }
-}
+                            }
+                            }
 
-SigninContainer.propTypes = {
-    isFetching: bool,
-    error: string,
-    fetchAndHandleAuthenticatedUser: func
-}
+                                SigninContainer.propTypes = {
+                                    isFetching: bool,
+                                    error: string,
+                                    fetchAndHandleAuthenticatedUser: func
+                                }
 
 export default withRouter(connect(
     (state) => ({
@@ -73,5 +74,5 @@ export default withRouter(connect(
         isAuthenticating: false,
         error: ""
     }),
-    usersActions
+    signinActions
 )(SigninContainer))
