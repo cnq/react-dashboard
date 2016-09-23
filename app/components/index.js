@@ -1,3 +1,7 @@
 export Signin from './Signin'
+export SigninForm from './SigninForm'
 export Signout from './Signout'
+export Navigation from './Navigation'
+export SettingsDropdown from './SettingsDropdown'
+export LoadingIndicator from './LoadingIndicator'
 //export <COMPONENT-NAME> from './PATH-TO-COMPONENT-WITHOUT-EXTENSION'
