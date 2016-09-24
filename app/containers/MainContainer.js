@@ -7,8 +7,6 @@ import s from './MainContainer.css'
 import { customTheme } from '../theme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-const { bool, object } = PropTypes
-
 function checkAuthHoc(WrappedComponent) {
 
     class CheckAuthentication extends Component {
@@ -29,55 +27,28 @@ function checkAuthHoc(WrappedComponent) {
             }
         }
 
-        //componentWillMount() {
-        //    console.log('CheckAuthentication - componentWillMount() called');
-        //    const isAuthed = this.handleAuthCheck()
-
-        //    if (!isAuthed && this.props.router.isActive('dashboard')) {
-        //        this.props.router.push('/signin')
-        //    }
-        //}
-
-        //componentWillReceiveProps(nextProps) {
-        //    const isAuthed = this.handleAuthCheck(nextProps.isAuthenticated)
-        //    const nextRouter = nextProps.router
-        //    const { router } = this.props
-
-        //    if(isAuthed) {
-        //        if (!nextProps.isAuthenticated) {
-        //            router.push('/signout')
-        //        } else if (nextRouter.isActive('signin')) {
-        //            router.push('/dashboard/apps')
-        //        }
-        //    } else if (nextRouter.isActive('dashboard')) {
-        //        router.push('/signin')
-        //    }
-        //}
-
-        //handleAuthCheck (nextIsAuthenticated) {
-        //    console.log('CheckAuthentication - handleAuthCheck() called');
-        //    const { isAuthenticated } = this.props
-        //    this.props.checkSigninStart()
-        //}
-
         render() {
             return (
                 <div>
                     { !this.props.isAuthenticated && this.props.authRequired ? null : <WrappedComponent { ...this.props } /> }
                 </div>
             )
-                    }
+        }
 
     }
     function mapStateToProps({signin}) { 
         return { isAuthenticated: signin.isAuthenticated }
     }
 
-return withRouter(connect( mapStateToProps, signinActions)(CheckAuthentication))
+    return withRouter(connect( mapStateToProps, signinActions)(CheckAuthentication))
 }
 
 
 class MainContainer extends Component {
+    propTypes : {
+        isAuthenticated: PropTypes.bool.isRequired,
+        user: PropTypes.object.isRequired
+    }
     render () {
         return (
             <MuiThemeProvider muiTheme={customTheme}>
@@ -90,11 +61,6 @@ class MainContainer extends Component {
             </MuiThemeProvider>
         )
     }
-}
-
-MainContainer.propTypes = {
-    isAuthenticated: bool.isRequired,
-    user: object.isRequired
 }
 
 export default connect(
