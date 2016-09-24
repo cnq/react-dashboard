@@ -4,7 +4,6 @@ import { withRouter } from 'react-router'
 import Paper from 'material-ui/Paper';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import { SigninForm, LoadingIndicator } from 'components'
-import { provideHooks } from 'redial';
 import { signin as signinActions } from 'actions'
 import s from './SigninContainer.css'
 import { centeredContainer } from '../styles.css'
@@ -30,12 +29,25 @@ class SigninContainer extends Component {
         this.props.signIn(event)
     }
 
+    componentWillMount() {
+        this.props.initializeSignin()
+    }
 
-        login = (props, handleAuth) => {
-            return (
-                <div>
-                    <SigninForm isFetching={props.isFetching} formError={props.error} onSubmit={handleAuth} />
-                </div>
+    componentDidUpdate() {
+        if(this.props.isAuthenticated){
+            if (this.props.location.state && this.props.location.state.nextPathname) {
+                this.props.router.replace(this.props.location.state.nextPathname)
+            } else {
+                this.props.router.replace('/dashboard')
+            }
+        }
+    }
+
+    login = (props, handleAuth) => {
+        return (
+            <div>
+                <SigninForm formError={props.error} onSubmit={handleAuth} />
+            </div>
         )
     }
 
@@ -62,17 +74,20 @@ class SigninContainer extends Component {
                             }
                             }
 
-                                SigninContainer.propTypes = {
-                                    isFetching: bool,
-                                    error: string,
-                                    fetchAndHandleAuthenticatedUser: func
-                                }
+SigninContainer.propTypes = {
+    isAuthenticating: bool.isRequired,
+    isAuthenticated: bool.isRequired,
+    error: string.isRequired,
+    fetchAndHandleAuthenticatedUser: func
+}
+
+const mapStateToProps = ({signin}) => ({
+    isAuthenticating: signin.isAuthenticating,
+    isAuthenticated: signin.isAuthenticated,
+    error: signin.error
+})
 
 export default withRouter(connect(
-    (state) => ({
-        isFetching: true,
-        isAuthenticating: false,
-        error: ""
-    }),
+    mapStateToProps,
     signinActions
 )(SigninContainer))

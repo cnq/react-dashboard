@@ -36,5 +36,5 @@ export function* authenticateUser(action) {
 }
 
 export function* watchForAuthenticateUser() {
-    yield* takeEvery('SIGN_IN_INITIATED', authenticateUser)
+    yield* takeEvery('SIGN_IN_START', authenticateUser)
 }

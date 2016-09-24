@@ -6,7 +6,7 @@ import auth from './auth'
 
 const App = React.createClass({
     getInitialState() {
-        return { isAuthenticated: auth.loggedIn() }
+        return { isAuthenticated: auth.isLoggedIn() }
     },
     updateAuth(isAuthenticated) {
         this.setState({ isAuthenticated })
@@ -25,6 +25,7 @@ const App = React.createClass({
 
 
 
+
 const NotFound = React.createClass({
     render() { return <h1>404 Not Found</h1> }
 })
@@ -32,7 +33,7 @@ const NotFound = React.createClass({
 
 
 function requireAuth(nextState, replace) {
-    if (!auth.loggedIn()) {
+    if (!auth.isLoggedIn()) {
         replace({
             pathname: '/signin',
             state: { nextPathname: nextState.location.pathname }
@@ -41,10 +42,10 @@ function requireAuth(nextState, replace) {
 }
 
 const routes = (
-  <Route path="/" component={App}>
+  <Route path="/" component={MainContainer}>
       <Route path="signin" component={SigninContainer} />
       <Route path="signout" component={Signout} />
-      <Route path="dashboard" component={DashboardContainer} onEnter={requireAuth} />
+      <Route path="dashboard" component={DashboardContainer}/>
       <Route path="*" component={NotFound} />
   </Route>
 );
