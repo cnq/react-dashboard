@@ -32,7 +32,6 @@ function user ( state = initialUserState, action ) {
     }
 
 export default function users ( state = initialState, action ) {
-    console.log(action.type);
     switch ( action.type ) {
         case actions.AUTH_USER:
             return {

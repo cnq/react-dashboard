@@ -7,11 +7,12 @@ import { Router, browserHistory } from 'react-router';
 import configureStore from 'config/store'
 import configureHistory from 'config/history'
 import combinedReducer from './reducers';
+import { combinedEpic } from './epics';
 import routes from './routes';
 
 injectTapEventPlugin();
 
-const store = configureStore(browserHistory, combinedReducer);
+const store = configureStore(browserHistory, combinedReducer, combinedEpic);
 const history = configureHistory(browserHistory, routes, store);
 
 ReactDOM.render((

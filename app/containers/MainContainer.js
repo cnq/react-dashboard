@@ -24,7 +24,7 @@ function checkAuthHoc(WrappedComponent) {
             if(!nextProps.isAuthenticated && !this.props.router.isActive('signin')){
                 console.log('CheckAuthentication - user is not authenticated');
                 this.props.router.push('/signin')
-            } else {
+            } else if(nextProps.isAuthenticated) {
                 console.log('CheckAuthentication - user is authenticated');
             }
         }

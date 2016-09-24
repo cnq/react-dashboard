@@ -18,7 +18,7 @@ export const checkSigninRequestEpic = action$ =>
                     obs.complete();
                 })
                 .catch(err => {
-                    obs.next({ type: 'CHECK_SIGN_IN_FAIL', isAuthenticating: false});
+                    obs.next({ type: 'CHECK_SIGN_IN_FAIL', isAuthenticated: false});
                     obs.complete();
                 });
           }));

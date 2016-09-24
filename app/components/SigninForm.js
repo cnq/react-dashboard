@@ -70,9 +70,9 @@ class SigninForm extends Component {
 
         }
 
-        renderError = () => (
+                            renderError = (formError) => (
             <div>
-                <p className={errorMsg}>{'We had an issue getting you logged in. We think you may have mistyped either your email address or password.'}</p>
+                <p className={errorMsg}>{formError}</p>
                 <p className={errorMsg}>{'Please try again.'}</p>
             </div>
         )
@@ -85,7 +85,7 @@ class SigninForm extends Component {
                     {this.renderForm(this.props)}
                     {
                         formError
-                            ?   this.renderError()
+                            ?   this.renderError(formError)
                             :   null
                     }
                 </div>

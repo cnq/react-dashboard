@@ -6,13 +6,11 @@ import auth from '../auth';
 const Dashboard = React.createClass({
     
     render() {
-        const token = auth.getToken()
         return (
             <div>
                     <div>
                 <h1>Dashboard View</h1>
                 <p>You made it!</p>
-                <p>{token}</p>
               </div>
         {this.props.children}
         </div>
