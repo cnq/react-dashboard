@@ -1,45 +1,14 @@
 import React from 'react';
-import { browserHistory, Router, Route, Link, withRouter } from 'react-router';
-import {Signin, Signout} from './components';
-import {HomeContainer, DashboardContainer, MainContainer, SigninContainer} from './containers';
+import { Route } from 'react-router';
+import { Signout } from './components';
+import { HomeContainer, DashboardContainer, MainContainer, SigninContainer} from './containers';
 import auth from './auth'
-
-const App = React.createClass({
-    getInitialState() {
-        return { isAuthenticated: auth.isLoggedIn() }
-    },
-    updateAuth(isAuthenticated) {
-        this.setState({ isAuthenticated })
-    },
-    componentWillMount() {
-        auth.onChange = this.updateAuth
-    },
-    render() {
-        return (
-            <MainContainer isAuthenticated = {this.state.isAuthenticated}>
-                {this.props.children }
-            </MainContainer>
-      )
-  }
-})
-
-
 
 
 const NotFound = React.createClass({
     render() { return <h1>404 Not Found</h1> }
 })
 
-
-
-function requireAuth(nextState, replace) {
-    if (!auth.isLoggedIn()) {
-        replace({
-            pathname: '/signin',
-            state: { nextPathname: nextState.location.pathname }
-        })
-    }
-}
 
 const routes = (
   <Route path="/" component={MainContainer}>

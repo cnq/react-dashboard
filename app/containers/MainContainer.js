@@ -4,7 +4,7 @@ import { Navigation } from 'components'
 import { connect } from 'react-redux'
 import { signin as signinActions } from 'actions'
 import s from './MainContainer.css'
-import { customTheme } from 'config/theme'
+import { customTheme } from '../theme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const { bool, object } = PropTypes

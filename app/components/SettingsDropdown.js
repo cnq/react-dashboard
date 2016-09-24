@@ -10,12 +10,10 @@ import Settings from 'material-ui/svg-icons/action/settings';
 import Profile from 'material-ui/svg-icons/social/person';
 import Signout from 'material-ui/svg-icons/action/exit-to-app';
 
-const { object } = PropTypes
-
 class SettingsDropdown extends Component {
 
     propTypes: {
-        user: object.isRequired
+        user: PropTypes.object.isRequired
     }
 
     constructor(props) {

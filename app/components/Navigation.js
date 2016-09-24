@@ -1,29 +1,27 @@
 ﻿import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { SettingsDropdown } from 'components'
-import { container, navContainer, link } from './Navigation.css'
-
-const { bool, object } = PropTypes
+import s from './Navigation.css'
 
 NavLinks.propTypes = {
-    isAuthenticated: bool.isRequired
+    isAuthenticated: PropTypes.bool.isRequired
 }
 
 function NavLinks ({isAuthenticated}) {
     return (
         isAuthenticated
             ?   <ul>
-                    <li><Link to='/dashboard/apps' className={link}>{'Dashboard'}</Link></li>
+                    <li><Link to='/dashboard/apps' className={s.link}>{'Dashboard'}</Link></li>
                 </ul>
             :   <ul>
-                    <li><Link to='/' className={link}>{'Home'}</Link></li>
+                    <li><Link to='/' className={s.link}>{'Home'}</Link></li>
                 </ul>
     )
 }
 
 ActionLinks.propTypes = {
-    isAuthenticated: bool.isRequired,
-    user: object.isRequired
+    isAuthenticated: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired
 }
 
 function ActionLinks ({isAuthenticated, user}) {
@@ -33,20 +31,20 @@ function ActionLinks ({isAuthenticated, user}) {
                     <li><SettingsDropdown user={user} /></li>
                 </ul>
             :   <ul>
-                    <li><Link to='/signin' className={link}>{'Sign In'}</Link></li>
+                    <li><Link to='/signin' className={s.link}>{'Sign In'}</Link></li>
                 </ul>
     )
 }
 
 Navigation.propTypes = {
-    isAuthenticated: bool.isRequired,
-    user: object.isRequired
+    isAuthenticated: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired
 }
 
 export default function Navigation ({isAuthenticated, user}) {
     return (
-        <div className={container}>
-            <nav className={navContainer}>
+        <div className={s.container}>
+            <nav className={s.navContainer}>
                 <NavLinks isAuthenticated={isAuthenticated} />
                 <ActionLinks isAuthenticated={isAuthenticated}  user={user}/>
             </nav>

@@ -1,6 +1,4 @@
 ﻿
-
-
 export const SIGN_IN_INITILIZE = 'SIGN_IN_INITILIZE'
 export const SIGN_IN_START = 'SIGN_IN_START'
 export const SIGN_IN_REQUEST = 'SIGN_IN_REQUEST'

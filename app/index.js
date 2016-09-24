@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
-import configureStore from 'config/store'
-import configureHistory from 'config/history'
+import configureStore from './store'
+import configureHistory from './history'
 import combinedReducer from './reducers';
 import { combinedEpic } from './epics';
 import routes from './routes';
