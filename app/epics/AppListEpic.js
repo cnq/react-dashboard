@@ -5,7 +5,7 @@ import api from '../api'
 export const initializeAppListEpic = action$ =>
     action$.ofType('APPLIST_INITILIZE')
       .map(action => { 
-          return { type: 'APPLIST_FETCH_START', isFetching: false, error: '', appIds: {} }
+          return { type: 'APPLIST_FETCH_START', isFetching: false, error: '', appIds: action.appIds }
       });
 
 export const startAppListFetchEpic = action$ =>
@@ -20,7 +20,7 @@ export const appListFetchEpic = action$ =>
           Rx.Observable.create(obs => {
               api.getApps()
                 .then(resp => {
-                    obs.next({ type: 'APPLIST_FETCH_SUCCESS', isFetching: false, error: '', appIds: {} });
+                    obs.next({ type: 'APPLIST_FETCH_SUCCESS', isFetching: false, error: '', appIds: action.appIds });
                     obs.complete();
                 })
                 .catch(err => {
