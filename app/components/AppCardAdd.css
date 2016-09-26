@@ -1,0 +1,15 @@
+﻿.pointer {
+    cursor: pointer;
+}
+
+.newAppInputContainer {
+    composes: baseInputContainer from '../styles.css';
+}
+
+.enabled {
+    background-color: 'blue',
+}
+
+.disabled {
+    background-color: #EBEBEB;
+}

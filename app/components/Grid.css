@@ -1,0 +1,14 @@
+﻿.grid {
+    display:flex;
+    flex-wrap:wrap;
+    min-height: 100vh;
+    justify-content: center;
+    align-content: flex-start;
+    flex-direction: row;
+}
+
+.gridItem {
+    flex:1 1 420px;
+    padding: 10px;
+    max-width: 20%;
+}

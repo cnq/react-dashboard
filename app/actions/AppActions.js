@@ -1,0 +1,3 @@
+﻿
+
+export const APP_INITILIZE = 'APPLIST_INITILIZE'

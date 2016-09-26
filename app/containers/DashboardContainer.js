@@ -8,18 +8,11 @@ const Dashboard = React.createClass({
     render() {
         return (
             <div>
-                    <div>
-                <h1>Dashboard View</h1>
-                <p>You made it!</p>
-              </div>
-        {this.props.children}
-        </div>
-    )
-  }
+                {this.props.children}
+            </div>
+        )
+    }
 })
-
-
-
 
 
 class DashboardContainer extends Component {

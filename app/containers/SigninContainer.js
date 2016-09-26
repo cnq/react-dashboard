@@ -36,7 +36,7 @@ class SigninContainer extends Component {
             if (this.props.location.state && this.props.location.state.nextPathname) {
                 this.props.router.replace(this.props.location.state.nextPathname)
             } else {
-                this.props.router.replace('/dashboard')
+                this.props.router.replace('/dashboard/apps')
             }
         }
     }
