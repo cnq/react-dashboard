@@ -37,7 +37,6 @@ class App extends Component {
     render () {
 
         const renderActions = () => {
-            const connectionCount = 999//this.props.app.connections.length
             return (
                 <div>
                     <FlatButton onClick={(event) => this.props.goToAppConnections(event, this.props.app.appId)} label="View Connections" />
@@ -66,7 +65,7 @@ class App extends Component {
     return (
               this.props.isFetching === true ?   <div></div>
                 :   <div>
-                        <AppCard className={s.appContainer}
+                        <AppCard className={s.appContainer} isCreating={this.props.app.isCreating}
                             backendSiteUri={renderSiteUri(this.props.app.backendSiteUri)}
                             uri={this.props.app.uri}
                             actions={renderActions(this.props)}
@@ -82,7 +81,6 @@ class App extends Component {
 App.propTypes = {
     app: PropTypes.object.isRequired,
     error: PropTypes.string.isRequired,
-    isFetching: PropTypes.bool.isRequired,
     goToAppConnections: PropTypes.func.isRequired,
     deleteApp: PropTypes.func.isRequired
 }

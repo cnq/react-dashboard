@@ -5,17 +5,20 @@ import { app as appActions } from 'actions'
 
 class AppCardAddContainer extends Component {
 
-    handleCreateApp = (event) => {
-        this.props.createApp(event)
+    handleCreateApp = (backendSiteUri) => {
+        this.props.createApp(backendSiteUri)
     }
 
-    render () {
-        return (
-            <AppCardAdd props={this.props}>
-                {this.props.children}
-            </AppCardAdd>)
+        render () {
+            return (
+                <AppCardAdd createApp={this.handleCreateApp} isCreating={this.props.isCreating}/>)
     }
-    }
+}
+
+const mapStateToProps = ({app}) => ({
+    backendSiteUri: app.backendSiteUri,
+    isCreating: app.isCreating
+})
 
 
-export default connect({...appActions})(AppCardAddContainer)
+export default connect(mapStateToProps,{...appActions})(AppCardAddContainer)

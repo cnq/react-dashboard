@@ -1,5 +1,6 @@
 ﻿import React, { PropTypes } from 'react'
 import {Card, CardActions, CardHeader, CardText, CardTitle} from 'material-ui/Card';
+import { LoadingIndicator } from 'components'
 
 const styles = {
     cardStyle: {
@@ -22,6 +23,7 @@ const styles = {
 
 AppCard.propTypes = {
     uri: PropTypes.string.isRequired,
+    isCreating: PropTypes.bool,
     actions: PropTypes.object.isRequired,
 }
 
@@ -35,11 +37,17 @@ function AppCard (props) {
                     {props.backendSiteUri}
                 </CardTitle>
             </CardHeader>
-            <CardText>
-                <a href={props.uri} target="_blank">{props.uri}</a>
-                {props.children}
-            </CardText>
-            <CardActions>{props.actions}</CardActions>
+                {props.isCreating ? <LoadingIndicator size={1} /> :
+                    <div>
+                    <CardText>
+                        <a href={props.uri} target="_blank">{props.uri}</a>
+                        {props.children}
+                    </CardText>
+                    <CardActions>{props.actions}</CardActions>
+                    </div>
+                }
+        
+
         </Card>
     )
 }

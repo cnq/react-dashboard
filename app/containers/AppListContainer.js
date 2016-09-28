@@ -39,8 +39,7 @@ class AppListContainer extends Component {
                     </GridItem>
         { this.props.apps.length === 0 ? <p className={s.header}>{'This is unfortunate.'}<br />{'It appears there are no apps yet'}</p> : null }
             { this.props.apps.length > 0 ? this.props.apps.map( (app) => ( <GridItem key={app.appId}>
-                                                                                <App isFetching={this.props.isFetching}
-                                                                                    error={this.props.error}
+                                                                                <App error={this.props.error}
                                                                                     app={app}
                                                                                     goToAppConnections={this.goToAppConnections}
                                                                                     deleteApp={this.deleteApp} />
