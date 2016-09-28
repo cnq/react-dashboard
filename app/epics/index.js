@@ -1,6 +1,6 @@
 ﻿import { combineEpics } from 'redux-observable';
 import { initiateSigninEpic, signinRequestEpic, initiateCheckSigninEpic, checkSigninRequestEpic } from './SigninEpic';
-import { initializeAppListEpic, startAppListFetchEpic, appListFetchEpic } from './AppListEpic';
+import { initializeAppListEpic, startAppListFetchEpic, appListFetchEpic, initializeAppCreateEpic } from './AppListEpic';
 //export { <TYPE> } from './PATH-TO-REDUCER-WITHOUT-EXTENSION';
 
 export const combinedEpic = combineEpics(
@@ -10,6 +10,7 @@ export const combinedEpic = combineEpics(
   checkSigninRequestEpic,
   initializeAppListEpic,
   startAppListFetchEpic,
-  appListFetchEpic
+  appListFetchEpic,
+  initializeAppCreateEpic
   //LIST HERE
 );

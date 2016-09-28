@@ -1,8 +1,12 @@
 ﻿import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { List } from 'immutable'
-import { AppList } from 'components'
+import { AppCardAddContainer } from 'containers'
+import { Grid, GridItem, App } from 'components'
 import { applist as appListActions } from 'actions'
+import s from './AppListContainer.css'
+import { errorMsg } from '../styles.css'
 
 
 class AppListContainer extends Component {
@@ -11,11 +15,38 @@ class AppListContainer extends Component {
         this.props.initializeAppList()
     }
 
+    goToAppConnections = (event, appId) => {
+        console.log("AppListContainer - goToAppConnections() called")
+        event.stopPropagation()
+        this.props.router.push('/dashboard/apps/app/' + appId + '/connections')
+    }
+
+    deleteApp = (event, appId) => {
+        console.log("AppListContainer - deleteApp() called")
+        event.stopPropagation()
+        this.props.deleteAndHandleApp(appId)
+    }
+
 
 
     render () {
         return (
-            <AppList appIds={this.props.appIds} error={this.props.error} isFetching={this.props.isFetching}/>
+                   this.props.isFetching === true
+            ?   <div></div>
+            :   <Grid>
+                    <GridItem>
+                       <AppCardAddContainer />
+                    </GridItem>
+        { this.props.apps.length === 0 ? <p className={s.header}>{'This is unfortunate.'}<br />{'It appears there are no apps yet'}</p> : null }
+            { this.props.apps.length > 0 ? this.props.apps.map( (app) => ( <GridItem key={app.appId}>
+                                                                                <App isFetching={this.props.isFetching}
+                                                                                    error={this.props.error}
+                                                                                    app={app}
+                                                                                    goToAppConnections={this.goToAppConnections}
+                                                                                    deleteApp={this.deleteApp} />
+                                                                            </GridItem> )) : null}
+        { this.props.error ? <p className={errorMsg}>{this.props.error}</p> : null}
+    </Grid>
         )
     }
 }
@@ -23,14 +54,16 @@ class AppListContainer extends Component {
 AppListContainer.propTypes = {
         isFetching: PropTypes.bool.isRequired,
         error: PropTypes.string.isRequired,
-        appIds: PropTypes.instanceOf(List)
+        apps: PropTypes.array.isRequired
 }
 
 
-const mapStateToProps = ({applist}) => ({
-    isFetching: applist.get('isFetching'),
-    error: applist.get('error'),
-    appIds: applist.get('appIds')
-})
+const mapStateToProps = ({applist}) => {
+    return {
+        isFetching: applist.isFetching,
+        error: applist.error,
+        apps: applist.apps
+    }
+}
 
-export default connect( mapStateToProps, {...appListActions})(AppListContainer)
+export default withRouter(connect( mapStateToProps, {...appListActions})(AppListContainer))

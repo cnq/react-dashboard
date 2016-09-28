@@ -15,7 +15,7 @@ module.exports = {
 
     logout() {
         console.log('auth module - logout() called');
-        return ajax.post("/api/auth/signin");
+        return ajax.post("/api/auth/signout");
     },
 
     getLoggedInUser() {

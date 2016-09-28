@@ -1,8 +1,14 @@
 ﻿import React, { Component } from 'react';
 import { AppCardAdd } from 'components'
 import { connect } from 'react-redux'
+import { app as appActions } from 'actions'
 
 class AppCardAddContainer extends Component {
+
+    handleCreateApp = (event) => {
+        this.props.createApp(event)
+    }
+
     render () {
         return (
             <AppCardAdd props={this.props}>
@@ -12,4 +18,4 @@ class AppCardAddContainer extends Component {
     }
 
 
-export default connect()(AppCardAddContainer)
+export default connect({...appActions})(AppCardAddContainer)
