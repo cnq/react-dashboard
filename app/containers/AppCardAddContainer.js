@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { AppCardAdd } from 'components'
 import { connect } from 'react-redux'
-import { app as appActions } from 'actions'
+import { appActions } from 'actions'
 
 class AppCardAddContainer extends Component {
 
@@ -15,9 +15,9 @@ class AppCardAddContainer extends Component {
     }
 }
 
-const mapStateToProps = ({app}) => ({
-    backendSiteUri: app.backendSiteUri,
-    isCreating: app.isCreating
+const mapStateToProps = ({addApp}) => ({
+    backendSiteUri: addApp.backendSiteUri,
+    isCreating: addApp.isCreating
 })
 
 

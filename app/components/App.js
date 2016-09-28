@@ -51,7 +51,7 @@ class App extends Component {
             <IconMenu iconButtonElement={<IconButton><NavMoreVert color={'#ffffff'} /></IconButton>} onChange={this.handleChangeSingle} value={this.state.valueSingle}>
                 <MenuItem style={menuItemStyle} innerDivStyle={innerDivStyle} value="1" primaryText="Site Settings" leftIcon={<ActionSettings style={iconStyle} />} />
                 <MenuItem style={menuItemStyle} innerDivStyle={innerDivStyle} value="2" primaryText="Download Config Files" leftIcon={<ActionDownload style={iconStyle} />} />
-                <MenuItem style={menuItemStyle} innerDivStyle={innerDivStyle} value="3" primaryText="Delete Site" leftIcon={<ActionDelete style={iconStyle} />} onClick={(event) => deleteApp(event, this.props.app.appId)} />
+                <MenuItem style={menuItemStyle} innerDivStyle={innerDivStyle} value="3" primaryText="Delete Site" leftIcon={<ActionDelete style={iconStyle} />} onClick={(event) => deleteApp(event, this.props.app)} />
             </IconMenu>
             )
         }
@@ -65,7 +65,7 @@ class App extends Component {
     return (
               this.props.isFetching === true ?   <div></div>
                 :   <div>
-                        <AppCard className={s.appContainer} isCreating={this.props.app.isCreating}
+                        <AppCard className={s.appContainer} isCreating={this.props.app.isCreating} isDeleting={this.props.app.isDeleting}
                             backendSiteUri={renderSiteUri(this.props.app.backendSiteUri)}
                             uri={this.props.app.uri}
                             actions={renderActions(this.props)}

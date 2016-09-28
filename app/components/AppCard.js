@@ -24,6 +24,7 @@ const styles = {
 AppCard.propTypes = {
     uri: PropTypes.string.isRequired,
     isCreating: PropTypes.bool,
+    isDeleting: PropTypes.bool,
     actions: PropTypes.object.isRequired,
 }
 
@@ -37,7 +38,7 @@ function AppCard (props) {
                     {props.backendSiteUri}
                 </CardTitle>
             </CardHeader>
-                {props.isCreating ? <LoadingIndicator size={1} /> :
+                {props.isCreating || props.isDeleting  ? <LoadingIndicator size={1} /> :
                     <div>
                     <CardText>
                         <a href={props.uri} target="_blank">{props.uri}</a>

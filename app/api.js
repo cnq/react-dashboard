@@ -16,5 +16,10 @@ module.exports = {
     createApp(app) {
         console.log('api module - createApp() called');
         return ajax.post('/api/apps',app).then(resp => resp.data);
+    },
+
+    deleteApp(app) {
+        console.log('api module - deleteApp() called');
+        return ajax.delete(`/api/apps/${app.appId}`).then(resp => resp.data);
     }
 }

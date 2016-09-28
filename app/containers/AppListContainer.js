@@ -4,7 +4,7 @@ import { withRouter } from 'react-router'
 import { List } from 'immutable'
 import { AppCardAddContainer } from 'containers'
 import { Grid, GridItem, App } from 'components'
-import { applist as appListActions } from 'actions'
+import { applist as appListActions, appActions } from 'actions'
 import s from './AppListContainer.css'
 import { errorMsg } from '../styles.css'
 
@@ -21,10 +21,10 @@ class AppListContainer extends Component {
         this.props.router.push('/dashboard/apps/app/' + appId + '/connections')
     }
 
-    deleteApp = (event, appId) => {
+    deleteApp = (event, app) => {
         console.log("AppListContainer - deleteApp() called")
         event.stopPropagation()
-        this.props.deleteAndHandleApp(appId)
+        this.props.deleteApp(app)
     }
 
 
@@ -65,4 +65,4 @@ const mapStateToProps = ({applist}) => {
     }
 }
 
-export default withRouter(connect( mapStateToProps, {...appListActions})(AppListContainer))
+export default withRouter(connect( mapStateToProps, {...appListActions,...appActions})(AppListContainer))

@@ -3,13 +3,13 @@ import { reducer as form } from 'redux-form';
 import {routerReducer} from 'react-router-redux';
 import SigninReducer from './SigninReducer';
 import AppListReducer from './AppListReducer';
-import AppReducer from './AppReducer';
+import {addApp} from './AppReducer';
 //export <TYPE> from './PATH-TO-REDUCER-WITHOUT-EXTENSION';
 
 const combinedReducer = combineReducers({
     signin: SigninReducer,
     applist: AppListReducer,
-    app: AppReducer,
+    addApp: addApp,
     //LIST OF IMPORTED REDUCERS (FORMAT: actionname: ReducerName)
     form,
     routing: routerReducer
