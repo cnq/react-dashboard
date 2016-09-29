@@ -21,5 +21,20 @@ module.exports = {
     deleteApp(app) {
         console.log('api module - deleteApp() called');
         return ajax.delete(`/api/apps/${app.appId}`).then(resp => resp.data);
+    },
+
+    getConnections(appId) {
+        console.log('api module - getConnections() called');
+        return ajax.get(`/api/apps/${appId}/routes`).then(resp => resp.data);
+    },
+
+    createConnection(appId, connection) {
+        console.log('api module - createConnection() called');
+        return ajax.post(`/api/apps/${appId}/routes`,connection).then(resp => resp.data);
+    },
+
+    deleteConnection(appId, connection) {
+        console.log('api module - deleteConnection() called');
+        return ajax.delete(`/api/apps/${appId}/routes/${connectionId}`).then(resp => resp.data);
     }
 }

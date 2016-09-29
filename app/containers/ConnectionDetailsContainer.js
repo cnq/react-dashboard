@@ -1,0 +1,52 @@
+import React, { Component, PropTypes } from 'react'
+import { ConnectionDetails } from 'components'
+import { connect } from 'react-redux'
+import { connections as actions } from 'actions'
+
+
+class ConnectionDetailsContainer extends Component {
+
+    componentDidMount () {
+        if (this.props.connectionAlreadyFetched === false) {
+            this.props.fetchAndHandleConnection(this.props.connectionId)
+        } else {
+            this.props.removeConnectionFetching()
+        }
+    }
+
+    render () {
+        return (
+            <ConnectionDetails
+                connectionId={this.props.connectionId}
+                appId={this.props.appId}
+                isFetching={this.props.isFetching}
+                error={this.props.error}
+                connectionAlreadyFetched={this.props.connectionAlreadyFetched}
+            />
+        )
+    }
+
+}
+
+ConnectionDetailsContainer.propTypes = {
+    connectionId: PropTypes.string.isRequired,
+    appId: PropTypes.string.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    error: PropTypes.string.isRequired,
+    connectionAlreadyFetched: PropTypes.bool.isRequired,
+    removeConnectionFetching: PropTypes.func.isRequired,
+    fetchAndHandleConnection: PropTypes.func.isRequired
+}
+
+const mapStateToProps = ({connections}, {params}) => ({
+    isFetching: connections.get('isFetching'),
+    error: connections.get('error'),
+    appId: connections.getIn([params.connectionId, 'appId']),
+    connectionId: params.connectionId,
+    connectionAlreadyFetched: !!connections.get(params.connectionId)
+})
+
+export default connect(
+    mapStateToProps,
+    actions
+)(ConnectionDetailsContainer)

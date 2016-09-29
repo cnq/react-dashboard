@@ -1,0 +1,11 @@
+﻿.pointer {
+    cursor: pointer;
+}
+
+.newConnectionInputWrapper {
+    composes: baseInputContainer from '../styles.css';
+}
+
+.step {
+    width: 50%;
+}

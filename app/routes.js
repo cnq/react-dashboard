@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import { Signout } from './components';
-import { HomeContainer, DashboardContainer, MainContainer, SigninContainer, AppsContainer, AppListContainer} from './containers';
+import { HomeContainer, DashboardContainer, MainContainer, SigninContainer, AppsContainer, AppListContainer, ConnectionsContainer, ConnectionListContainer, ConnectionDetailsContainer, ConnectionEditContainer, ConnectionAddStepperContainer} from './containers';
 import auth from './auth'
 
 
@@ -17,6 +17,12 @@ const routes = (
     <Route path="dashboard" component={DashboardContainer}>
         <Route path='apps' component={AppsContainer} >
             <IndexRoute component={AppListContainer} />
+            <Route path='app/:appId/connections' component={ConnectionsContainer} >
+                <IndexRoute component={ConnectionListContainer} />
+                <Route path='connection/:connectionId' component={ConnectionDetailsContainer} />
+                <Route path='connection/:connectionId/edit' component={ConnectionEditContainer} />
+                <Route path='add' component={ConnectionAddStepperContainer} />
+            </Route>
         </Route>
     </Route>
     <Route path="*" component={NotFound} />

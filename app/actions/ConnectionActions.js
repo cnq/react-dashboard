@@ -1,0 +1,26 @@
+﻿
+
+
+export const CONNECTION_CREATE_INITILIZE = 'CONNECTION_CREATE_INITILIZE'
+export const CONNECTION_CREATE_START = 'CONNECTION_CREATE_START'
+export const CONNECTION_CREATE_REQUEST = 'CONNECTION_CREATE_REQUEST'
+export const CONNECTION_CREATE_SUCCESS = 'CONNECTION_CREATE_SUCCESS'
+export const CONNECTION_CREATE_FAIL = 'CONNECTION_CREATE_FAIL'
+
+export const CONNECTION_DELETE_INITILIZE = 'CONNECTION_DELETE_INITILIZE'
+export const CONNECTION_DELETE_START = 'CONNECTION_DELETE_START'
+export const CONNECTION_DELETE_REQUEST = 'CONNECTION_DELETE_REQUEST'
+export const CONNECTION_DELETE_SUCCESS = 'CONNECTION_DELETE_SUCCESS'
+export const CONNECTION_DELETE_FAIL = 'CONNECTION_DELETE_FAIL'
+
+export const createConnection = (connectionToAdd) => (
+    {
+        type: CONNECTION_CREATE_INITILIZE,
+        connection: connectionToAdd
+    })
+
+export const deleteConnection = (connectionToDelete) => (
+    {
+        type: CONNECTION_DELETE_INITILIZE,
+        connection: connectionToDelete
+    })
