@@ -3,7 +3,7 @@ import { initiateSigninEpic, signinRequestEpic, initiateCheckSigninEpic, checkSi
 import { initializeAppListEpic, startAppListFetchEpic, appListFetchEpic } from './AppListEpic';
 import { initializeAppCreateEpic, startAppCreateEpic, appCreateRequestEpic, startAppListAddAppEpic, initializeAppDeleteEpic, startAppDeleteEpic, startAppListCreateAppEpic, appDeleteRequestEpic } from './AppEpic';
 import { initializeConnectionListEpic, startConnectionListFetchEpic, connectionListFetchEpic } from './ConnectionListEpic';
-import { initializeConnectionCreateEpic, startConnectionCreateEpic, startConnectionListAddConnectionEpic, connectionCreateRequestEpic, initializeConnectionDeleteEpic, startConnectionDeleteEpic, startConnectionListCreateConnectionEpic, connectionDeleteRequestEpic } from './ConnectionEpic';
+import { initializeConnectionCreateEpic, startConnectionCreateEpic, connectionCreateRequestEpic, initializeConnectionDeleteEpic, startConnectionDeleteEpic, connectionDeleteRequestEpic } from './ConnectionEpic';
 //import { <TYPE> } from './PATH-TO-REDUCER-WITHOUT-EXTENSION';
 
 export const combinedEpic = combineEpics(
@@ -26,12 +26,10 @@ export const combinedEpic = combineEpics(
   startConnectionListFetchEpic, 
   connectionListFetchEpic,
   initializeConnectionCreateEpic, 
-  startConnectionCreateEpic, 
-  startConnectionListAddConnectionEpic, 
+  startConnectionCreateEpic,  
   connectionCreateRequestEpic, 
   initializeConnectionDeleteEpic, 
-  startConnectionDeleteEpic, 
-  startConnectionListCreateConnectionEpic, 
+  startConnectionDeleteEpic,  
   connectionDeleteRequestEpic
 
   //LIST HERE

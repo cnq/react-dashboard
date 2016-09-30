@@ -28,13 +28,13 @@ module.exports = {
         return ajax.get(`/api/apps/${appId}/routes`).then(resp => resp.data);
     },
 
-    createConnection(appId, connection) {
+    createConnection(connection) {
         console.log('api module - createConnection() called');
-        return ajax.post(`/api/apps/${appId}/routes`,connection).then(resp => resp.data);
+        return ajax.post(`/api/apps/${connection.appId}/routes`,connection).then(resp => resp.data);
     },
 
-    deleteConnection(appId, connection) {
+    deleteConnection(connection) {
         console.log('api module - deleteConnection() called');
-        return ajax.delete(`/api/apps/${appId}/routes/${connectionId}`).then(resp => resp.data);
+        return ajax.delete(`/api/apps/${connection.appId}/routes/${connection.connectionId}`).then(resp => resp.data);
     }
 }

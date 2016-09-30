@@ -8,6 +8,7 @@ const addConnectionInitialState = {
     error: ''
 }
 
+
 export function addConnection ( state = addConnectionInitialState, action ) {
     switch ( action.type ) {
         case connectionActions.CONNECTION_CREATE_INITILIZE:

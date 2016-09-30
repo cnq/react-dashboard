@@ -71,12 +71,13 @@ class ConnectionAddStepper extends Component {
         console.log("ConnectionAddStepper - onClickCreateConnection() called")
         props.createConnection(props.app.appId,
                 {
-                    connectionId: null,
+                    connectionId: "newconnection",
                     connectionUri: props.connectionUri,
                     connectionType: props.connectionType,
                     connectionName: props.connectionName,
                     appId: props.app.appId,
                     backendSiteUri: props.app.backendSiteUri,
+                    isCreating: true,
                     timestamp: Date.now()
                 }
             )

@@ -1,4 +1,5 @@
 ﻿import { applist as actions } from 'actions'
+import { connectionActions } from 'actions'
 
 const initialState = {
     isFetching: false,
@@ -60,7 +61,101 @@ export default function applist ( state = initialState, action ) {
             apps: state.apps.filter(function(app) { return app.appId != action.app.appId; })
         }
         case actions.APPLIST_APP_DELETE_FAIL:
-            return state
+        return state
+
+        case connectionActions.CONNECTION_CREATE_START:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { 
+                if(app.appId == action.connection.appId){
+                    app.connections = app.connections.concat(action.connection);
+                }
+                return app; 
+            })
+        }
+
+        case connectionActions.CONNECTION_CREATE_SUCCESS:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { 
+                if(app.appId == action.connection.appId){
+                    app.connections = app.connections.map(function(connection) { 
+                        return connection.connectionId == "newconnection" ? action.connection : connection; 
+                    })
+                }
+                return app; 
+            })
+        }
+        case connectionActions.CONNECTION_CREATE_FAIL:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { 
+                if(app.appId == action.connection.appId){
+                    app.connections = app.connections.filter(function(connection) { 
+                        return connection.connectionId != "newconnection"; 
+                    })
+                }
+                return app; 
+            })
+        }
+
+
+        case connectionActions.CONNECTION_DELETE_START:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { 
+                if(app.appId == action.connection.appId){
+                        app.connections = app.connections.map(function(connection) { 
+                            if(connection.connectionId == action.connection.connectionId){
+                                connection.isDeleting = true;
+                            }
+                            return connection;
+                        })
+                }
+                return app; 
+             })
+        }
+        case connectionActions.CONNECTION_DELETE_SUCCESS:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { 
+                if(app.appId == action.connection.appId){
+                    app.connections = app.connections.filter(function(connection) { 
+                        return connection.connectionId != action.connection.connectionId; 
+                    })
+                }
+                return app; 
+            })
+        }
+        case connectionActions.CONNECTION_DELETE_FAIL:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { 
+                if(app.appId == action.connection.appId){
+                    app.connections = app.connections.map(function(connection) { 
+                        if(connection.connectionId == action.connection.connectionId){
+                            connection.isDeleting = false;
+                        }
+                        return connection;
+                    })
+                }
+                return app; 
+            })
+        }
+
+
         default:
             return state
     }

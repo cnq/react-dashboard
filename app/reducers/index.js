@@ -9,7 +9,9 @@ import { addConnection, deleteConnection } from './ConnectionReducer';
 import ConnectionStepperReducer from './ConnectionStepperReducer';
 //export <TYPE> from './PATH-TO-REDUCER-WITHOUT-EXTENSION';
 
-const combinedReducer = combineReducers({
+
+
+export default combineReducers({
     signin: SigninReducer,
     applist: AppListReducer,
     addApp: addApp,
@@ -23,4 +25,16 @@ const combinedReducer = combineReducers({
     routing: routerReducer
 });
 
-export default combinedReducer;
+
+
+export const getApp = (state, appId) => {
+    return state.applist.apps.find(app => app.appId == appId);
+}
+export const getConnections = (state, appId) => {
+    const app = getApp(state, appId);
+    if(app) return app.connections
+    return [];
+}
+export const getConnection = (state, appId, connectionId) => {
+    return getConnections(state, appId).find(connection => connection.connectionId == connectionId);
+}

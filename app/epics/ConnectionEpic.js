@@ -7,34 +7,29 @@ import api from '../api'
 export const initializeConnectionCreateEpic = action$ =>
     action$.ofType('CONNECTION_CREATE_INITILIZE')
       .map(action => { 
-          return { type: 'CONNECTION_CREATE_START', appId: action.appId, connection: action.connection}
+          return { type: 'CONNECTION_CREATE_START', connection: action.connection}
       });
 
 export const startConnectionCreateEpic = action$ =>
     action$.ofType('CONNECTION_CREATE_START')
       .map(action => { 
-          return { type: 'CONNECTION_CREATE_REQUEST', appId: action.appId, connection: action.connection }
+          return { type: 'CONNECTION_CREATE_REQUEST', connection: action.connection }
       });
 
-export const startConnectionListAddConnectionEpic = action$ =>
-    action$.ofType('CONNECTION_CREATE_START')
-      .map(action => { 
-          return { type: 'CONNECTIONLIST_CONNECTION_CREATE_START', appId: action.appId, connection: action.connection }
-      });
 
 export const connectionCreateRequestEpic = action$ =>
     action$.ofType('CONNECTION_CREATE_REQUEST')
       .mergeMap(action =>
           Rx.Observable.create(obs => {
-              api.createConnection(action.appId, action.connection)
+              api.createConnection(action.connection)
                 .then(resp => {
                     const newConnection = resp
-                    obs.next({ type: 'CONNECTION_CREATE_SUCCESS', appId: action.appId, connection: action.connection})
-                    obs.next({ type: 'CONNECTIONLIST_CONNECTION_CREATE_SUCCESS', connection: newConnection });
+                    obs.next({ type: 'CONNECTION_CREATE_SUCCESS', connection: newConnection})
+                    obs.complete();
                 })
                 .catch(err => {
-                    obs.next({ type: 'CONNECTION_CREATE_FAIL', error: 'Failed to create connection' , appId: action.appId, connection: action.connection});
-                    obs.next({ type: 'CONNECTIONLIST_CONNECTION_CREATE_FAIL' });
+                    obs.next({ type: 'CONNECTION_CREATE_FAIL', error: 'Failed to create connection' , connection: action.connection});
+                    obs.complete();
                 });
           }));
 
@@ -55,24 +50,16 @@ export const startConnectionDeleteEpic = action$ =>
           return { type: 'CONNECTION_DELETE_REQUEST', connection: action.connection  }
       });
 
-export const startConnectionListCreateConnectionEpic = action$ =>
-    action$.ofType('CONNECTION_DELETE_START')
-      .map(action => { 
-          return { type: 'CONNECTIONLIST_CONNECTION_DELETE_START' }
-      });
-
 export const connectionDeleteRequestEpic = action$ =>
     action$.ofType('CONNECTION_DELETE_REQUEST')
       .mergeMap(action =>
           Rx.Observable.create(obs => {
               api.deleteConnection(action.connection)
                 .then(resp => {
-                    obs.next({ type: 'CONNECTION_DELETE_SUCCESS' })
-                    obs.next({ type: 'CONNECTIONLIST_CONNECTION_DELETE_SUCCESS', connection: action.connection });
+                    obs.next({ type: 'CONNECTION_DELETE_SUCCESS', connection: action.connection })
                 })
                 .catch(err => {
                     obs.next({ type: 'CONNECTION_DELETE_FAIL', error: 'Failed to delete connection'});
-                    obs.next({ type: 'CONNECTIONLIST_CONNECTION_DELETE_FAIL' });
                 });
           }));
 

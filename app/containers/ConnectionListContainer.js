@@ -5,15 +5,12 @@ import { List } from 'immutable'
 import { ConnectionContainer } from 'containers'
 import FlatButton from 'material-ui/RaisedButton';
 import { Grid, GridItem } from 'components'
+import { getConnections } from '../reducers'
 import { connectionList as connectionListActions } from 'actions'
-import { centeredContainer, addContainer, breathingRoom, errorMsg } from '../styles.css'
+import { centeredContainer, addContainer, breathingRoom } from '../styles.css'
 
 
 class ConnectionListContainer extends Component {
-
-    componentWillMount () {
-        this.props.initializeConnectionList(this.props.appId)
-    }
 
     goToAddAppConnections = (event) => {
         event.stopPropagation()
@@ -23,9 +20,7 @@ class ConnectionListContainer extends Component {
     render () {
         return (
 
-            this.props.isFetching === true
-            ?   <div></div>
-            :   <div>
+             <div>
                     {
                         this.props.connections.length === 0
                             ?   <div className={`${centeredContainer} ${breathingRoom}`}>
@@ -42,12 +37,11 @@ class ConnectionListContainer extends Component {
                         {
                             this.props.connections.map( (connection) => (
                                 <GridItem key={connection.connectionId}>
-                                    <ConnectionContainer connectionId={connection.connectionId} appId={this.props.appId} connectionAlreadyFetched={this.props.connectionAlreadyFetched} />
+                                    <ConnectionContainer connection={connection} />
                                 </GridItem>
                             ))
                         }
                     </Grid>
-                    {this.props.error ? <p className={errorMsg}>{this.props.error}</p> : null}
                 </div>
 
         )
@@ -56,19 +50,16 @@ class ConnectionListContainer extends Component {
 }
 
 ConnectionListContainer.propTypes = {
-    isFetching: PropTypes.bool.isRequired,
-    error: PropTypes.string.isRequired,
     appId: PropTypes.string.isRequired,
     connections: PropTypes.array
 }
 
-const mapStateToProps = ({connectionList}, {params}) => {
+const mapStateToProps = (state, {params}) => {
     return {
-        isFetching: connectionList.isFetching ? true : false,
-        error: connectionList.error ? connectionList.error : '',
         appId: params.appId,
-        connections: connectionList.connections
-    }}
+        connections: getConnections(state, params.appId)
+    }
+}
 
 export default withRouter(connect(
     mapStateToProps,
