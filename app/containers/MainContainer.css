@@ -1,0 +1,8 @@
+﻿.container {
+    width: 100%;
+}
+
+.innerContainer {
+    margin: 0 auto;
+    padding: 65px 40px 40px;
+}

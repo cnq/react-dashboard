@@ -1,13 +1,40 @@
-export users from './UsersReducer'
-export updateAddAppCard from './UpdateAddAppCardReducer'
-export removeApp from './RemoveAppReducer'
-export apps from './AppsReducer'
-export usersApps from './UsersAppsReducer'
-export appList from './AppListReducer'
-export listeners from './ListenersReducer'
-export updateConnectionStepper from './UpdateConnectionStepperReducer'
-export removeConnection from './RemoveConnectionReducer'
-export connections from './ConnectionsReducer'
-//export connectionCount from './ConnectionCountReducer'
-export connectionList from './ConnectionListReducer'
-export appsConnections from './AppsConnectionsReducer'
+import { combineReducers } from 'redux';
+import { reducer as form } from 'redux-form';
+import { routerReducer } from 'react-router-redux';
+import SigninReducer from './SigninReducer';
+import AppListReducer from './AppListReducer';
+import { addApp, deleteApp } from './AppReducer';
+import ConnectionListReducer from './ConnectionListReducer';
+import { addConnection, deleteConnection } from './ConnectionReducer';
+import ConnectionStepperReducer from './ConnectionStepperReducer';
+//export <TYPE> from './PATH-TO-REDUCER-WITHOUT-EXTENSION';
+
+
+
+export default combineReducers({
+    signin: SigninReducer,
+    applist: AppListReducer,
+    addApp: addApp,
+    deleteApp: deleteApp,
+    connectionList: ConnectionListReducer,
+    addConnection: addConnection,
+    deleteConnection: deleteConnection,
+    connectionStepper: ConnectionStepperReducer,
+    //LIST OF IMPORTED REDUCERS (FORMAT: actionname: ReducerName)
+    form,
+    routing: routerReducer
+});
+
+
+
+export const getApp = (state, appId) => {
+    return state.applist.apps.find(app => app.appId == appId);
+}
+export const getConnections = (state, appId) => {
+    const app = getApp(state, appId);
+    if(app) return app.connections
+    return [];
+}
+export const getConnection = (state, appId, connectionId) => {
+    return getConnections(state, appId).find(connection => connection.connectionId == connectionId);
+}

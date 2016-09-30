@@ -1,26 +1,26 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Root from 'components/Root/Root'
-import configureStore from 'config/store'
-import { loadFromLocalStorage } from 'helpers/localStorage'
-import { users as actions } from 'actions';
+// APP INDEX
+import React from 'react';
+import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { Provider } from 'react-redux';
+import { Router, browserHistory } from 'react-router';
+import configureStore from './store'
+import configureHistory from './history'
+import combinedReducer from './reducers';
+import { combinedEpic } from './epics';
+import { applist } from './actions';
+import routes from './routes';
 
 injectTapEventPlugin();
 
-const store = configureStore()
-//console.log(store)
-//TODO: remove these. these are just here temporarily to assist with debugging.
-//removeFromLocalStorage('auth')
-//removeFromLocalStorage('user')
+const store = configureStore(browserHistory, combinedReducer, combinedEpic);
+const history = configureHistory(browserHistory, routes, store);
 
-//If user has token, consider the user to be authenticated
-loadFromLocalStorage('auth')
-    // Update application state
-    ? store.dispatch(actions.fetchAndHandleAuthenticatedUser(loadFromLocalStorage('auth')))
-    : null
 
-ReactDOM.render(
-    <Root store={store} />,
-    document.getElementById('root')
-)
+store.dispatch(applist.initializeAppList())
+
+ReactDOM.render((
+  <Provider store={store}>
+    <Router routes={routes} history={history} />
+  </Provider>
+), document.getElementById('root'));

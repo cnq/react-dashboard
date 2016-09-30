@@ -1,108 +1,23 @@
-import { addListener, removeListener } from './ListenersActions'
-import { addMultipleConnections } from './ConnectionsActions'
-import { listenToConnectionList } from 'apis'
+﻿
 
-export const SETTING_CONNECTION_LIST_LISTENER = 'SETTING_CONNECTION_LIST_LISTENER'
-export const REMOVING_CONNECTION_LIST_LISTENER = 'REMOVING_CONNECTION_LIST_LISTENER'
-export const SETTING_CONNECTION_LIST_LISTENER_ERROR = 'SETTING_CONNECTION_LIST_LISTENER_ERROR'
-export const REMOVING_CONNECTION_LIST_LISTENER_ERROR = 'REMOVING_CONNECTION_LIST_LISTENER_ERROR'
-export const SETTING_CONNECTION_LIST_LISTENER_SUCCESS = 'SETTING_CONNECTION_LIST_LISTENER_SUCCESS'
-export const REMOVING_CONNECTION_LIST_LISTENER_SUCCESS = 'REMOVING_CONNECTION_LIST_LISTENER_SUCCESS'
-export const ADD_NEW_CONNECTION_ID_TO_CONNECTION_LIST = 'ADD_NEW_CONNECTION_ID_TO_CONNECTION_LIST'
-export const RESET_NEW_CONNECTIONS_AVAILABLE = 'RESET_NEW_CONNECTIONS_AVAILABLE'
+export const CONNECTIONLIST_INITILIZE = 'CONNECTIONLIST_INITILIZE'
+export const CONNECTIONLIST_FETCH_START = 'CONNECTIONLIST_FETCH_START'
+export const CONNECTIONLIST_FETCH_REQUEST = 'CONNECTIONLIST_FETCH_REQUEST'
+export const CONNECTIONLIST_FETCH_SUCCESS = 'CONNECTIONLIST_FETCH_SUCCESS'
+export const CONNECTIONLIST_FETCH_FAIL = 'CONNECTIONLIST_FETCH_FAIL'
 
-function settingConnectionListListener () {
-    return {
-        type: SETTING_CONNECTION_LIST_LISTENER
-    }
-}
+export const CONNECTIONLIST_CONNECTION_CREATE_START = 'CONNECTIONLIST_CONNECTION_CREATE_START'
+export const CONNECTIONLIST_CONNECTION_CREATE_SUCCESS = 'CONNECTIONLIST_CONNECTION_CREATE_SUCCESS'
+export const CONNECTIONLIST_CONNECTION_CREATE_FAIL = 'CONNECTIONLIST_CONNECTION_CREATE_FAIL'
 
-function removingConnectionListListener () {
-    return {
-        type: REMOVING_CONNECTION_LIST_LISTENER
-    }
-}
+export const CONNECTIONLIST_CONNECTION_DELETE_START = 'CONNECTIONLIST_CONNECTION_DELETE_START'
+export const CONNECTIONLIST_CONNECTION_DELETE_SUCCESS = 'CONNECTIONLIST_CONNECTION_DELETE_SUCCESS'
+export const CONNECTIONLIST_CONNECTION_DELETE_FAIL = 'CONNECTIONLIST_CONNECTION_DELETE_FAIL'
 
-function settingConnectionListListenerError (error) {
-    console.warn(error)
-    return {
-        type: SETTING_CONNECTION_LIST_LISTENER_ERROR,
-        error: error
-    }
-}
 
-function removingConnectionListListenerError (error) {
-    console.warn(error)
-    return {
-        type: REMOVING_CONNECTION_LIST_LISTENER_ERROR,
-        error: error
-    }
-}
 
-function settingConnectionListListenerSuccess (connectionIds) {
-    return {
-        type: SETTING_CONNECTION_LIST_LISTENER_SUCCESS,
-        connectionIds
-    }
-}
-
-function removingConnectionListListenerSuccess () {
-    return {
-        type: REMOVING_CONNECTION_LIST_LISTENER_SUCCESS
-    }
-}
-
-function addNewConnectionIdToConnectionList (connectionId) {
-    return {
-        type: ADD_NEW_CONNECTION_ID_TO_CONNECTION_LIST,
-        connectionId
-    }
-}
-
-export function resetNewConnectionsAvailable () {
-    return {
-        type: RESET_NEW_CONNECTIONS_AVAILABLE
-    }
-}
-
-export function handleConnectionListListener (appId, listenerOn) {
-
-    let initialFetch = true
-
-    return function (dispatch, getState) {
-
-        if (getState().listeners.connectionList === true && listenerOn) {
-            return
-        }
-
-        if (listenerOn) {
-            dispatch(addListener('connectionList'))
-            dispatch(settingConnectionListListener())
-        } else {
-            dispatch(removeListener('connectionList'))
-            dispatch(removingConnectionListListener())
-        }
-
-        listenToConnectionList(
-            appId, //If we pass in an appId, then we will listen for connections specific to that app
-            listenerOn, //Turn listener on or off
-            ({connectionList, sortedIds}) => { //callback function to get our connection list.
-                if (listenerOn) {
-                    dispatch(addMultipleConnections(connectionList))
-                    initialFetch === true
-                        ? dispatch(settingConnectionListListenerSuccess(sortedIds))
-                        : dispatch(addNewConnectionIdToConnectionList(sortedIds[0]))
-                } else {
-                    dispatch(removingConnectionListListenerSuccess())
-                }
-            },
-            (error) => {
-                listenerOn
-                    ?   dispatch(settingConnectionListListenerError(error))
-                    :   dispatch(removingConnectionListListenerError(error))
-            }
-        )
-
-    }
-
-}
+export const initializeConnectionList = (appId) => (
+    {
+        type: CONNECTIONLIST_INITILIZE,
+        appId: appId
+    })

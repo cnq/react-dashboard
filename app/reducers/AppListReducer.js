@@ -1,56 +1,161 @@
-import { appList as actions } from 'actions'
-import { List, fromJS } from 'immutable'
+﻿import { applist as actions } from 'actions'
+import { connectionActions } from 'actions'
 
-const initialState = fromJS({
+const initialState = {
     isFetching: false,
     error: '',
-    newAppsAvailable: false,
-    newAppsToAdd: [],
-    appIds: []
-})
+    apps: []
+}
 
-export default function appList ( state = initialState, action ) {
+export default function applist ( state = initialState, action ) {
     switch ( action.type ) {
-        case actions.SETTING_APP_LIST_LISTENER:
-            return state.merge({
-                isFetching: true
+        case actions.APPLIST_INITILIZE:
+        case actions.APPLIST_FETCH_START:
+        case actions.APPLIST_FETCH_REQUEST:
+            return {
+                ... state
+            }
+        case actions.APPLIST_FETCH_SUCCESS:
+            return {
+                ... state,
+        isFetching: false,
+        error: action.error,
+        apps: action.apps
+        }
+        case actions.APPLIST_FETCH_FAIL:
+            return {
+                ... state,
+            isFetching: false,
+            error: action.error
+        }
+        case actions.APPLIST_APP_CREATE_START:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.concat({appId: "newapp", backendSiteUri: action.backendSiteUri, isCreating: true, connections: [], uri:"" })
+        }
+        case actions.APPLIST_APP_CREATE_SUCCESS:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { return app.appId == "newapp" ? action.app : app; })
+        }
+        case actions.APPLIST_APP_CREATE_FAIL:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.filter(function(app) { return app.appId != "newapp"; })
+        }
+
+
+        case actions.APPLIST_APP_DELETE_START:
+            return state;
+        case actions.APPLIST_APP_DELETE_SUCCESS:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.filter(function(app) { return app.appId != action.app.appId; })
+        }
+        case actions.APPLIST_APP_DELETE_FAIL:
+        return state
+
+        case connectionActions.CONNECTION_CREATE_START:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { 
+                if(app.appId == action.connection.appId){
+                    app.connections = app.connections.concat(action.connection);
+                }
+                return app; 
             })
-        case actions.REMOVING_APP_LIST_LISTENER:
-            return state.merge({
-                isFetching: false
+        }
+
+        case connectionActions.CONNECTION_CREATE_SUCCESS:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { 
+                if(app.appId == action.connection.appId){
+                    app.connections = app.connections.map(function(connection) { 
+                        return connection.connectionId == "newconnection" ? action.connection : connection; 
+                    })
+                }
+                return app; 
             })
-        case actions.SETTING_APP_LIST_LISTENER_ERROR:
-            return state.merge({
-                isFetching: false,
-                error: action.error
+        }
+        case connectionActions.CONNECTION_CREATE_FAIL:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { 
+                if(app.appId == action.connection.appId){
+                    app.connections = app.connections.filter(function(connection) { 
+                        return connection.connectionId != "newconnection"; 
+                    })
+                }
+                return app; 
             })
-        case actions.REMOVING_APP_LIST_LISTENER_ERROR:
-            return state.merge({
-                isFetching: false,
-                error: action.error
+        }
+
+
+        case connectionActions.CONNECTION_DELETE_START:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { 
+                if(app.appId == action.connection.appId){
+                        app.connections = app.connections.map(function(connection) { 
+                            if(connection.connectionId == action.connection.connectionId){
+                                connection.isDeleting = true;
+                            }
+                            return connection;
+                        })
+                }
+                return app; 
+             })
+        }
+        case connectionActions.CONNECTION_DELETE_SUCCESS:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { 
+                if(app.appId == action.connection.appId){
+                    app.connections = app.connections.filter(function(connection) { 
+                        return connection.connectionId != action.connection.connectionId; 
+                    })
+                }
+                return app; 
             })
-        case actions.SETTING_APP_LIST_LISTENER_SUCCESS:
-            return state.merge({
-                isFetching: false,
-                error: '',
-                appIds: action.appIds,
-                newAppsAvailable: false
+        }
+        case connectionActions.CONNECTION_DELETE_FAIL:
+        return {
+            ... state,
+            isFetching: false,
+            error: '',
+            apps: state.apps.map(function(app) { 
+                if(app.appId == action.connection.appId){
+                    app.connections = app.connections.map(function(connection) { 
+                        if(connection.connectionId == action.connection.connectionId){
+                            connection.isDeleting = false;
+                        }
+                        return connection;
+                    })
+                }
+                return app; 
             })
-        case actions.REMOVING_APP_LIST_LISTENER_SUCCESS:
-            return state.merge({
-                isFetching: false,
-                error: ''
-            })
-        case actions.ADD_NEW_APP_ID_TO_APP_LIST:
-            return state.merge({
-                newAppsToAdd: state.get('newAppsToAdd').unshift(action.appId)
-            })
-        case actions.RESET_NEW_APPS_AVAILABLE:
-            return state.merge({
-                appIds: state.get('newAppsToAdd').concat(state.get('appIds')),
-                newAppsToAdd: [],
-                newAppsAvailable: false
-            })
+        }
+
+
         default:
             return state
     }
