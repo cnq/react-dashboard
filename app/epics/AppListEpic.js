@@ -5,7 +5,7 @@ import api from '../api'
 export const initializeAppListEpic = action$ =>
     action$.ofType('APPLIST_INITILIZE')
       .map(action => { 
-          return { type: 'APPLIST_FETCH_START', isFetching: false, error: '', apps: action.apps }
+          return { type: 'APPLIST_FETCH_START' }
       });
 
 export const startAppListFetchEpic = action$ =>

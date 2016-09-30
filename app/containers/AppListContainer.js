@@ -37,7 +37,7 @@ class AppListContainer extends Component {
                     <GridItem>
                        <AppCardAddContainer />
                     </GridItem>
-        { this.props.apps.length === 0 ? <p className={s.header}>{'This is unfortunate.'}<br />{'It appears there are no apps yet'}</p> : null }
+        { this.props.initialFetchComplete && this.props.apps.length === 0 ? <p className={s.header}>{'This is unfortunate.'}<br />{'It appears there are no apps yet'}</p> : null }
             { this.props.apps.length > 0 ? this.props.apps.map( (app) => ( <GridItem key={app.appId}>
                                                                                 <App error={this.props.error}
                                                                                     app={app}
@@ -51,14 +51,16 @@ class AppListContainer extends Component {
 }
 
 AppListContainer.propTypes = {
-        isFetching: PropTypes.bool.isRequired,
-        error: PropTypes.string.isRequired,
-        apps: PropTypes.array.isRequired
+    initialFetchComplete: PropTypes.bool.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    error: PropTypes.string.isRequired,
+    apps: PropTypes.array.isRequired
 }
 
 
 const mapStateToProps = ({applist}) => {
     return {
+        initialFetchComplete: applist.isFetching,
         isFetching: applist.isFetching,
         error: applist.error,
         apps: applist.apps

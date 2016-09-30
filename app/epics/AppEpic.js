@@ -67,12 +67,12 @@ export const appDeleteRequestEpic = action$ =>
           Rx.Observable.create(obs => {
               api.deleteApp(action.app)
                 .then(resp => {
-                    obs.next({ type: 'APP_DELETE_SUCCESS' })
+                    obs.next({ type: 'APP_DELETE_SUCCESS', app: action.app  })
                     obs.next({ type: 'APPLIST_APP_DELETE_SUCCESS', app: action.app });
                 })
                 .catch(err => {
-                    obs.next({ type: 'APP_DELETE_FAIL', error: 'Failed to delete app'});
-                    obs.next({ type: 'APPLIST_APP_DELETE_FAIL' });
+                    obs.next({ type: 'APP_DELETE_FAIL', app: action.app , error: 'Failed to delete app'});
+                    obs.next({ type: 'APPLIST_APP_DELETE_FAIL', app: action.app  });
                 });
           }));
 
