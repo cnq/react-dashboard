@@ -2,9 +2,10 @@
 import connectionList from './ConnectionListReducer'
 
 const addConnectionInitialState = {
+    appId: '',
+    connection: '',
     isCreating: false,
-    error: '',
-    backendSiteUri: ''
+    error: ''
 }
 
 export function addConnection ( state = addConnectionInitialState, action ) {
@@ -13,13 +14,13 @@ export function addConnection ( state = addConnectionInitialState, action ) {
         case connectionActions.CONNECTION_CREATE_START:
             return {
                 ... state,
-                backendSiteUri: action.backendSiteUri,
+                appId: action.appId,
+                connection: action.connection,
                 isCreating: true
             }
         case connectionActions.CONNECTION_CREATE_REQUEST:
             return {
                 ... state,
-                backendSiteUri: action.backendSiteUri,
                 isCreating: true
             }
         case connectionActions.CONNECTION_CREATE_SUCCESS:

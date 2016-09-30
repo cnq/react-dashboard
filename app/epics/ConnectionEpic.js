@@ -7,33 +7,33 @@ import api from '../api'
 export const initializeConnectionCreateEpic = action$ =>
     action$.ofType('CONNECTION_CREATE_INITILIZE')
       .map(action => { 
-          return { type: 'CONNECTION_CREATE_START', backendSiteUri: action.backendSiteUri }
+          return { type: 'CONNECTION_CREATE_START', appId: action.appId, connection: action.connection}
       });
 
 export const startConnectionCreateEpic = action$ =>
     action$.ofType('CONNECTION_CREATE_START')
       .map(action => { 
-          return { type: 'CONNECTION_CREATE_REQUEST', backendSiteUri: action.backendSiteUri }
+          return { type: 'CONNECTION_CREATE_REQUEST', appId: action.appId, connection: action.connection }
       });
 
 export const startConnectionListAddConnectionEpic = action$ =>
     action$.ofType('CONNECTION_CREATE_START')
       .map(action => { 
-          return { type: 'CONNECTIONLIST_CONNECTION_CREATE_START' }
+          return { type: 'CONNECTIONLIST_CONNECTION_CREATE_START', appId: action.appId, connection: action.connection }
       });
 
 export const connectionCreateRequestEpic = action$ =>
     action$.ofType('CONNECTION_CREATE_REQUEST')
       .mergeMap(action =>
           Rx.Observable.create(obs => {
-              api.createConnection({backendSiteUri: action.backendSiteUri})
+              api.createConnection(action.appId, action.connection)
                 .then(resp => {
                     const newConnection = resp
-                    obs.next({ type: 'CONNECTION_CREATE_SUCCESS' })
+                    obs.next({ type: 'CONNECTION_CREATE_SUCCESS', appId: action.appId, connection: action.connection})
                     obs.next({ type: 'CONNECTIONLIST_CONNECTION_CREATE_SUCCESS', connection: newConnection });
                 })
                 .catch(err => {
-                    obs.next({ type: 'CONNECTION_CREATE_FAIL', error: 'Failed to create connection'});
+                    obs.next({ type: 'CONNECTION_CREATE_FAIL', error: 'Failed to create connection' , appId: action.appId, connection: action.connection});
                     obs.next({ type: 'CONNECTIONLIST_CONNECTION_CREATE_FAIL' });
                 });
           }));

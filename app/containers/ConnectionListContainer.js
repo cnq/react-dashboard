@@ -40,9 +40,9 @@ class ConnectionListContainer extends Component {
                     </div>
                     <Grid>
                         {
-                            this.props.connections.map( (connect) => (
-                                <GridItem key={v4()}>
-                                    <ConnectionContainer connectionId={connect.id} appId={this.props.appId} connectionAlreadyFetched={this.props.connectionAlreadyFetched} />
+                            this.props.connections.map( (connection) => (
+                                <GridItem key={connection.connectionId}>
+                                    <ConnectionContainer connectionId={connection.connectionId} appId={this.props.appId} connectionAlreadyFetched={this.props.connectionAlreadyFetched} />
                                 </GridItem>
                             ))
                         }

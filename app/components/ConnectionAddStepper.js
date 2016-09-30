@@ -69,7 +69,18 @@ class ConnectionAddStepper extends Component {
 
     onClickCreateConnection = (props)  => {
         console.log("ConnectionAddStepper - onClickCreateConnection() called")
-        this.context.router.push('/dashboard/apps/app/' + props.app.get('appId') + '/connections')
+        props.createConnection(props.app.appId,
+                {
+                    connectionId: null,
+                    connectionUri: props.connectionUri,
+                    connectionType: props.connectionType,
+                    connectionName: props.connectionName,
+                    appId: props.app.appId,
+                    backendSiteUri: props.app.backendSiteUri,
+                    timestamp: Date.now()
+                }
+            )
+        this.context.router.push('/dashboard/apps/app/' + props.app.appId + '/connections')
     }
 
     renderButtons = (props) => {
@@ -173,7 +184,7 @@ class ConnectionAddStepper extends Component {
         return (
             <div style={{width: '100%', maxWidth: 1200, margin: 'auto'}}>
                 <div className={centeredContainer}>
-                    <h1 className={breathingRoom}><span className={uri}>{this.props.app.get('backendSiteUri')}</span></h1>
+                    <h1 className={breathingRoom}><span className={uri}>{this.props.app.backendSiteUri}</span></h1>
                 </div>
                 <Stepper style={{maxWidth: 960, margin: 'auto'}} activeStep={stepIndex}>
                     <Step>
@@ -263,7 +274,7 @@ ConnectionAddStepper.propTypes = {
     updateConnectionUri: PropTypes.func.isRequired,
     updateConnectionType: PropTypes.func.isRequired,
     updateConnectionName: PropTypes.func.isRequired,
-    connectionFanout: PropTypes.func.isRequired
+    createConnection: PropTypes.func.isRequired
 }
 
 ConnectionAddStepper.contextTypes = {

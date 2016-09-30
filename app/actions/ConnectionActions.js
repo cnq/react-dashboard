@@ -13,11 +13,12 @@ export const CONNECTION_DELETE_REQUEST = 'CONNECTION_DELETE_REQUEST'
 export const CONNECTION_DELETE_SUCCESS = 'CONNECTION_DELETE_SUCCESS'
 export const CONNECTION_DELETE_FAIL = 'CONNECTION_DELETE_FAIL'
 
-export const createConnection = (connectionToAdd) => (
-    {
-        type: CONNECTION_CREATE_INITILIZE,
-        connection: connectionToAdd
-    })
+export const createConnection = (appId, connectionToAdd) => {
+   return {
+       type: CONNECTION_CREATE_INITILIZE,
+       appId: appId,
+       connection: connectionToAdd
+    }}
 
 export const deleteConnection = (connectionToDelete) => (
     {
