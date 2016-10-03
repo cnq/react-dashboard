@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
 import { routerReducer } from 'react-router-redux';
 import SigninReducer from './SigninReducer';
+import SignoutReducer from './SignoutReducer';
 import AppListReducer from './AppListReducer';
 import { addApp, deleteApp } from './AppReducer';
 import ConnectionListReducer from './ConnectionListReducer';
@@ -13,6 +14,7 @@ import ConnectionStepperReducer from './ConnectionStepperReducer';
 
 export default combineReducers({
     signin: SigninReducer,
+    signout: SignoutReducer,
     applist: AppListReducer,
     addApp: addApp,
     deleteApp: deleteApp,

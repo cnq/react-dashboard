@@ -10,6 +10,11 @@ const initialState = {
 
 export default function signin ( state = initialState, action ) {
     switch ( action.type ) {
+        case actions.SIGN_IN_CLEAR:
+            return {
+                ...state,
+                isAuthenticated: false
+            }
         case actions.CHECK_SIGN_IN_START:
             return {
                 ...state,
