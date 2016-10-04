@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { Signout } from './components';
-import { HomeContainer, DashboardContainer, MainContainer, SigninContainer, AppsContainer, AppListContainer, ConnectionsContainer, ConnectionListContainer, ConnectionDetailsContainer, ConnectionEditContainer, ConnectionAddStepperContainer} from './containers';
+import { HomeContainer, DashboardContainer, MainContainer, SigninContainer, SignoutContainer, AppsContainer, AppListContainer, ConnectionsContainer, ConnectionListContainer, ConnectionDetailsContainer, ConnectionEditContainer, ConnectionAddStepperContainer} from './containers';
 import auth from './auth'
 
 
@@ -13,7 +12,7 @@ const NotFound = React.createClass({
 const routes = (
   <Route path="/" component={MainContainer}>
     <Route path="signin" component={SigninContainer} />
-    <Route path="signout" component={Signout} />
+    <Route path="signout" component={SignoutContainer} />
     <Route path="dashboard" component={DashboardContainer}>
         <Route path='apps' component={AppsContainer} >
             <IndexRoute component={AppListContainer} />
