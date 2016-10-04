@@ -2,10 +2,13 @@
 import api from '../api'
 
 
-export const initializeAppListEpic = action$ =>
+export const initializeAppListEpic = (action$,store) =>
     action$.ofType('APPLIST_INITILIZE')
+      .filter(() => {
+          return store.getState().signin.isAuthenticated;
+      })
       .map(action => { 
-          return { type: 'APPLIST_FETCH_START' }
+          return { type: 'APPLIST_FETCH_START', isFetching: false, error: '', apps: action.apps }
       });
 
 export const startAppListFetchEpic = action$ =>
