@@ -60,6 +60,18 @@ export default function applist ( state = initialState, action ) {
         }
 
         case appActions.APP_DELETE_START:
+            return {
+                ... state,
+                isFetching: false,
+                initialFetchComplete: true,
+                error: '',
+                apps: state.apps.map(function(app) { 
+                    if( app.appId == action.app.appId ){
+                        app.isDeleting = true; 
+                    }
+                    return app;
+                })
+            }
         case appActions.APP_DELETE_SUCCESS:
             return {
                 ... state,
