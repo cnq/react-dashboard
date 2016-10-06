@@ -1,11 +1,5 @@
-﻿import axios from 'axios';
+﻿import {ajax} from './constants';
 
-
-const ajax = axios.create({
-    baseURL: 'http://tailspin.demo.ncnq.io',
-    timeout: 6000,
-    withCredentials: true
-})
 
 module.exports = {
     login(authenticationCredentials) {
