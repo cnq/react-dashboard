@@ -6,7 +6,7 @@ import { appActions } from 'actions'
 class AppCardAddContainer extends Component {
 
     handleCreateApp = (backendSiteUri) => {
-        this.props.createApp(backendSiteUri)
+        this.props.appCreateInitialize(backendSiteUri)
     }
 
         render () {

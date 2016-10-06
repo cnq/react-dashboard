@@ -1,22 +1,12 @@
 ﻿
-
 export const APPLIST_INITILIZE = 'APPLIST_INITILIZE'
 export const APPLIST_FETCH_START = 'APPLIST_FETCH_START'
 export const APPLIST_FETCH_REQUEST = 'APPLIST_FETCH_REQUEST'
 export const APPLIST_FETCH_SUCCESS = 'APPLIST_FETCH_SUCCESS'
 export const APPLIST_FETCH_FAIL = 'APPLIST_FETCH_FAIL'
 
-export const APPLIST_APP_CREATE_START = 'APPLIST_APP_CREATE_START'
-export const APPLIST_APP_CREATE_SUCCESS = 'APPLIST_APP_CREATE_SUCCESS'
-export const APPLIST_APP_CREATE_FAIL = 'APPLIST_APP_CREATE_FAIL'
-
-export const APPLIST_APP_DELETE_START = 'APPLIST_APP_DELETE_START'
-export const APPLIST_APP_DELETE_SUCCESS = 'APPLIST_APP_DELETE_SUCCESS'
-export const APPLIST_APP_DELETE_FAIL = 'APPLIST_APP_DELETE_FAIL'
-
-
-
-export const initializeAppList = () => (
-    {
-        type: APPLIST_INITILIZE
-    })
+export const appListInitialize = () => ({ type: APPLIST_INITILIZE })
+export const appListFetchStart = () => ({ type: APPLIST_FETCH_START })
+export const appListFetchRequest = () => ({ type: APPLIST_FETCH_REQUEST })
+export const appListFetchSuccess = (apps) => ({ type: APPLIST_FETCH_SUCCESS, apps: apps })
+export const appListFetchFail = (errorMessage) => ({ type: APPLIST_FETCH_FAIL, error: errorMessage })

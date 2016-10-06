@@ -4,25 +4,33 @@ import applist from './AppListReducer'
 const addAppInitialState = {
     isCreating: false,
     error: '',
-    backendSiteUri: ''
+    backendSiteUri: '',
+    app: null
 }
 
 export function addApp ( state = addAppInitialState, action ) {
     switch ( action.type ) {
         case appActions.APP_CREATE_INITILIZE:
-        case appActions.APP_CREATE_START:
             return {
                 ... state,
                 backendSiteUri: action.backendSiteUri,
-                isCreating: true
+                isCreating: true,
+                error: '',
+                app: null
+            }
+        case appActions.APP_CREATE_START:
+            return {
+                ... state
             }
         case appActions.APP_CREATE_REQUEST:
             return {
-                ... state,
-                backendSiteUri: action.backendSiteUri,
-                isCreating: true
+                ... state
             }
         case appActions.APP_CREATE_SUCCESS:
+            return {
+                ... state,
+                isCreating: false
+            }
         case appActions.APP_CREATE_FAIL:
             return {
                 ... state,
@@ -44,24 +52,28 @@ const deleteAppInitialState = {
 export function deleteApp ( state = deleteAppInitialState, action ) {
     switch ( action.type ) {
         case appActions.APP_DELETE_INITILIZE:
-        case appActions.APP_DELETE_START:
             return {
                 ... state,
                 app: action.app,
                 isDeleting: true
+            }
+        case appActions.APP_DELETE_START:
+            return {
+                ... state
             }
         case appActions.APP_DELETE_REQUEST:
             return {
-                ... state,
-                app: action.app,
-                isDeleting: true
+                ... state
             }
         case appActions.APP_DELETE_SUCCESS:
+            return {
+                ... state,
+                isDeleting: false
+            }
         case appActions.APP_DELETE_FAIL:
             return {
                 ... state,
-                isDeleting: false,
-                error: action.error
+                isDeleting: false
             }
         default:
             return state

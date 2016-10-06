@@ -70,7 +70,6 @@ class App extends Component {
                             uri={this.props.app.uri}
                             actions={renderActions(this.props)}
                             menu={renderMenu(this.props)} />
-                        {this.props.error ? <p className={errorMsg}>{this.props.error}</p> : null}
                     </div>         
                         
      )
@@ -80,7 +79,6 @@ class App extends Component {
 
 App.propTypes = {
     app: PropTypes.object.isRequired,
-    error: PropTypes.string.isRequired,
     goToAppConnections: PropTypes.func.isRequired,
     deleteApp: PropTypes.func.isRequired
 }

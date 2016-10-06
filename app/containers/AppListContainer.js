@@ -12,7 +12,7 @@ import { errorMsg } from '../styles.css'
 class AppListContainer extends Component {
 
     componentWillMount () {
-        this.props.initializeAppList()
+        this.props.appListInitialize()
     }
 
     goToAppConnections = (event, appId) => {
@@ -24,7 +24,7 @@ class AppListContainer extends Component {
     deleteApp = (event, app) => {
         console.log("AppListContainer - deleteApp() called")
         event.stopPropagation()
-        this.props.deleteApp(app)
+        this.props.appDeleteInitialize(app)
     }
 
 
@@ -39,8 +39,7 @@ class AppListContainer extends Component {
                     </GridItem>
         { this.props.initialFetchComplete && this.props.apps.length === 0 ? <p className={s.header}>{'This is unfortunate.'}<br />{'It appears there are no apps yet'}</p> : null }
             { this.props.apps.length > 0 ? this.props.apps.map( (app) => ( <GridItem key={app.appId}>
-                                                                                <App error={this.props.error}
-                                                                                    app={app}
+                                                                                <App app={app}
                                                                                     goToAppConnections={this.goToAppConnections}
                                                                                     deleteApp={this.deleteApp} />
                                                                             </GridItem> )) : null}

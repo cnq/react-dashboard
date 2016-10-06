@@ -1,40 +1,36 @@
 ﻿import Rx from 'rxjs/Rx';
 import api from '../api'
+import { appActions } from 'actions'
 
 
 // app create
 
 export const initializeAppCreateEpic = action$ =>
-    action$.ofType('APP_CREATE_INITILIZE')
+    action$.ofType(appActions.APP_CREATE_INITILIZE)
       .map(action => { 
-          return { type: 'APP_CREATE_START', backendSiteUri: action.backendSiteUri }
+          return appActions.appCreateStart();
       });
 
 export const startAppCreateEpic = action$ =>
-    action$.ofType('APP_CREATE_START')
+    action$.ofType(appActions.APP_CREATE_START)
       .map(action => { 
-          return { type: 'APP_CREATE_REQUEST', backendSiteUri: action.backendSiteUri }
+          return appActions.appCreateRequest();
       });
 
-export const startAppListAddAppEpic = action$ =>
-    action$.ofType('APP_CREATE_START')
-      .map(action => { 
-          return { type: 'APPLIST_APP_CREATE_START' }
-      });
-
-export const appCreateRequestEpic = action$ =>
-    action$.ofType('APP_CREATE_REQUEST')
-      .mergeMap(action =>
+export const appCreateRequestEpic = (action$, store) =>
+    action$.ofType(appActions.APP_CREATE_REQUEST)
+      .mergeMap((action) =>
           Rx.Observable.create(obs => {
-              api.createApp({backendSiteUri: action.backendSiteUri})
+              api.createApp({backendSiteUri: store.getState().addApp.backendSiteUri})
                 .then(resp => {
                     const newApp = resp
-                    obs.next({ type: 'APP_CREATE_SUCCESS' })
-                    obs.next({ type: 'APPLIST_APP_CREATE_SUCCESS', app: newApp });
+                    obs.next(appActions.appCreateSuccess(newApp))
+                    obs.complete()
                 })
                 .catch(err => {
-                    obs.next({ type: 'APP_CREATE_FAIL', error: 'Failed to create app'});
-                    obs.next({ type: 'APPLIST_APP_CREATE_FAIL' });
+                    const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
+                    obs.next(appActions.appCreateFail('Failed to create app: ' + errorMessage))
+                    obs.complete()
                 });
           }));
 
@@ -42,38 +38,30 @@ export const appCreateRequestEpic = action$ =>
 
 // app delete
 
-
 export const initializeAppDeleteEpic = action$ =>
-    action$.ofType('APP_DELETE_INITILIZE')
+    action$.ofType(appActions.APP_DELETE_INITILIZE)
       .map(action => { 
-          return { type: 'APP_DELETE_START', app: action.app }
+          return appActions.appDeleteStart(action.app)
       });
 
 export const startAppDeleteEpic = action$ =>
-    action$.ofType('APP_DELETE_START')
+    action$.ofType(appActions.APP_DELETE_START)
       .map(action => { 
-          return { type: 'APP_DELETE_REQUEST', app: action.app  }
+          return appActions.appDeleteRequest()
       });
 
-export const startAppListCreateAppEpic = action$ =>
-    action$.ofType('APP_DELETE_START')
-      .map(action => { 
-          return { type: 'APPLIST_APP_DELETE_START' }
-      });
-
-export const appDeleteRequestEpic = action$ =>
-    action$.ofType('APP_DELETE_REQUEST')
+export const appDeleteRequestEpic = (action$, store) =>
+    action$.ofType(appActions.APP_DELETE_REQUEST)
       .mergeMap(action =>
           Rx.Observable.create(obs => {
-              api.deleteApp(action.app)
+              api.deleteApp(store.getState().deleteApp.app)
                 .then(resp => {
-                    obs.next({ type: 'APP_DELETE_SUCCESS', app: action.app  })
-                    obs.next({ type: 'APPLIST_APP_DELETE_SUCCESS', app: action.app });
+                    obs.next(appActions.appDeleteSuccess(store.getState().deleteApp.app))
+                    obs.complete()
                 })
                 .catch(err => {
-                    obs.next({ type: 'APP_DELETE_FAIL', app: action.app , error: 'Failed to delete app'});
-                    obs.next({ type: 'APPLIST_APP_DELETE_FAIL', app: action.app  });
+                    const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
+                    obs.next(appActions.appDeleteFail(store.getState().deleteApp.app, 'Failed to delete app : ' + errorMessage))
+                    obs.complete()
                 });
           }));
-
-

@@ -1,35 +1,34 @@
 ﻿import Rx from 'rxjs/Rx';
 import api from '../api'
+import { applist } from 'actions'
 
-
-export const initializeAppListEpic = (action$,store) =>
-    action$.ofType('APPLIST_INITILIZE')
-      .filter(() => {
-          return store.getState().signin.isAuthenticated;
-      })
+export const initializeAppListEpic = (action$, store) =>
+    action$.ofType(applist.APPLIST_INITILIZE)
+      // only catch APPLIST_INITILIZE actions if the user is signed in
+      .filter(() => { return store.getState().signin.isAuthenticated; })
       .map(action => { 
-          return { type: 'APPLIST_FETCH_START', isFetching: false, error: '', apps: action.apps }
+          return applist.appListInitialize()
       });
 
 export const startAppListFetchEpic = action$ =>
-    action$.ofType('APPLIST_FETCH_START')
+    action$.ofType(applist.APPLIST_FETCH_START)
       .map(action => { 
-          return { type: 'APPLIST_FETCH_REQUEST', isFetching: true, error: action.error, apps: action.apps }
+          return applist.appListFetchRequest()
       });
 
 export const appListFetchEpic = action$ =>
-    action$.ofType('APPLIST_FETCH_REQUEST')
+    action$.ofType(applist.APPLIST_FETCH_REQUEST)
       .mergeMap(action =>
           Rx.Observable.create(obs => {
               api.getApps()
                 .then(resp => {
                     const appArray = Object.keys(resp).map(function(key) { return resp[key] });
-                    obs.next({ type: 'APPLIST_FETCH_SUCCESS', isFetching: false, error: '', apps: appArray });
+                    obs.next(applist.appListFetchSuccess(appArray));
                     obs.complete();
                 })
                 .catch(err => {
-                    obs.next({ type: 'APPLIST_FETCH_FAIL', isFetching: false, error: 'Failed to fetch apps', apps: action.apps});
+                    const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
+                    obs.next(applist.appListFetchFail(errorMessage));
                     obs.complete();
                 });
           }));
-

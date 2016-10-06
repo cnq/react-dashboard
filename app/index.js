@@ -17,7 +17,7 @@ const store = configureStore(browserHistory, combinedReducer, combinedEpic);
 const history = configureHistory(browserHistory, routes, store);
 
 
-store.dispatch(applist.initializeAppList())
+store.dispatch(applist.appListInitialize())
 
 ReactDOM.render((
   <Provider store={store}>
