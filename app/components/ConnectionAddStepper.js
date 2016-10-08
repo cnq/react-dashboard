@@ -69,7 +69,7 @@ class ConnectionAddStepper extends Component {
 
     onClickCreateConnection = (props)  => {
         console.log("ConnectionAddStepper - onClickCreateConnection() called")
-        props.createConnection(props.app.appId,
+        props.connectionCreateInitialize(
                 {
                     connectionId: "newconnection",
                     connectionUri: props.connectionUri,
@@ -275,7 +275,7 @@ ConnectionAddStepper.propTypes = {
     updateConnectionUri: PropTypes.func.isRequired,
     updateConnectionType: PropTypes.func.isRequired,
     updateConnectionName: PropTypes.func.isRequired,
-    createConnection: PropTypes.func.isRequired
+    connectionCreateInitialize: PropTypes.func.isRequired
 }
 
 ConnectionAddStepper.contextTypes = {

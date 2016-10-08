@@ -4,7 +4,6 @@ import { LoadingIndicator } from 'components'
 import { signout as signoutActions } from 'actions'
 
 
-
 class SignoutContainer extends Component {
 
     propTypes : {
@@ -14,21 +13,13 @@ class SignoutContainer extends Component {
     }
 
     componentDidMount() {
-        this.props.signout()
+        this.props.signoutStart()
     }
 
     render () {
-        return (
-            <div>
-                  {
-                      this.props.isSignoutComplete
-                          ?  <p>You are now logged out</p> 
-                          :   <LoadingIndicator size={2} />
-                          }
-            </div>
-        )
-            }
-            }
+        return ( <div>{ !this.props.isSignoutComplete ? <LoadingIndicator size={2} /> : null }</div> )
+    }
+}
 
 const mapStateToProps = ({signout}) => {
     return {

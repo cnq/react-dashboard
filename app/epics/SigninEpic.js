@@ -1,47 +1,51 @@
 ﻿import Rx from 'rxjs/Rx';
 import auth from '../auth'
+import { signin as signinActions } from 'actions'
 
 
 export const initiateCheckSigninEpic = action$ =>
-    action$.ofType('CHECK_SIGN_IN_START')
+    action$.ofType(signinActions.CHECK_SIGNIN_START)
       .map(action => { 
-          return { type: 'CHECK_SIGN_IN_REQUEST', isAuthenticated: action.isAuthenticated }
+          return signinActions.checkSigninRequest()
       });
 
 export const checkSigninRequestEpic = action$ =>
-    action$.ofType('CHECK_SIGN_IN_REQUEST')
+    action$.ofType(signinActions.CHECK_SIGNIN_REQUEST)
       .mergeMap(action =>
           Rx.Observable.create(obs => {
               auth.getLoggedInUser()
                 .then(resp => {
-                    obs.next({ type: 'CHECK_SIGN_IN_SUCCESS', isAuthenticated: true });
+                    const signedInUser = resp
+                    obs.next(signinActions.checkSigninSuccess(signedInUser));
                     obs.complete();
                 })
                 .catch(err => {
-                    obs.next({ type: 'CHECK_SIGN_IN_FAIL', isAuthenticated: false});
+                    obs.next(signinActions.checkSigninFail());
                     obs.complete();
                 });
           }));
 
 export const initiateSigninEpic = action$ =>
-    action$.ofType('SIGN_IN_START')
+    action$.ofType(signinActions.SIGNIN_START)
       .map(action => { 
-          return { type: 'SIGN_IN_REQUEST', isAuthenticating: true, isAuthenticated: false, error: '', email :action.email, password: action.password }
+          return signinActions.signinRequest(action.authenticationCredentials)
       });
 
 
 
 export const signinRequestEpic = action$ =>
-    action$.ofType('SIGN_IN_REQUEST')
+    action$.ofType(signinActions.SIGNIN_REQUEST)
       .mergeMap(action =>
           Rx.Observable.create(obs => {
-              auth.login({ email: action.email, password: action.password } )
+              auth.login({ email: action.authenticationCredentials.email, password: action.authenticationCredentials.password } )
                 .then(resp => {
-                    obs.next({ type: 'SIGN_IN_SUCCESS', isAuthenticating: false, isAuthenticated: true, error:'', email :'', password: ''  });
+                    const signedInUser = resp
+                    obs.next(signinActions.signinSuccess(signedInUser));
                     obs.complete();
                 })
                 .catch(err => {
-                    obs.next({ type: 'SIGN_IN_FAIL', isAuthenticating: false,  isAuthenticated: false, password: '', error: 'We had an issue getting you logged in. We think you may have mistyped either your email address or password.'});
+                    const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
+                    obs.next(signinActions.signinFail('We had an issue getting you logged in. We think you may have mistyped either your email address or password.'));
                     obs.complete();
                 });
           }));

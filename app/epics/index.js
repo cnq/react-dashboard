@@ -1,9 +1,8 @@
 ﻿import { combineEpics } from 'redux-observable';
 import { initiateSigninEpic, signinRequestEpic, initiateCheckSigninEpic, checkSigninRequestEpic } from './SigninEpic';
-import { initiateSignoutEpic, signoutRequestEpic, signoutClearSigninEpic } from './SignoutEpic';
+import { initiateSignoutEpic, signoutRequestEpic } from './SignoutEpic';
 import { initializeAppListEpic, startAppListFetchEpic, appListFetchEpic } from './AppListEpic';
 import { initializeAppCreateEpic, startAppCreateEpic, appCreateRequestEpic, initializeAppDeleteEpic, startAppDeleteEpic, appDeleteRequestEpic } from './AppEpic';
-import { initializeConnectionListEpic, startConnectionListFetchEpic, connectionListFetchEpic } from './ConnectionListEpic';
 import { initializeConnectionCreateEpic, startConnectionCreateEpic, connectionCreateRequestEpic, initializeConnectionDeleteEpic, startConnectionDeleteEpic, connectionDeleteRequestEpic } from './ConnectionEpic';
 //import { <TYPE> } from './PATH-TO-REDUCER-WITHOUT-EXTENSION';
 
@@ -14,7 +13,6 @@ export const combinedEpic = combineEpics(
   checkSigninRequestEpic,
   initiateSignoutEpic, 
   signoutRequestEpic, 
-  signoutClearSigninEpic,
   initializeAppListEpic,
   startAppListFetchEpic,
   appListFetchEpic,
@@ -24,9 +22,6 @@ export const combinedEpic = combineEpics(
   initializeAppDeleteEpic, 
   startAppDeleteEpic,  
   appDeleteRequestEpic,
-  initializeConnectionListEpic, 
-  startConnectionListFetchEpic, 
-  connectionListFetchEpic,
   initializeConnectionCreateEpic, 
   startConnectionCreateEpic,  
   connectionCreateRequestEpic, 

@@ -5,7 +5,6 @@ import SigninReducer from './SigninReducer';
 import SignoutReducer from './SignoutReducer';
 import AppListReducer from './AppListReducer';
 import { addApp, deleteApp } from './AppReducer';
-import ConnectionListReducer from './ConnectionListReducer';
 import { addConnection, deleteConnection } from './ConnectionReducer';
 import ConnectionStepperReducer from './ConnectionStepperReducer';
 //export <TYPE> from './PATH-TO-REDUCER-WITHOUT-EXTENSION';
@@ -18,7 +17,6 @@ export default combineReducers({
     applist: AppListReducer,
     addApp: addApp,
     deleteApp: deleteApp,
-    connectionList: ConnectionListReducer,
     addConnection: addConnection,
     deleteConnection: deleteConnection,
     connectionStepper: ConnectionStepperReducer,

@@ -18,7 +18,7 @@ function checkAuthHoc(WrappedComponent) {
             this.props.checkSigninStart(false) //assume that the user is not authenticated on initial load and kick off checkSigninStart action 
         }
         componentWillReceiveProps(nextProps) {
-            console.log('CheckAuthentication - componentDidUpdate() called');
+            console.log('CheckAuthentication - componentWillReceiveProps() called');
             if(!nextProps.isAuthenticated && !this.props.router.isActive('signin')){
                 console.log('CheckAuthentication - user is not authenticated');
                 this.props.router.push('/signin')

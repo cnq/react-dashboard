@@ -1,35 +1,36 @@
 ﻿import Rx from 'rxjs/Rx';
 import api from '../api'
+import { connectionActions } from 'actions'
 
 
 // connection create
 
 export const initializeConnectionCreateEpic = action$ =>
-    action$.ofType('CONNECTION_CREATE_INITILIZE')
+    action$.ofType(connectionActions.CONNECTION_CREATE_INITILIZE)
       .map(action => { 
-          return { type: 'CONNECTION_CREATE_START', connection: action.connection}
+          return connectionActions.connectionCreateStart(action.connection)
       });
 
 export const startConnectionCreateEpic = action$ =>
-    action$.ofType('CONNECTION_CREATE_START')
+    action$.ofType(connectionActions.CONNECTION_CREATE_START)
       .map(action => { 
-          return { type: 'CONNECTION_CREATE_REQUEST', connection: action.connection }
+          return connectionActions.connectionCreateRequest()
       });
 
-
-export const connectionCreateRequestEpic = action$ =>
-    action$.ofType('CONNECTION_CREATE_REQUEST')
+export const connectionCreateRequestEpic = (action$, store) =>
+    action$.ofType(connectionActions.CONNECTION_CREATE_REQUEST)
       .mergeMap(action =>
           Rx.Observable.create(obs => {
-              api.createConnection(action.connection)
+              api.createConnection(store.getState().addConnection.connection)
                 .then(resp => {
                     const newConnection = resp
-                    obs.next({ type: 'CONNECTION_CREATE_SUCCESS', connection: newConnection})
-                    obs.complete();
+                    obs.next(connectionActions.connectionCreateSuccess(newConnection))
+                    obs.complete()
                 })
                 .catch(err => {
-                    obs.next({ type: 'CONNECTION_CREATE_FAIL', error: 'Failed to create connection' , connection: action.connection});
-                    obs.complete();
+                    const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
+                    obs.next(connectionActions.connectionCreateFail('Failed to create connection : ' + errorMessage));
+                    obs.complete()
                 });
           }));
 
@@ -37,29 +38,31 @@ export const connectionCreateRequestEpic = action$ =>
 
 // connection delete
 
-
 export const initializeConnectionDeleteEpic = action$ =>
-    action$.ofType('CONNECTION_DELETE_INITILIZE')
+    action$.ofType(connectionActions.CONNECTION_DELETE_INITILIZE)
       .map(action => { 
-          return { type: 'CONNECTION_DELETE_START', connection: action.connection }
+          return connectionActions.connectionDeleteStart(action.connection)
       });
 
 export const startConnectionDeleteEpic = action$ =>
-    action$.ofType('CONNECTION_DELETE_START')
+    action$.ofType(connectionActions.CONNECTION_DELETE_START)
       .map(action => { 
-          return { type: 'CONNECTION_DELETE_REQUEST', connection: action.connection  }
+          return connectionActions.connectionDeleteRequest()
       });
 
-export const connectionDeleteRequestEpic = action$ =>
-    action$.ofType('CONNECTION_DELETE_REQUEST')
+export const connectionDeleteRequestEpic = (action$, store) =>
+    action$.ofType(connectionActions.CONNECTION_DELETE_REQUEST)
       .mergeMap(action =>
           Rx.Observable.create(obs => {
-              api.deleteConnection(action.connection)
+              api.deleteConnection(store.getState().deleteConnection.connection)
                 .then(resp => {
-                    obs.next({ type: 'CONNECTION_DELETE_SUCCESS', connection: action.connection })
+                    obs.next(connectionActions.connectionDeleteSuccess(store.getState().deleteConnection.connection))
+                    obs.complete()
                 })
                 .catch(err => {
-                    obs.next({ type: 'CONNECTION_DELETE_FAIL', error: 'Failed to delete connection'});
+                    const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
+                    obs.next(connectionActions.connectionDeleteFail(store.getState().deleteConnection.connection, 'Failed to delete connection : ' + errorMessage));
+                    obs.complete()
                 });
           }));
 

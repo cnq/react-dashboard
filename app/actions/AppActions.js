@@ -1,5 +1,5 @@
 ﻿
-// App Add Actions
+// App Create Actions
 export const APP_CREATE_INITILIZE = 'APP_CREATE_INITILIZE'
 export const APP_CREATE_START = 'APP_CREATE_START'
 export const APP_CREATE_REQUEST = 'APP_CREATE_REQUEST'

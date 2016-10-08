@@ -1,86 +1,65 @@
-﻿import { signin as actions } from 'actions'
+﻿import { signin as signinActions } from 'actions'
+import { signout as signoutActions } from 'actions'
 
 const initialState = {
+    user: null,
     isAuthenticated: false,
     isAuthenticating: false,
-    error :'',
-    email :'',
-    password: ''
+    error :''
 }
 
 export default function signin ( state = initialState, action ) {
     switch ( action.type ) {
-        case actions.SIGN_IN_CLEAR:
+        case signoutActions.SIGNOUT_SUCCESS: 
             return {
                 ...state,
                 isAuthenticated: false
             }
-        case actions.CHECK_SIGN_IN_START:
-            return {
-                ...state,
-                isAuthenticated: action.isAuthenticated
-            }
-        case actions.CHECK_SIGN_IN_REQUEST:
-            return {
-                ...state,
-                isAuthenticated: action.isAuthenticated
-            }
-        case actions.CHECK_SIGN_IN_SUCCESS: 
-            return {
-                ...state,
-                isAuthenticated: action.isAuthenticated
-            }
-        case actions.CHECK_SIGN_IN_FAIL:
-            return {
-                ...state,
-                isAuthenticated: action.isAuthenticated
-            }
-        case actions.CHECK_SIGN_IN_INITILIZE:
+        case signinActions.CHECK_SIGNIN_START:
             return {
                 ...state,
                 isAuthenticated: action.isAuthenticated,
-                isAuthenticating: action.isAuthenticating,
-                error :action.error,
-                email :action.email,
-                password: action.password
+                error :''
             }
-        case actions.SIGN_IN_START:
+        case signinActions.CHECK_SIGNIN_REQUEST:
+            return {
+                ...state
+            }
+        case signinActions.CHECK_SIGNIN_SUCCESS: 
             return {
                 ...state,
-                isAuthenticated: action.isAuthenticated,
-                isAuthenticating: action.isAuthenticating,
-                error :action.error,
-                email :action.email,
-                password: action.password
+                isAuthenticated: true,
+                user: action.user
             }
-        case actions.SIGN_IN_REQUEST:
+        case signinActions.CHECK_SIGNIN_FAIL:
             return {
                 ...state,
-                isAuthenticated: action.isAuthenticated,
-                isAuthenticating: action.isAuthenticating,
-                error :action.error,
-                email :action.email,
-                password: action.password
+                isAuthenticated: false,
+                error: action.error
             }
-        case actions.SIGN_IN_SUCCESS: 
+        case signinActions.SIGNIN_START:
             return {
                 ...state,
-                isAuthenticated: action.isAuthenticated,
-                isAuthenticating: action.isAuthenticating,
-                error :action.error,
-                email :action.email,
-                password: action.password
+                isAuthenticated: false,
+                isAuthenticating: true,
             }
-        case actions.SIGN_IN_FAIL:
+        case signinActions.SIGNIN_REQUEST:
+            return {
+                ...state
+            }
+        case signinActions.SIGNIN_SUCCESS: 
             return {
                 ...state,
-                isAuthenticated: action.isAuthenticated,
-                isAuthenticating: action.isAuthenticating,
-                error :action.error,
-                email :action.email,
-                password: action.password
+                isAuthenticated: true,
+                isAuthenticating: false,
+                user: action.user
             }
-
+        case signinActions.SIGNIN_FAIL:
+            return {
+                ...state,
+                isAuthenticating: false,
+                error :action.error
+            }
         default:
             return state
     }

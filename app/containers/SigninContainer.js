@@ -24,11 +24,11 @@ class SigninContainer extends Component {
         fetchAndHandleAuthenticatedUser: PropTypes.func
     }
     handleAuth = (event) => {
-        this.props.signIn(event)
+        this.props.signinStart(event)
     }
 
     componentWillMount() {
-        this.props.initializeSignin()
+        this.props.signinInitialize()
     }
 
     componentDidUpdate() {

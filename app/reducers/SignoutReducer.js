@@ -8,28 +8,28 @@ const initialState = {
 
 export default function signout ( state = initialState, action ) {
     switch ( action.type ) {
-        case actions.SIGN_OUT_START:
+        case actions.SIGNOUT_START:
             return {
                 ...state,
                 isSignoutComplete: false,
                 isSigningOut: true,
                 error :''
             }
-        case actions.SIGN_OUT_REQUEST:
+        case actions.SIGNOUT_REQUEST:
             return {
                 ...state,
                 isSignoutComplete: false,
                 isSigningOut: true,
                 error :''
             }
-        case actions.SIGN_OUT_SUCCESS: 
+        case actions.SIGNOUT_SUCCESS: 
             return {
                 ...state,
                 isSignoutComplete: true,
                 isSigningOut: false,
                 error :''
             }
-        case actions.SIGN_OUT_FAIL:
+        case actions.SIGNOUT_FAIL:
             return {
                 ...state,
                 isSignoutComplete: true,

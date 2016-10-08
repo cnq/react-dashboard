@@ -1,30 +1,32 @@
 ﻿import { connectionActions } from 'actions'
-import connectionList from './ConnectionListReducer'
 
 const addConnectionInitialState = {
-    appId: '',
-    connection: '',
+    connection: null,
     isCreating: false,
     error: ''
 }
 
-
 export function addConnection ( state = addConnectionInitialState, action ) {
     switch ( action.type ) {
         case connectionActions.CONNECTION_CREATE_INITILIZE:
-        case connectionActions.CONNECTION_CREATE_START:
             return {
                 ... state,
-                appId: action.appId,
                 connection: action.connection,
                 isCreating: true
             }
+        case connectionActions.CONNECTION_CREATE_START:
+            return {
+                ... state
+            }
         case connectionActions.CONNECTION_CREATE_REQUEST:
             return {
-                ... state,
-                isCreating: true
+                ... state
             }
         case connectionActions.CONNECTION_CREATE_SUCCESS:
+            return {
+                ... state,
+                isCreating: false
+            }
         case connectionActions.CONNECTION_CREATE_FAIL:
             return {
                 ... state,
@@ -38,27 +40,33 @@ export function addConnection ( state = addConnectionInitialState, action ) {
 
 
 const deleteConnectionInitialState = {
+        connection: null,
         isDeleting: false,
-        error: '',
-        connection: null
+        error: ''
     }
 
 export function deleteConnection ( state = deleteConnectionInitialState, action ) {
     switch ( action.type ) {
         case connectionActions.CONNECTION_DELETE_INITILIZE:
-        case connectionActions.CONNECTION_DELETE_START:
             return {
                 ... state,
                 connection: action.connection,
                 isDeleting: true
+            }
+        case connectionActions.CONNECTION_DELETE_START:
+            return {
+                ... state
             }
         case connectionActions.CONNECTION_DELETE_REQUEST:
             return {
-                ... state,
-                connection: action.connection,
-                isDeleting: true
+                ... state
             }
         case connectionActions.CONNECTION_DELETE_SUCCESS:
+            return {
+                ... state,
+                connection: action.connection,
+                isDeleting: false,
+            }
         case connectionActions.CONNECTION_DELETE_FAIL:
             return {
                 ... state,

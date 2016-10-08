@@ -7,7 +7,7 @@ export const initializeAppListEpic = (action$, store) =>
       // only catch APPLIST_INITILIZE actions if the user is signed in
       .filter(() => { return store.getState().signin.isAuthenticated; })
       .map(action => { 
-          return applist.appListInitialize()
+          return applist.appListFetchStart()
       });
 
 export const startAppListFetchEpic = action$ =>

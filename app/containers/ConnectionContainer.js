@@ -9,7 +9,7 @@ class ConnectionContainer extends Component {
 
     deleteConnection = (event, connection) => {
         event.stopPropagation()
-        this.props.deleteConnection(connection)
+        this.props.connectionDeleteInitialize(connection)
         //redirect user to dashboard if we are in the details view
         if (this.props.router.isActive({ pathname: `/dashboard/apps/app/${this.props.connection.appId}/connections/connection/${this.props.connection.connectionId}`}))
             this.props.router.push(`/dashboard/apps/app/${this.props.connection.appId}/connections`)
@@ -25,7 +25,7 @@ class ConnectionContainer extends Component {
 
 ConnectionContainer.propTypes = {
     connection: PropTypes.object.isRequired,
-    deleteConnection: PropTypes.func.isRequired
+    connectionDeleteInitialize: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, props) => ({

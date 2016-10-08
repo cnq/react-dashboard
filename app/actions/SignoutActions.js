@@ -1,11 +1,9 @@
-﻿export const SIGN_OUT_INITILIZE = 'SIGN_OUT_INITILIZE'
-export const SIGN_OUT_START = 'SIGN_OUT_START'
-export const SIGN_OUT_REQUEST = 'SIGN_OUT_REQUEST'
-export const SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS'
-export const SIGN_OUT_FAIL = 'SIGN_OUT_FAIL'
+﻿export const SIGNOUT_START = 'SIGNOUT_START'
+export const SIGNOUT_REQUEST = 'SIGNOUT_REQUEST'
+export const SIGNOUT_SUCCESS = 'SIGNOUT_SUCCESS'
+export const SIGNOUT_FAIL = 'SIGNOUT_FAIL'
 
-
-export const signout = (authenticationCredentials) => (
-    {
-        type: SIGN_OUT_START
-    })
+export const signoutStart = () => ({ type: SIGNOUT_START })
+export const signoutRequest = () => ({ type: SIGNOUT_REQUEST })
+export const signoutSuccess = () => ({ type: SIGNOUT_SUCCESS })
+export const signoutFail = () => ({ type: SIGNOUT_FAIL })
