@@ -42,12 +42,14 @@ export default function applist ( state = initialState, action ) {
         case appActions.APP_CREATE_START:
             return {
                 ... state,
-                apps: state.apps.concat({appId: "newapp", backendSiteUri: action.backendSiteUri, isCreating: true, connections: [], uri:"" })
+                apps: state.apps.concat({appId: "newapp", backendSiteUri: action.backendSiteUri, isCreating: true, connections: [], uri:"" }),
+                error: ''
             }
         case appActions.APP_CREATE_SUCCESS:
             return {
                 ... state,
-                apps: state.apps.map(function(app) { return app.appId == "newapp" ? action.app : app; })
+                apps: state.apps.map(function(app) { return app.appId == "newapp" ? action.app : app; }),
+                error: ''
             }
         case appActions.APP_CREATE_FAIL:
             return {
@@ -64,12 +66,14 @@ export default function applist ( state = initialState, action ) {
                         app.isDeleting = true; 
                     }
                     return app;
-                })
+                }),
+                error: ''
             }
         case appActions.APP_DELETE_SUCCESS:
             return {
                 ... state,
-                apps: state.apps.filter(function(app) { return app.appId != action.app.appId; })
+                apps: state.apps.filter(function(app) { return app.appId != action.app.appId; }),
+                error: ''
             }
         case appActions.APP_DELETE_FAIL:
             return {
