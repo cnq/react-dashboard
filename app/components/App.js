@@ -8,7 +8,7 @@ import ActionDownload from 'material-ui/svg-icons/file/file-download';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import NavMoreVert from 'material-ui/svg-icons/navigation/more-vert';
 import Badge from 'material-ui/Badge';
-import { AppCard } from 'components';
+import { AppCard, DialogConfirm } from 'components';
 import { errorMsg } from '../styles.css';
 import s from './App.css';
 
@@ -24,13 +24,27 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            valueSingle: ''
+            valueSingle: '',
+            showDeleteConfirmation: false
         }
     }
 
     handleChangeSingle = (event, value) => {
         this.setState({
+            ... this.state,
             valueSingle: value
+        })
+    }
+    openDeleteConfirmation = () => {
+        this.setState({
+            ... this.state,
+            showDeleteConfirmation: true
+        })
+    }
+    closeDeleteConfirmation = () => {
+        this.setState({
+            ... this.state,
+                showDeleteConfirmation: false
         })
     }
 
@@ -51,10 +65,10 @@ class App extends Component {
             <IconMenu iconButtonElement={<IconButton><NavMoreVert color={'#ffffff'} /></IconButton>} onChange={this.handleChangeSingle} value={this.state.valueSingle}>
                 <MenuItem style={menuItemStyle} innerDivStyle={innerDivStyle} value="1" primaryText="Site Settings" leftIcon={<ActionSettings style={iconStyle} />} />
                 <MenuItem style={menuItemStyle} innerDivStyle={innerDivStyle} value="2" primaryText="Download Config Files" leftIcon={<ActionDownload style={iconStyle} />} />
-                <MenuItem style={menuItemStyle} innerDivStyle={innerDivStyle} value="3" primaryText="Delete Site" leftIcon={<ActionDelete style={iconStyle} />} onClick={(event) => deleteApp(event, this.props.app)} />
+                <MenuItem style={menuItemStyle} innerDivStyle={innerDivStyle} value="3" primaryText="Delete Site" leftIcon={<ActionDelete style={iconStyle} />} onClick={(event) => {event.stopPropagation(); this.openDeleteConfirmation()}} />
             </IconMenu>
             )
-        }
+                }
 
     const renderSiteUri = (backendSiteUri) => {
         return (
@@ -70,17 +84,26 @@ class App extends Component {
                             uri={this.props.app.uri}
                             actions={renderActions(this.props)}
                             menu={renderMenu(this.props)} />
+                        <DialogConfirm
+                            title = "Delete Site"
+                            message = {"You are about to delete the site " + this.props.app.backendSiteUri + " .  This cannot be undone.  Are you sure?"}
+                            isOpen = {this.state.showDeleteConfirmation}
+                            confirmButtonText = "Yes, Delete"
+                            confirmCallback = {() => { this.closeDeleteConfirmation(); this.props.deleteApp(this.props.app)} }
+                            cancelCallback = {this.closeDeleteConfirmation}
+                            
+                            />
                     </div>         
                         
      )
-  }
+                        }
    
-}
+                        }
 
-App.propTypes = {
-    app: PropTypes.object.isRequired,
-    goToAppConnections: PropTypes.func.isRequired,
-    deleteApp: PropTypes.func.isRequired
-}
+                            App.propTypes = {
+                            app: PropTypes.object.isRequired,
+                            goToAppConnections: PropTypes.func.isRequired,
+                            deleteApp: PropTypes.func.isRequired
+                        }
 
 export default App

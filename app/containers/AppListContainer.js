@@ -21,9 +21,8 @@ class AppListContainer extends Component {
         this.props.router.push('/dashboard/apps/app/' + appId + '/connections')
     }
 
-    deleteApp = (event, app) => {
+    deleteApp = (app) => {
         console.log("AppListContainer - deleteApp() called")
-        event.stopPropagation()
         this.props.appDeleteInitialize(app)
     }
 
