@@ -15,13 +15,14 @@ class ConnectionContainer extends Component {
 
     render () {
         return (
-            <Connection deleteConnection={this.deleteConnection} connection={this.props.connection} />
+            <Connection deleteConnection={this.deleteConnection} connection={this.props.connection} uri={this.props.uri} />
         )
     }
 
 }
 
 ConnectionContainer.propTypes = {
+    uri: PropTypes.string.isRequired,
     connection: PropTypes.object.isRequired,
     connectionDeleteInitialize: PropTypes.func.isRequired
 }

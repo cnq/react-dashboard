@@ -30,6 +30,28 @@
     flex: 1;
 }
 
+.uri {
+    text-decoration: none;
+    color: #383838;
+    font-weight: 400;
+}
+
+.devMode {
+    color: #3ED1D6;
+}
+
+.liveMode {
+    color: #5DE858;
+}
+
+.warningMode {
+    color: #FBC761;
+}
+
+.errorMode {
+    color: #FC656E;
+}
+
 .header {
     display: flex;
     flex-direction: row;
@@ -47,4 +69,16 @@
 
 .uri {
     composes: clickable from '../styles.css';
+}
+
+.connectionCount h4 {
+    text-align: center;
+    font-size: 54px;
+    line-height: 62px;
+    margin: 0;
+}
+
+.connectionCount div {
+    line-height: 16px;
+    opacity: .3;
 }

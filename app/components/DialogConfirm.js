@@ -1,7 +1,7 @@
 ﻿import React, { Component, PropTypes } from 'react'
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
+import s from '../styles.css'
 
 
 export default class DialogConfirm extends Component {
@@ -16,14 +16,16 @@ export default class DialogConfirm extends Component {
 
     render() {
         const actions = [
-            <FlatButton label="Cancel" primary={true} onTouchTap={this.handleClose} />,
-            <FlatButton label={this.props.confirmButtonText} primary={true} onTouchTap={this.handleConfirm}/>
+            <FlatButton label="Cancel" primary={true} onTouchTap={this.handleClose} style={{color: '#383838'}} hoverColor="none" rippleColor="none" />,
+            <FlatButton label={this.props.confirmButtonText} style={{color: '#FC656E'}}hoverColor="none" rippleColor="none" onTouchTap={this.handleConfirm}/>
         ];
 
     return (
           <div>
-            <Dialog title={this.props.title} actions={actions} modal={true} open={this.props.isOpen} >
-            {this.props.message}
+            <Dialog title={this.props.title} actions={actions} modal={true} open={this.props.isOpen} titleStyle={{backgroundColor: '#FC656E', color: '#ffffff'}} >
+                <div className={s.breathingRoom}>
+                    {this.props.message}
+                </div>
             </Dialog>
           </div>
         );

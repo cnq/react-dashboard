@@ -1,12 +1,18 @@
-﻿import React from 'react'
+import React from 'react'
 import s from './Grid.css'
 
-function Grid (props) {
+export function GridCard (props) {
     return (
-        <div className={s.grid}>
+        <div className={s.gridCard}>
             {props.children}
         </div>
     )
 }
 
-export default Grid
+export function GridList (props) {
+    return (
+        <div className={s.gridList}>
+            {props.children}
+        </div>
+    )
+}

@@ -11,7 +11,7 @@ function NavLinks ({isAuthenticated}) {
     return (
         isAuthenticated
             ?   <ul>
-                    <li><Link to='/dashboard/apps' className={s.link}>{'Dashboard'}</Link></li>
+                    <li><Link to='/dashboard/apps' className={s.logo}>{'Paperhook'}</Link></li>
                 </ul>
             :   <ul>
                     <li><Link to='/' className={s.link}>{'Home'}</Link></li>

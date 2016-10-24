@@ -4,11 +4,12 @@ import FlatButton from 'material-ui/FlatButton';
 import {Popover, PopoverAnimationVertical} from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
-import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
 import Settings from 'material-ui/svg-icons/action/settings';
 import Profile from 'material-ui/svg-icons/social/person';
 import Signout from 'material-ui/svg-icons/action/exit-to-app';
+import MenuIcon from 'material-ui/svg-icons/navigation/menu';
+import s from './Navigation.css'
 
 class SettingsDropdown extends Component {
 
@@ -43,7 +44,7 @@ class SettingsDropdown extends Component {
 
         return (
             <div>
-                <FlatButton label={user.name} icon={<Avatar src={user.avatar} />} onTouchTap={this.handleTouchTap} style={{ height: '46px', lineHeight: '46px' }} />
+                <FlatButton className={s.link} icon={<MenuIcon color={'#F2F2F2'} hoverColor={'#3ED1D6'} />} onTouchTap={this.handleTouchTap} hoverColor={'none'} rippleColor={'none'} style={{ height: '65px', lineHeight: '65px' }} />
                 <Popover open={this.state.open} anchorEl={this.state.anchorEl} anchorOrigin={{horizontal: 'left', vertical: 'bottom'}} targetOrigin={{horizontal: 'left', vertical: 'top'}} onRequestClose={this.handleRequestClose} animation={PopoverAnimationVertical}>
                     <Menu onChange={this.handleChange} desktop={true} width={180}>
                         <MenuItem value={`/dashboard/user/${user.uid}`} primaryText="Profile" rightIcon={<Profile />} />

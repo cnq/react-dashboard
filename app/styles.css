@@ -6,21 +6,19 @@ html, body {
     padding: 0;
     height: 100%;
     width: 100%;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Roboto', sans-serif;
     color: #453f3e;
-    background-color: #F6F6F6;
+    background-color: #F2F2F2;
 }
 
 h1, h2, h3, h4 {
     margin: .12em 0;
 }
 h1 {
-    font-weight: 600;
-    font-size: 3em;
+    font-weight: 100;
+    font-size: 2em;
     letter-spacing: 2px;
-    text-transform: capitalize;
 }
-
 h2 {
     font-weight: 400;
     font-size: 1.9em;
@@ -35,24 +33,77 @@ h4 {
     font-weight: 300;
     font-size: 1.5em;
 }
+h6 {
+    font-weight: 100;
+    font-size: .75em;
+}
 
 .centeredContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.leftContainer {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    width: 50%;
+    max-width: calc(1024px / 2);
+    flex-wrap:wrap;
+    position: relative;
+}
+
+.leftContainer h6 {
+    top: 0;
+}
+.leftContainer h6,
+.leftContainer h2 {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.rightContainer {
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 50%;
+    max-width: calc(1024px / 2);
 }
 
 .addContainer {
-    border: dashed 2px rgba(150, 150, 150, 0.3);
 }
 
 .breathingRoom {
-    margin: 40px 15px;
+    margin: 40px auto;
+}
+
+.breathingRoomSmall {
+    margin: 10px auto;
 }
 
 .uri {
     text-transform: lowercase;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.uri.clickable {
+    color: #3ED1D9;
 }
 
 .largeHeader {
@@ -84,7 +135,8 @@ h4 {
 .baseInputContainer {
     display: flex;
     height: 60px;
-    margin: 10px;
+    margin: 0 10px;
+    justify-content: center;
 }
 
 .baseInput {
@@ -153,3 +205,56 @@ h4 {
 }
 
 .buttonIcon {}
+
+.table,
+.dataTable {
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+}
+.dataTable {
+    min-height: calc(84px - (2em + 2em));
+}
+.table li {
+    display: inline-block;
+}
+.table li:first-child {
+    padding-left: 20px;
+}
+.table li:first-child {
+    width: calc(10% - 20px);
+}
+
+.table li:last-child {
+    width: 10%;
+}
+
+.table li:nth-child(2) {
+    width: 20%;
+}
+
+.table li:nth-child(3) {
+    width: 60%;
+}
+.progressContainer {
+    padding: 2em 0 0;
+}
+.addText {
+    color: #3ED1D6;
+    font-size: 2.2em;
+    padding-bottom: 1em;
+    text-transform: uppercase;
+    text-align: center;
+    display: block;
+    opacity: 1;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1; }
+    50% {
+        opacity: 0; }
+    100% {
+        opacity: 1; }
+}

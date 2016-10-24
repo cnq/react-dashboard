@@ -3,12 +3,12 @@ import { Map } from 'immutable'
 import TextField from 'material-ui/TextField'
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
-import { centeredContainer, breathingRoom, uri } from '../styles.css'
+import { centeredContainer, center, breathingRoom, breathingRoomSmall, uri } from '../styles.css'
 
 const styles = {
     buttonSelectedStyle: {
         fontSize: '24px',
-        border: '1px solid #00DFFC',
+        border: '1px solid #3ED1D9',
         marginRight: '40px',
         height: '56px',
         width: '138px',
@@ -16,7 +16,7 @@ const styles = {
     },
     buttonStyle: {
         fontSize: '24px',
-        border: '1px solid #666',
+        border: '1px solid #D4D4D4',
         marginRight: '40px',
         height: '56px',
         width: '138px',
@@ -28,8 +28,25 @@ const styles = {
     },
     stepLabelStyle: {
         cursor: 'pointer'
+    },
+    stepInputStyle: {
+        fontSize: '22px',
+        lineHeight: '28px',
+        width: '100%',
+        height: '78px',
+        border: 'solid 1px #D4D4D4',
+        borderRadius: '10px',
+        backgroundColor: '#fff',
+        padding: '0 10px'
+    },
+    underlineStyles: {
+        bottom: '-1px',
+        left: '10px',
+        width: 'calc(100% - 20px)'
+    },
+    floatingLabelFocusStyles: {
+        top: '28px'
     }
-
 }
 
 
@@ -87,14 +104,14 @@ class ConnectionAddStepper extends Component {
     renderButtons = (props) => {
         const { buttonSelectedStyle, buttonStyle, buttonLabelStyle } = styles
         return (
-            <div className={`${centeredContainer} ${breathingRoom}`}>
+            <div className={`${center} ${breathingRoom}`}>
                 <div>
                     <FlatButton
                         label="Directory"
                         style={props.connectionType === 'directory' ? buttonSelectedStyle : buttonStyle}
                         labelStyle={buttonLabelStyle}
-                        rippleColor={'#00DFFC'}
-                        hoverColor={'#00DFFC'}
+                        rippleColor={'#3ED1D9'}
+                        hoverColor={'#3ED1D9'}
                         onTouchTap={
                             () =>  {
                                 props.updateConnectionType('directory')
@@ -106,8 +123,8 @@ class ConnectionAddStepper extends Component {
                         label="Page"
                         style={props.connectionType === 'page' ? buttonSelectedStyle : buttonStyle}
                         labelStyle={buttonLabelStyle}
-                        rippleColor={'#00DFFC'}
-                        hoverColor={'#00DFFC'}
+                        rippleColor={'#3ED1D9'}
+                        hoverColor={'#3ED1D9'}
                         onTouchTap={
                             () =>  {
                                 props.updateConnectionType('page')
@@ -122,6 +139,9 @@ class ConnectionAddStepper extends Component {
     }
 
     getStepContent = (stepIndex, props) => {
+
+        const { stepInputStyle, underlineStyles, floatingLabelFocusStyles } = styles
+
         switch (stepIndex) {
             case 0:
                 return (
@@ -132,15 +152,17 @@ class ConnectionAddStepper extends Component {
                 )
             case 1:
                 return (
-                    <div className={`${centeredContainer} ${breathingRoom}`}>
-                        <h3>What would you like to name your {`${props.connectionType ? props.connectionType : 'content '}`}?</h3>
+                    <div className={`${center} ${breathingRoom}`}>
+                        <h3 className={breathingRoomSmall}>What would you like to name your {`${props.connectionType ? props.connectionType : 'content '}`}?</h3>
                         <TextField
                             value={props.connectionName}
                             maxLength={480}
                             type="text"
-                            style={{width: '480px'}}
+                            style={stepInputStyle}
                             floatingLabelText={`${props.connectionType ? props.connectionType : 'content'} name`}
-                            hintText={`Enter a name for the ${props.connectionType ? props.connectionType : 'content'}${props.connectionType === 'page' ? ' (e.g. mypage.html)' : ' (e.g. blog, wiki, forum, etc.)'}`}
+                            floatingLabelFocusStyle={floatingLabelFocusStyles}
+                            underlineStyle={underlineStyles}
+                            hintText={`Enter a ${props.connectionType ? props.connectionType : 'content'}${props.connectionType === 'page' ? ' (e.g. mypage.html)' : ' name (e.g. blog, wiki, forum, etc.)'}`}
                             onChange={
                                     (event) =>  {
                                         props.updateConnectionName(event.target.value)
@@ -151,14 +173,16 @@ class ConnectionAddStepper extends Component {
                 )
             case 2:
                 return (
-                    <div className={`${centeredContainer} ${breathingRoom}`}>
-                        <h3>What is the URL where your {`${props.connectionType ? props.connectionType : 'content '}`} is located?</h3>
+                    <div className={`${center} ${breathingRoom}`}>
+                        <h3 className={breathingRoomSmall}>What is the URL where your {`${props.connectionType ? props.connectionType : 'content '}`} is located?</h3>
                         <TextField
                                 value={props.connectionUri}
                                 maxLength={480}
                                 type="text"
-                                style={{width: '480px'}}
+                                style={stepInputStyle}
                                 floatingLabelText={`${props.connectionType ? props.connectionType : 'content'} location`}
+                                floatingLabelFocusStyle={floatingLabelFocusStyles}
+                                underlineStyle={underlineStyles}
                                 hintText={`Enter the URL location for the ${props.connectionType ? props.connectionType : 'content '}`}
                                 onChange={
                                     (event) =>  {
@@ -183,11 +207,11 @@ class ConnectionAddStepper extends Component {
         const { buttonStyle, stepLabelStyle, buttonLabelStyle } = styles
         const {finished, editing, stepIndex} = this.state
         return (
-            <div style={{width: '100%', maxWidth: 1200, margin: 'auto'}}>
-                <div className={centeredContainer}>
-                    <h1 className={breathingRoom}><span className={uri}>{this.props.app.backendSiteUri}</span></h1>
+            <div className={centeredContainer}>
+                <div>
+                    <h1 className={breathingRoom}>ADDING CONNECTION: <span className={uri}>{this.props.app.backendSiteUri}</span></h1>
                 </div>
-                <Stepper style={{maxWidth: 960, margin: 'auto'}} activeStep={stepIndex}>
+                <Stepper style={{width: '100%', maxWidth: '1024px', margin: 'auto'}} activeStep={stepIndex}>
                     <Step>
                         <StepLabel style={stepLabelStyle} onTouchTap={() => this.setState({stepIndex: 0, editing: true})}>
                            {`${this.props.connectionType ? 'Type: ' : 'Choose type'} ${this.props.connectionType}`}
@@ -212,16 +236,16 @@ class ConnectionAddStepper extends Component {
                         </StepLabel>
                     </Step>
                 </Stepper>
-                <div className={centeredContainer}>
+                <div className={center}>
                     { finished && !editing
-                        ?   <div className={`${centeredContainer} ${breathingRoom}`}>
+                        ?   <div className={`${center} ${breathingRoom}`}>
                                 <h4>If the information you have entered is correct, click the 'Connect' button below.</h4>
-                                <div className={`${centeredContainer} ${breathingRoom}`}>
+                                <div className={`${center} ${breathingRoom}`}>
                                     <FlatButton
                                         style={buttonStyle}
                                         labelStyle={buttonLabelStyle}
-                                        rippleColor={'#00DFFC'}
-                                        hoverColor={'#00DFFC'}
+                                        rippleColor={'#3ED1D9'}
+                                        hoverColor={'#3ED1D9'}
                                         onTouchTap={() => this.onClickCreateConnection(this.props)}
                                     >
                                         {`Connect`}
@@ -232,18 +256,20 @@ class ConnectionAddStepper extends Component {
                                 {this.getStepContent(stepIndex, this.props)}
                                 { stepIndex === 0
                                     ?   ''
-                                    :   <div className={`${centeredContainer} ${breathingRoom}`}>
+                                    :   <div className={`${center} ${breathingRoom}`}>
                                             <div style={{position: 'relative'}}>
                                                 <FlatButton
                                                     label="Back"
                                                     disabled={stepIndex === 0}
                                                     style={{position: 'relative', left: '0'}}
+                                                    hoverColor="none"
                                                     onTouchTap={this.handlePrev}
                                                 />
                                                 <FlatButton
                                                     label="Next"
                                                     primary={true}
                                                     style={{position: 'relative', right: '0'}}
+                                                    hoverColor="none"
                                                     onTouchTap={this.handleNext}
                                                 />
                                                 {   finished
@@ -251,6 +277,7 @@ class ConnectionAddStepper extends Component {
                                                                 label="Connect"
                                                                 primary={true}
                                                                 style={{position: 'relative', right: '0'}}
+                                                                hoverColor="none"
                                                                 onTouchTap={() => this.onClickCreateConnection(this.props)}
                                                             />
                                                         :   ''

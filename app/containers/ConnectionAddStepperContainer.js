@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import { Map } from 'immutable'
 import { ConnectionAddStepper } from 'components'
+import { getApp } from '../reducers'
 import { connect } from 'react-redux'
-import { connectionStepperActions , connectionActions, applist as appListActions } from 'actions'
+import { connectionStepperActions , connectionActions } from 'actions'
  
 class ConnectionAddStepperContainer extends Component {
     render () {
@@ -10,16 +10,16 @@ class ConnectionAddStepperContainer extends Component {
     }
 }
 
-const mapStateToProps = ({connectionStepper, applist}, {params}) => {
+const mapStateToProps = (state, {params}) => {
 return {
-    app: applist.apps.find(app => app.appId == params.appId),
-    connectionUri: connectionStepper.connectionUri,
-    connectionType: connectionStepper.connectionType,
-    connectionName: connectionStepper.connectionName,
-    isActive: connectionStepper.isActive
+    app: getApp(state, params.appId),
+    connectionUri: state.connectionStepper.connectionUri,
+    connectionType: state.connectionStepper.connectionType,
+    connectionName: state.connectionStepper.connectionName,
+    isActive: state.connectionStepper.isActive
 }}
 
 export default connect(
     mapStateToProps,
-    {...connectionStepperActions, ...connectionActions, ...appListActions}
+    {...connectionStepperActions, ...connectionActions}
 )(ConnectionAddStepperContainer)

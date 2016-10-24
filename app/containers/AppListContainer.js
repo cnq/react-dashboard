@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { List } from 'immutable'
 import { AppCardAddContainer } from 'containers'
-import { Grid, GridItem, App } from 'components'
+import { GridCard, GridCardItem, App } from 'components'
 import { applist as appListActions, appActions } from 'actions'
 import s from './AppListContainer.css'
-import { errorMsg } from '../styles.css'
+import { errorMsg, centeredContainer, breathingRoom } from '../styles.css'
 
 
 class AppListContainer extends Component {
@@ -26,26 +26,28 @@ class AppListContainer extends Component {
         this.props.appDeleteInitialize(app)
     }
 
-
-
     render () {
         return (
-                   this.props.isFetching === true
-            ?   <div></div>
-            :   <Grid>
-                    <GridItem>
-                       <AppCardAddContainer />
-                    </GridItem>
-        { this.props.initialFetchComplete && this.props.apps.length === 0 ? <p className={s.header}>{'This is unfortunate.'}<br />{'It appears there are no apps yet'}</p> : null }
-            { this.props.apps.length > 0 ? this.props.apps.map( (app) => ( <GridItem key={app.appId}>
-                                                                                <App app={app}
-                                                                                    goToAppConnections={this.goToAppConnections}
-                                                                                    deleteApp={this.deleteApp} />
-                                                                            </GridItem> )) : null}
-        { this.props.error ? <p className={errorMsg}>{this.props.error}</p> : null}
-    </Grid>
+            <div className={`${centeredContainer} ${breathingRoom}`}>
+                {
+                    this.props.isFetching === true
+                        ? <div></div>
+                        : <GridCard>
+                        <GridCardItem>
+                            <AppCardAddContainer />
+                        </GridCardItem>
+                        { this.props.initialFetchComplete && this.props.apps.length === 0 ? <p className={s.header}>{'There are currently no website\'s setup in your account.'}</p> : null }
+                        { this.props.apps.length > 0 ? this.props.apps.map((app) => ( <GridCardItem key={app.appId}>
+                                                                                            <App app={app}
+                                                                                                 goToAppConnections={this.goToAppConnections}
+                                                                                                 deleteApp={this.deleteApp}/>
+                                                                                        </GridCardItem> )) : null}
+                        { this.props.error ? <p className={errorMsg}>{this.props.error}</p> : null}
+                    </GridCard>
+                }
+            </div>
         )
-    }
+}
 }
 
 AppListContainer.propTypes = {
