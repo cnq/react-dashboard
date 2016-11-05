@@ -14,8 +14,10 @@ function checkAuthHoc(WrappedComponent) {
         propTypes: { isAuthenticated: PropTypes.bool, checkSigninComplete: PropTypes.bool  }
 
         componentWillReceiveProps(nextProps) {
-            if(nextProps.checkSigninComplete && !nextProps.isAuthenticated && !this.props.router.isActive('signin')){
+            if(nextProps.checkSigninComplete && !nextProps.isAuthenticated && this.props.location.pathname != "/signin"){
                 this.props.router.push('/signin')
+            } else if(nextProps.checkSigninComplete && nextProps.isAuthenticated && (this.props.location.pathname == "/" || this.props.location.pathname == "/dashboard" || this.props.location.pathname == "/dashboard/")){
+                this.props.router.replace('/dashboard/apps')
             }
         }
 
