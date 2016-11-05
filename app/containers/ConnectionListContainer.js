@@ -5,7 +5,7 @@ import { ConnectionContainer } from 'containers'
 import FlatButton from 'material-ui/RaisedButton';
 import AddIcon from 'material-ui/svg-icons/content/add'
 import { GridList, GridListItem } from 'components'
-import { getConnections, getApp } from '../reducers'
+import { getConnections, getApp, fetchComplete } from '../reducers'
 import { connectionList as connectionListActions, appList as appListActions } from 'actions'
 import { tableHeading, listItem } from './ConnectionListContainer.css'
 import { leftContainer, rightContainer, centeredContainer, addContainer, breathingRoom, table, uri } from '../styles.css'
@@ -20,7 +20,7 @@ class ConnectionListContainer extends Component {
 
     render () {
         return (
-
+            this.props.fetchComplete === false ? <div></div> :
              <div className={centeredContainer}>
                     {
                         this.props.connections.length === 0
@@ -72,12 +72,14 @@ class ConnectionListContainer extends Component {
 }
 
 ConnectionListContainer.propTypes = {
+    fetchComplete: PropTypes.bool.isRequired,
     appId: PropTypes.string.isRequired,
     connections: PropTypes.array
 }
 
 const mapStateToProps = (state, {params}) => {
     return {
+        fetchComplete: fetchComplete(state),
         app: getApp(state, params.appId),
         appId: params.appId,
         connections: getConnections(state, params.appId)

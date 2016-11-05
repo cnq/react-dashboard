@@ -26,6 +26,9 @@ export default combineReducers({
 });
 
 
+export const fetchComplete = (state) => {
+    return state.applist.initialFetchComplete;
+}
 
 export const getApp = (state, appId) => {
     return state.applist.apps.find(app => app.appId == appId);

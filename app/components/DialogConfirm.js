@@ -34,7 +34,7 @@ export default class DialogConfirm extends Component {
 
 DialogConfirm.propTypes = {
     title: PropTypes.string.isRequired,
-    message: PropTypes.string,
+    message: PropTypes.object,
     isOpen: PropTypes.bool.isRequired,
     confirmButtonText: PropTypes.string.isRequired,
     confirmCallback: PropTypes.func.isRequired,

@@ -8,7 +8,7 @@ import configureStore from './store'
 import configureHistory from './history'
 import combinedReducer from './reducers';
 import { combinedEpic } from './epics';
-import { applist } from './actions';
+import { signin } from './actions';
 import routes from './routes';
 
 injectTapEventPlugin();
@@ -17,7 +17,7 @@ const store = configureStore(browserHistory, combinedReducer, combinedEpic);
 const history = configureHistory(browserHistory, routes, store);
 
 
-store.dispatch(applist.appListInitialize())
+store.dispatch(signin.checkSigninStart())
 
 ReactDOM.render((
   <Provider store={store}>

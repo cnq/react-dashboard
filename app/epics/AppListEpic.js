@@ -1,11 +1,20 @@
 ﻿import Rx from 'rxjs/Rx';
 import api from '../api'
-import { applist } from 'actions'
+import { applist, signin as signinActions } from 'actions'
+
+
+export const loadAppListOnCheckSigninSuccessfulEpic = (action$, store) =>
+    action$.ofType(signinActions.CHECK_SIGNIN_SUCCESS)
+      .map(action => { 
+          return applist.appListFetchStart()
+      });
 
 export const initializeAppListEpic = (action$, store) =>
     action$.ofType(applist.APPLIST_INITILIZE)
       // only catch APPLIST_INITILIZE actions if the user is signed in
-      .filter(() => { return store.getState().signin.isAuthenticated; })
+      .filter(() => { 
+          return store.getState().signin.isAuthenticated; 
+      })
       .map(action => { 
           return applist.appListFetchStart()
       });

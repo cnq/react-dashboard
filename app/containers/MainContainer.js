@@ -11,19 +11,11 @@ function checkAuthHoc(WrappedComponent) {
 
     class CheckAuthentication extends Component {
 
-        propTypes: { isAuthenticated: PropTypes.object }
+        propTypes: { isAuthenticated: PropTypes.bool, checkSigninComplete: PropTypes.bool  }
 
-        componentWillMount() {
-            console.log('CheckAuthentication - componentWillMount() called');
-            this.props.checkSigninStart(false) //assume that the user is not authenticated on initial load and kick off checkSigninStart action 
-        }
         componentWillReceiveProps(nextProps) {
-            console.log('CheckAuthentication - componentWillReceiveProps() called');
-            if(!nextProps.isAuthenticated && !this.props.router.isActive('signin')){
-                console.log('CheckAuthentication - user is not authenticated');
+            if(nextProps.checkSigninComplete && !nextProps.isAuthenticated && !this.props.router.isActive('signin')){
                 this.props.router.push('/signin')
-            } else if(nextProps.isAuthenticated) {
-                console.log('CheckAuthentication - user is authenticated');
             }
         }
 
@@ -37,7 +29,10 @@ function checkAuthHoc(WrappedComponent) {
 
     }
     function mapStateToProps({signin}) { 
-        return { isAuthenticated: signin.isAuthenticated }
+        return { 
+            checkSigninComplete: signin.checkSigninComplete,
+            isAuthenticated: signin.isAuthenticated 
+        }
     }
 
     return withRouter(connect( mapStateToProps, signinActions)(CheckAuthentication))
@@ -46,6 +41,7 @@ function checkAuthHoc(WrappedComponent) {
 
 class MainContainer extends Component {
     propTypes : {
+        checkSigninComplete: PropTypes.bool.isRequired,
         isAuthenticated: PropTypes.bool.isRequired,
         user: PropTypes.object.isRequired
     }
@@ -65,6 +61,7 @@ class MainContainer extends Component {
 
 export default connect(
     (state, ownProps) => ({
+        checkSigninComplete: ownProps.checkSigninComplete,
         isAuthenticated: ownProps.isAuthenticated,
         user: {}                                                                //TODO: user should retrieved as part of the auth flow and passed to the MainContainer 
     })

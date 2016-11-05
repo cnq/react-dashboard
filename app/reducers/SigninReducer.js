@@ -3,6 +3,7 @@ import { signout as signoutActions } from 'actions'
 
 const initialState = {
     user: null,
+    checkSigninComplete: false,
     isAuthenticated: false,
     isAuthenticating: false,
     error :''
@@ -15,12 +16,6 @@ export default function signin ( state = initialState, action ) {
                 ...state,
                 isAuthenticated: false
             }
-        case signinActions.CHECK_SIGNIN_START:
-            return {
-                ...state,
-                isAuthenticated: action.isAuthenticated,
-                error :''
-            }
         case signinActions.CHECK_SIGNIN_REQUEST:
             return {
                 ...state
@@ -28,12 +23,14 @@ export default function signin ( state = initialState, action ) {
         case signinActions.CHECK_SIGNIN_SUCCESS: 
             return {
                 ...state,
+                checkSigninComplete: true,
                 isAuthenticated: true,
                 user: action.user
             }
         case signinActions.CHECK_SIGNIN_FAIL:
             return {
                 ...state,
+                checkSigninComplete: true,
                 isAuthenticated: false,
                 error: action.error
             }
