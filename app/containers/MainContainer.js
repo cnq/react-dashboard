@@ -11,7 +11,11 @@ function checkAuthHoc(WrappedComponent) {
 
     class CheckAuthentication extends Component {
 
-        propTypes: { isAuthenticated: PropTypes.bool, checkSigninComplete: PropTypes.bool  }
+        propTypes: { 
+            isAuthenticated: PropTypes.bool, 
+            checkSigninComplete: PropTypes.bool, 
+            user: PropTypes.object 
+        }
 
         componentWillReceiveProps(nextProps) {
             if(nextProps.checkSigninComplete && !nextProps.isAuthenticated && this.props.location.pathname != "/signin"){
@@ -33,7 +37,8 @@ function checkAuthHoc(WrappedComponent) {
     function mapStateToProps({signin}) { 
         return { 
             checkSigninComplete: signin.checkSigninComplete,
-            isAuthenticated: signin.isAuthenticated 
+            isAuthenticated: signin.isAuthenticated,
+            user: signin.user 
         }
     }
 
@@ -62,9 +67,11 @@ class MainContainer extends Component {
 }
 
 export default connect(
-    (state, ownProps) => ({
-        checkSigninComplete: ownProps.checkSigninComplete,
-        isAuthenticated: ownProps.isAuthenticated,
-        user: {}                                                                //TODO: user should retrieved as part of the auth flow and passed to the MainContainer 
-    })
+    (state, ownProps) => {
+        return {
+            checkSigninComplete: ownProps.checkSigninComplete,
+            isAuthenticated: ownProps.isAuthenticated,
+            user: ownProps.user
+        }
+    }
 )(checkAuthHoc(MainContainer))

@@ -8,5 +8,8 @@ export ConnectionContainer from './ConnectionContainer'
 export ConnectionListContainer from './ConnectionListContainer'
 export ConnectionsContainer from './ConnectionsContainer'
 export ConnectionAddStepperContainer from './ConnectionAddStepperContainer'
+export UserProfileContainer from './UserProfileContainer'
+export UserContainer from './UserContainer'
+export UserListContainer from './UserListContainer'
 
 //export <TYPE>Container from './PATH-TO-CONTAINER-WITHOUT-EXTENSION'

@@ -47,8 +47,8 @@ class SettingsDropdown extends Component {
                 <FlatButton className={s.link} icon={<MenuIcon color={'#F2F2F2'} hoverColor={'#3ED1D6'} />} onTouchTap={this.handleTouchTap} hoverColor={'none'} rippleColor={'none'} style={{ height: '65px', lineHeight: '65px' }} />
                 <Popover open={this.state.open} anchorEl={this.state.anchorEl} anchorOrigin={{horizontal: 'left', vertical: 'bottom'}} targetOrigin={{horizontal: 'left', vertical: 'top'}} onRequestClose={this.handleRequestClose} animation={PopoverAnimationVertical}>
                     <Menu onChange={this.handleChange} desktop={true} width={180}>
-                        <MenuItem value={`/dashboard/user/${user.uid}`} primaryText="Profile" rightIcon={<Profile />} />
-                        <MenuItem value="/dashboard/settings" primaryText="Settings" rightIcon={<Settings />} />
+                        <MenuItem value={"/profile"} primaryText="Profile" rightIcon={<Profile />} />
+                        <MenuItem value="/dashboard/users" primaryText="Settings" rightIcon={<Settings />} />
                         <Divider />
                         <MenuItem value="/signout" primaryText="Sign Out" rightIcon={<Signout />} />
                     </Menu>

@@ -1,0 +1,4 @@
+﻿.text {
+    composes: center from '../styles.css';
+    composes: subHeader from '../styles.css';
+}

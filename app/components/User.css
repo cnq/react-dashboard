@@ -1,0 +1,11 @@
+﻿.userWrapper {
+    composes: baseAppContainer from '../styles.css';
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.userWrapper:hover {
+    background: #F1F1F1;
+}

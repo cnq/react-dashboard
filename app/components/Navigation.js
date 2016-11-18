@@ -21,7 +21,7 @@ function NavLinks ({isAuthenticated}) {
 
 ActionLinks.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object
 }
 
 function ActionLinks ({isAuthenticated, user}) {
@@ -38,7 +38,7 @@ function ActionLinks ({isAuthenticated, user}) {
 
 Navigation.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object
 }
 
 export default function Navigation ({isAuthenticated, user}) {

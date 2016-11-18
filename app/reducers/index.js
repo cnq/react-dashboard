@@ -4,6 +4,8 @@ import { routerReducer } from 'react-router-redux';
 import SigninReducer from './SigninReducer';
 import SignoutReducer from './SignoutReducer';
 import AppListReducer from './AppListReducer';
+import UserListReducer from './UserListReducer';
+import { addUser, deleteUser } from './UserReducer';
 import { addApp, deleteApp } from './AppReducer';
 import { addConnection, deleteConnection } from './ConnectionReducer';
 import ConnectionStepperReducer from './ConnectionStepperReducer';
@@ -15,6 +17,9 @@ export default combineReducers({
     signin: SigninReducer,
     signout: SignoutReducer,
     applist: AppListReducer,
+    userlist: UserListReducer,
+    addUser: addUser,
+    deleteUser: deleteUser,
     addApp: addApp,
     deleteApp: deleteApp,
     addConnection: addConnection,
