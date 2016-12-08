@@ -23,8 +23,8 @@ class UserSetup extends Component {
 
     renderTextField = field => {
         return (
-           <TextField  className={s.formField} key={field.name} name={field.name} type={field.type} floatingLabelText={field.floatingLabelText} hintText={field.hintText} errorText={field.meta.touched && field.meta.error ? field.meta.error : ''}
-    {...field.input}
+           <TextField className={s.formField} key={field.name} name={field.name} type={field.type} floatingLabelText={field.floatingLabelText} hintText={field.hintText} errorText={field.meta.touched && field.meta.error ? field.meta.error : ''}
+                {...field.input}
             />
         )
     }
@@ -36,14 +36,14 @@ class UserSetup extends Component {
             return (
                                    
                 <form onSubmit={handleSubmit((event) => onSubmit(event))}>
-                      
+                    <div>{props.user.email}</div>      
                     <Field
                         name="password"
                         type="password"
                         ref={(ref) => this.passwordField = ref}
                         component={this.renderTextField}
                         floatingLabelText={`Password`}
-                    hintText={`Enter your password`} />
+                        hintText={`Enter your password`} />
                     <RaisedButton className={s.formButton} type="submit" fullWidth={false} backgroundColor="#7DC93A" labelStyle={buttonStyles}>
                         {`Set Password`}
                     </RaisedButton>
@@ -69,4 +69,4 @@ class UserSetup extends Component {
     }
 }
 
-export default reduxForm({ form: 'createaccount', validate })(UserSetup)
+export default reduxForm({ form: 'usersetup', validate })(UserSetup)

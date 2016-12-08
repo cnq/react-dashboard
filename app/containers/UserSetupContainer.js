@@ -45,7 +45,7 @@ class UserSetupContainer extends Component {
     form = (props, handleFormSubmit) => {
         return (
             <div>
-                <UserSetupForm user={props.user} formError={props.error} onSubmit={handleFormSubmit} />
+                {props.user ? <UserSetupForm user={props.user} formError={props.error} onSubmit={handleFormSubmit} /> : null}
             </div>
         )
     }
@@ -58,7 +58,7 @@ class UserSetupContainer extends Component {
                             <CardHeader title="New Account Setup"/>
                             <CardText className={s.cardText}>
                                 {
-                                     this.props.isAuthenticating || this.props.isSettingUp  ?   <LoadingIndicator size={2} /> : this.form(this.props, this.handleFormSubmit)
+                                     this.props.isAuthenticating || this.props.isSettingUp || this.props.isSetupComplete  ?   <LoadingIndicator size={2} /> : this.form(this.props, this.handleFormSubmit)
                                 }
                             </CardText>
                             <CardText className={`${s.footnote} ${s.cardText}`}>
@@ -79,7 +79,7 @@ const mapStateToProps = ({activateUser, setupUser, signin}) => {
         isAuthenticated: signin.isAuthenticated,
         isSettingUp: setupUser.isSettingUp,
         isSetupComplete: setupUser.isSetupComplete,
-        error: () => {setupUser.error ? setupUser.error : signin.error } 
+        error: (() => {setupUser.error ? setupUser.error : signin.error })()
     }
 }
 

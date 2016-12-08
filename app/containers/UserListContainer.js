@@ -49,29 +49,28 @@ class UserListContainer extends Component {
                         </div>    
                     : null}
                 </div>
-                <DialogConfirm
-                    title = "Add User"
-                    message = {renderCreateUserDialog()}
-                    isOpen = {this.state.showUserCreateDialog}
-                    cancelCallback = {this.closeCreateUserDialog} />
-                    {
-                     this.props.users.length === 0  ?  ''
-                         :  <div style={{width: '100%'}}>
-                                <ul className={`${table} ${tableHeading}`}>
-                                     <li>Name</li>
-                                     <li></li>
-                                     <li></li>
-                                     <li>Actions</li>
-                                 </ul>
-                                 <GridList>
-                                 {
-                                    this.props.users.map( (user) => (
-                                        <GridListItem key={user.email}>
-                                            <UserContainer user={user} isAuthenticatedUserAnAdmin={this.props.isAuthenticatedUserAnAdmin}/>
-                                        </GridListItem> ))
-                                 }
-                                 </GridList>
-                            </div>
+                {this.props.isAuthenticatedUserAnAdmin  ?  
+                    <DialogConfirm title = "Add User" message = {renderCreateUserDialog()} isOpen = {this.state.showUserCreateDialog} cancelCallback = {this.closeCreateUserDialog} />
+                    : null
+                }
+                {
+                 this.props.users.length === 0  ?  '' :  
+                 <div style={{width: '100%'}}>
+                     <ul className={`${table} ${tableHeading}`}>
+                          <li>Name</li>
+                          <li></li>
+                          <li></li>
+                          <li>Actions</li>
+                      </ul>
+                      <GridList>
+                      {
+                         this.props.users.map( (user) => (
+                             <GridListItem key={user.email}>
+                                 <UserContainer user={user} isAuthenticatedUserAnAdmin={this.props.isAuthenticatedUserAnAdmin}/>
+                             </GridListItem> ))
+                      }
+                      </GridList>
+                 </div>
                     }
                 </div>
 
