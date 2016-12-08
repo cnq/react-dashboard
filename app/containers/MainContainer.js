@@ -18,10 +18,30 @@ function checkAuthHoc(WrappedComponent) {
         }
 
         componentWillReceiveProps(nextProps) {
-            if(nextProps.checkSigninComplete && !nextProps.isAuthenticated && this.props.location.pathname != "/signin"){
-                this.props.router.push('/signin')
-            } else if(nextProps.checkSigninComplete && nextProps.isAuthenticated && (this.props.location.pathname == "/" || this.props.location.pathname == "/dashboard" || this.props.location.pathname == "/dashboard/")){
-                this.props.router.replace('/dashboard/apps')
+            if(!nextProps.checkSigninComplete) return; //only do redirections once signin check has been completed
+
+            //if the user is not authenticated ...
+            if(nextProps.isAuthenticated){
+
+                if(this.props.location.pathname == "/" || this.props.location.pathname == "/dashboard" || this.props.location.pathname == "/dashboard/"){
+                    this.props.router.replace('/dashboard/apps')
+                }
+            
+            } 
+            else //if the user is not authenticated ...
+            { 
+                //if the user is not authenticated and they are requesting something other than the following, push them to signin
+                if(this.props.location.pathname != "/signin" && this.props.location.pathname != "/activate" && this.props.location.pathname != "/user-setup"){
+                    this.props.router.push('/signin')
+                }
+                //if activate is requested, but no code is supplied, push to signin
+                else if (this.props.location.pathname == "/activate"  && !this.props.location.query.code){
+                    this.props.router.push('/signin')
+                }
+                //if setup is requested, but no code is supplied, push to signin
+                else if (this.props.location.pathname == "/user-setup"  && !this.props.location.query.code){
+                    this.props.router.push('/signin')
+                }
             }
         }
 

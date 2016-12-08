@@ -11,5 +11,7 @@ export ConnectionAddStepperContainer from './ConnectionAddStepperContainer'
 export UserProfileContainer from './UserProfileContainer'
 export UserContainer from './UserContainer'
 export UserListContainer from './UserListContainer'
+export UserSetupContainer from './UserSetupContainer'
+export UserActivateContainer from './UserActivateContainer'
 
 //export <TYPE>Container from './PATH-TO-CONTAINER-WITHOUT-EXTENSION'

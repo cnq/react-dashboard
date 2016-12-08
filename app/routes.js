@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { HomeContainer, DashboardContainer, MainContainer, SigninContainer, SignoutContainer, AppsContainer, AppListContainer, ConnectionsContainer, ConnectionListContainer, ConnectionDetailsContainer, ConnectionEditContainer, ConnectionAddStepperContainer, UsersContainer, UserListContainer, UserProfileContainer} from './containers';
+import { HomeContainer, DashboardContainer, MainContainer, SigninContainer, SignoutContainer, UserActivateContainer, UserSetupContainer, AppsContainer, AppListContainer, ConnectionsContainer, ConnectionListContainer, ConnectionDetailsContainer, ConnectionEditContainer, ConnectionAddStepperContainer, UsersContainer, UserListContainer, UserProfileContainer} from './containers';
 import auth from './auth'
 
 
@@ -13,7 +13,9 @@ const routes = (
   <Route path="/" component={MainContainer}>
     <Route path="signin" component={SigninContainer} />
     <Route path="signout" component={SignoutContainer} />
+    <Route path="activate" component={UserActivateContainer} />
     <Route path="profile" component={UserProfileContainer} />
+    <Route path="user-setup" component={UserSetupContainer} />
     <Route path="dashboard" component={DashboardContainer}>
         <Route path='apps' component={AppsContainer} >
             <IndexRoute component={AppListContainer} />

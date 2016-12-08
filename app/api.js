@@ -42,6 +42,16 @@ module.exports = {
         return ajax.post('/api/users',user).then(resp => resp.data);
     },
 
+    activateUser(activationCode) {
+        console.log('api module - activateUser() called');
+        return ajax.get(`/api/users/activate?code=${activationCode}`).then(resp => resp.data);
+    },
+
+    setupUser(userSetup) {
+        console.log('api module - setupUser() called');
+        return ajax.post('/api/users/setup',userSetup).then(resp => resp.data);
+    },
+
     deleteUser(user) {
         console.log('api module - deleteUser() called');
         return ajax.delete(`/api/users/${user.userId}`).then(resp => resp.data);
