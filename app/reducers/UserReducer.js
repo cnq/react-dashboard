@@ -157,3 +157,129 @@ export function deleteUser ( state = deleteUserInitialState, action ) {
             return state
     }
 }
+
+const userChangePasswordInitialState = {
+    user: null,
+    isInProgress: false,
+    isCompleteSuccessfully: false,
+    error: ''
+}
+
+export function userChangePassword ( state = userChangePasswordInitialState, action ) {
+    switch ( action.type ) {
+        case userActions.USER_CHANGEPASSWORD_INITILIZE:
+            return {
+                ... state,
+                user: action.details.user,
+                isInProgress: true,
+                isCompleteSuccessfully: false
+            }
+        case userActions.USER_CHANGEPASSWORD_START:
+            return {
+                ... state
+            }
+        case userActions.USER_CHANGEPASSWORD_REQUEST:
+            return {
+                ... state
+            }
+        case userActions.USER_CHANGEPASSWORD_SUCCESS:
+            return {
+                ... state,
+                user: action.user,
+                isInProgress: false,
+                isCompleteSuccessfully: true
+            }
+        case userActions.USER_CHANGEPASSWORD_FAIL:
+            return {
+                ... state,
+                isInProgress: false,
+                error: action.error
+            }
+        default:
+            return state
+            }
+}
+
+const userResetPasswordInitialState = {
+    user: null,
+    isInProgress: false,
+    isCompleteSuccessfully: false,
+    error: ''
+}
+
+export function userResetPassword ( state = userResetPasswordInitialState, action ) {
+    switch ( action.type ) {
+        case userActions.USER_RESETPASSWORD_INITILIZE:
+            return {
+                ... state,
+                user: action.user,
+                isInProgress: true,
+                isCompleteSuccessfully: false
+            }
+        case userActions.USER_RESETPASSWORD_START:
+            return {
+                ... state
+            }
+        case userActions.USER_RESETPASSWORD_REQUEST:
+            return {
+                ... state
+            }
+        case userActions.USER_RESETPASSWORD_SUCCESS:
+            return {
+                ... state,
+                user: action.user,
+                isInProgress: false,
+                isCompleteSuccessfully: true
+            }
+        case userActions.USER_RESETPASSWORD_FAIL:
+            return {
+                ... state,
+                isInProgress: false,
+                error: action.error
+            }
+        default:
+            return state
+            }
+}
+
+const userChangeRolesInitialState = {
+    user: null,
+    isInProgress: false,
+    isCompleteSuccessfully: false,
+    error: ''
+}
+
+export function userChangeRoles ( state = userChangeRolesInitialState, action ) {
+    switch ( action.type ) {
+        case userActions.USER_CHANGEROLES_INITILIZE:
+            return {
+                ... state,
+                user: action.user,
+                isInProgress: true,
+                isCompleteSuccessfully: false
+            }
+        case userActions.USER_CHANGEROLES_START:
+            return {
+                ... state
+            }
+        case userActions.USER_CHANGEROLES_REQUEST:
+            return {
+                ... state
+            }
+        case userActions.USER_CHANGEROLES_SUCCESS:
+            return {
+                ... state,
+                user: action.user,
+                isInProgress: false,
+                isCompleteSuccessfully: true
+            }
+        case userActions.USER_CHANGEROLES_FAIL:
+            return {
+                ... state,
+                isInProgress: false,
+                error: action.error
+            }
+        default:
+            return state
+            }
+}

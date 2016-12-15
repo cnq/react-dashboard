@@ -52,3 +52,41 @@ export const userDeleteRequest = () => ({ type: USER_DELETE_REQUEST})
 export const userDeleteSuccess = (userToDelete) => ({ type: USER_DELETE_SUCCESS, user: userToDelete})
 export const userDeleteFail = (userToDelete, errorMessage) => ({ type: USER_DELETE_FAIL, user: userToDelete, error: errorMessage })
 
+// User Change Password Actions
+export const USER_CHANGEPASSWORD_INITILIZE = 'USER_CHANGEPASSWORD_INITILIZE'
+export const USER_CHANGEPASSWORD_START = 'USER_CHANGEPASSWORD_START'
+export const USER_CHANGEPASSWORD_REQUEST = 'USER_CHANGEPASSWORD_REQUEST'
+export const USER_CHANGEPASSWORD_SUCCESS = 'USER_CHANGEPASSWORD_SUCCESS'
+export const USER_CHANGEPASSWORD_FAIL = 'USER_CHANGEPASSWORD_FAIL'
+
+export const userChangePasswordInitialize = (userChangePasswordDetails) => ({ type: USER_CHANGEPASSWORD_INITILIZE, details: userChangePasswordDetails})
+export const userChangePasswordStart = (userChangePasswordDetails) => ({ type: USER_CHANGEPASSWORD_START, details: userChangePasswordDetails})
+export const userChangePasswordRequest = (userChangePasswordDetails) => ({ type: USER_CHANGEPASSWORD_REQUEST, details: userChangePasswordDetails})
+export const userChangePasswordSuccess = (user) => ({ type: USER_CHANGEPASSWORD_SUCCESS, user: user})
+export const userChangePasswordFail = (user, errorMessage) => ({ type: USER_CHANGEPASSWORD_FAIL, user: user, error: errorMessage })
+
+// User Password Reset Actions
+export const USER_RESETPASSWORD_INITILIZE = 'USER_RESETPASSWORD_INITILIZE'
+export const USER_RESETPASSWORD_START = 'USER_RESETPASSWORD_START'
+export const USER_RESETPASSWORD_REQUEST = 'USER_RESETPASSWORD_REQUEST'
+export const USER_RESETPASSWORD_SUCCESS = 'USER_RESETPASSWORD_SUCCESS'
+export const USER_RESETPASSWORD_FAIL = 'USER_RESETPASSWORD_FAIL'
+
+export const userResetPasswordInitialize = (userToResetPassword) => ({ type: USER_RESETPASSWORD_INITILIZE, user: userToResetPassword})
+export const userResetPasswordStart = (userToResetPassword) => ({ type: USER_RESETPASSWORD_START, user: userToResetPassword})
+export const userResetPasswordRequest = (userToResetPassword) => ({ type: USER_RESETPASSWORD_REQUEST, user: userToResetPassword })
+export const userResetPasswordSuccess = (userToResetPassword) => ({ type: USER_RESETPASSWORD_SUCCESS, user: userToResetPassword})
+export const userResetPasswordFail = (user, errorMessage) => ({ type: USER_RESETPASSWORD_FAIL, user: user, error: errorMessage })
+
+// User Change Roles Actions
+export const USER_CHANGEROLES_INITILIZE = 'USER_CHANGEROLES_INITILIZE'
+export const USER_CHANGEROLES_START = 'USER_CHANGEROLES_START'
+export const USER_CHANGEROLES_REQUEST = 'USER_CHANGEROLES_REQUEST'
+export const USER_CHANGEROLES_SUCCESS = 'USER_CHANGEROLES_SUCCESS'
+export const USER_CHANGEROLES_FAIL = 'USER_CHANGEROLES_FAIL'
+
+export const userChangeRolesInitialize = (userToChangeRoles) => ({ type: USER_CHANGEROLES_INITILIZE, user: userToChangeRoles})
+export const userChangeRolesStart = (userToChangeRoles) => ({ type: USER_CHANGEROLES_START, user: userToChangeRoles})
+export const userChangeRolesRequest = (userToChangeRoles) => ({ type: USER_CHANGEROLES_REQUEST, user: userToChangeRoles })
+export const userChangeRolesSuccess = (userToChangeRoles) => ({ type: USER_CHANGEROLES_SUCCESS, user: userToChangeRoles})
+export const userChangeRolesFail = (user, errorMessage) => ({ type: USER_CHANGEROLES_FAIL, user: user, error: errorMessage })

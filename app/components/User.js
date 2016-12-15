@@ -26,6 +26,10 @@ class User extends Component {
             showDeleteConfirmation: false
         })
     }
+    roleChange = (value) => {
+        this.props.user.isAccountAdmin = value;
+        this.props.handleRoleChange(this.props.user);
+    }
 
     render () {
         const renderCardActions = (props) => {
@@ -57,6 +61,8 @@ class User extends Component {
                         isCreating={this.props.user.isCreating}
                         isDeleting={this.props.user.isDeleting}
                         actions={renderCardActions(this.props)}
+                        handleRoleChange={this.roleChange}
+                        allowRoleSelection={this.props.isAuthenticatedUserAnAdmin}
                     />
                     {this.props.deleteUser ?
                         <DialogConfirm
@@ -77,8 +83,9 @@ class User extends Component {
 
 User.propTypes = {
     user: PropTypes.object.isRequired,
-    isAuthenticatedUserAnAdmin: PropTypes.bool.isRequired,
-    deleteUser: PropTypes.func
+    isAuthenticatedUserAnAdmin: PropTypes.bool,
+    deleteUser: PropTypes.func.isRequired,
+    handleRoleChange: PropTypes.func.isRequired,
 }
 
 export default User

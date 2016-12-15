@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton';
 import { centeredContainer, errorMsg, buttonContainer } from '../styles.css'
-import s from './SigninForm.css'
+import s from './Form.css'
 
 const buttonStyles = { color: '#ffffff' }
 
@@ -51,6 +51,9 @@ class SigninForm extends Component {
                 <RaisedButton className={s.formButton} type="submit" fullWidth={false} backgroundColor="#7DC93A" labelStyle={buttonStyles}>
                     {`Sign In`}
                 </RaisedButton>
+                <div>
+                    Forget you password? <a href="/forgot">Reset it</a>
+                </div>
             </form>
         )
     }

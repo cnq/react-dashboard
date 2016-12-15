@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import { SigninForm, LoadingIndicator } from 'components'
 import { signin as signinActions } from 'actions'
-import s from './SigninContainer.css'
+import s from './FormContainer.css'
 import { centeredContainer } from '../styles.css'
 
 const Signin = React.createClass({

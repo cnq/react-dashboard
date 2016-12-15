@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import { UserSetupForm, LoadingIndicator } from 'components'
 import { userActions, signin } from 'actions'
-import s from './UserSetupContainer.css'
+import s from './FormContainer.css'
 import { centeredContainer } from '../styles.css'
 
 const UserSetup = React.createClass({

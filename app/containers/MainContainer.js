@@ -17,8 +17,12 @@ function checkAuthHoc(WrappedComponent) {
             user: PropTypes.object 
         }
 
+       
+
         componentWillReceiveProps(nextProps) {
             if(!nextProps.checkSigninComplete) return; //only do redirections once signin check has been completed
+
+            const unprotected = ["/signin" ,"/activate", "/user-setup", "/forgot"]
 
             //if the user is not authenticated ...
             if(nextProps.isAuthenticated){
@@ -26,12 +30,18 @@ function checkAuthHoc(WrappedComponent) {
                 if(this.props.location.pathname == "/" || this.props.location.pathname == "/dashboard" || this.props.location.pathname == "/dashboard/"){
                     this.props.router.replace('/dashboard/apps')
                 }
+                //if the user is authenticated and they are requesting an unprotected page, push to dashboard landing page
+                else if(unprotected.indexOf(this.props.location.pathname) >= 0)
+                {
+                    this.props.router.push('/dashboard/apps')
+                }
             
             } 
             else //if the user is not authenticated ...
             { 
-                //if the user is not authenticated and they are requesting something other than the following, push them to signin
-                if(this.props.location.pathname != "/signin" && this.props.location.pathname != "/activate" && this.props.location.pathname != "/user-setup"){
+                //if the user is not authenticated and they are requesting something other than unprotected, push them to signin
+                if(unprotected.indexOf(this.props.location.pathname) < 0)
+                {
                     this.props.router.push('/signin')
                 }
                 //if activate is requested, but no code is supplied, push to signin

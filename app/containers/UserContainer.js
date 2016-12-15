@@ -9,10 +9,13 @@ class UserContainer extends Component {
     deleteUser = (user) => {
         this.props.userDeleteInitialize(user)
     }
+    updateUserRole = (user) => {
+        this.props.userChangeRolesInitialize(user)
+    }
 
     render () {
         return (
-            <User deleteUser={this.deleteUser} user={this.props.user} isAuthenticatedUserAnAdmin={this.props.isAuthenticatedUserAnAdmin} />
+            <User deleteUser={this.deleteUser} handleRoleChange={this.updateUserRole} user={this.props.user} isAuthenticatedUserAnAdmin={this.props.isAuthenticatedUserAnAdmin} />
         )
     }
 

@@ -13,5 +13,6 @@ export UserContainer from './UserContainer'
 export UserListContainer from './UserListContainer'
 export UserSetupContainer from './UserSetupContainer'
 export UserActivateContainer from './UserActivateContainer'
+export UserResetPasswordContainer from './UserResetPasswordContainer'
 
 //export <TYPE>Container from './PATH-TO-CONTAINER-WITHOUT-EXTENSION'

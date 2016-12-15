@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton';
 import { centeredContainer, errorMsg, buttonContainer } from '../styles.css'
-import s from './UserSetupForm.css'
+import s from './Form.css'
 
 const buttonStyles = { color: '#ffffff' }
 

@@ -136,3 +136,93 @@ export const userDeleteRequestEpic = (action$, store) =>
           }));
 
 
+// user change password
+
+export const initializeUserChangePasswordEpic = action$ =>
+    action$.ofType(userActions.USER_CHANGEPASSWORD_INITILIZE)
+      .map(action => { 
+          return userActions.userChangePasswordStart(action.details)
+      });
+
+export const startUserChangePasswordEpic = action$ =>
+    action$.ofType(userActions.USER_CHANGEPASSWORD_START)
+      .map(action => { 
+          return userActions.userChangePasswordRequest(action.details)
+      });
+
+export const userChangePasswordRequestEpic = (action$, store) =>
+    action$.ofType(userActions.USER_CHANGEPASSWORD_REQUEST)
+      .mergeMap(action =>
+          Rx.Observable.create(obs => {
+              api.userChangePassword(action.details)
+                .then(resp => {
+                    obs.next(userActions.userChangePasswordSuccess(action.details.user))
+                    obs.complete()
+                })
+                .catch(err => {
+                    const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
+                    obs.next(userActions.userChangePasswordFail(action.details.user, 'Failed to change your password : ' + errorMessage));
+                    obs.complete()
+                });
+          }));
+
+// user reset password
+
+export const initializeUserResetPasswordEpic = action$ =>
+    action$.ofType(userActions.USER_RESETPASSWORD_INITILIZE)
+      .map(action => { 
+          return userActions.userResetPasswordStart(action.user)
+      });
+
+export const startUserResetPasswordEpic = action$ =>
+    action$.ofType(userActions.USER_RESETPASSWORD_START)
+      .map(action => { 
+          return userActions.userResetPasswordRequest(action.user)
+      });
+
+export const userResetPasswordRequestEpic = (action$, store) =>
+    action$.ofType(userActions.USER_RESETPASSWORD_REQUEST)
+      .mergeMap(action =>
+          Rx.Observable.create(obs => {
+              api.userResetPassword(action.user)
+                .then(resp => {
+                    obs.next(userActions.userResetPasswordSuccess(action.user))
+                    obs.complete()
+                })
+                .catch(err => {
+                    const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
+                    obs.next(userActions.userResetPasswordFail(action.user, 'Failed to reset password : ' + errorMessage));
+                    obs.complete()
+                });
+          }));
+
+
+// user change roles
+
+export const initializeUserChangeRolesEpic = action$ =>
+    action$.ofType(userActions.USER_CHANGEROLES_INITILIZE)
+      .map(action => { 
+          return userActions.userChangeRolesStart(action.user)
+      });
+
+export const startUserChangeRolesEpic = action$ =>
+    action$.ofType(userActions.USER_CHANGEROLES_START)
+      .map(action => { 
+          return userActions.userChangeRolesRequest(action.user)
+      });
+
+export const userChangeRolesRequestEpic = (action$, store) =>
+    action$.ofType(userActions.USER_CHANGEROLES_REQUEST)
+      .mergeMap(action =>
+          Rx.Observable.create(obs => {
+              api.updateUser(action.user)
+                .then(resp => {
+                    obs.next(userActions.userChangeRolesSuccess(action.user))
+                    obs.complete()
+                })
+                .catch(err => {
+                    const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
+                    obs.next(userActions.userChangeRolesFail(action.user, 'Failed to change user roles : ' + errorMessage));
+                    obs.complete()
+                });
+          }));

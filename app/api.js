@@ -42,6 +42,11 @@ module.exports = {
         return ajax.post('/api/users',user).then(resp => resp.data);
     },
 
+    updateUser(user) {
+        console.log('api module - updateUser() called');
+        return ajax.put(`/api/users/${user.userId}`, user).then(resp => resp.data);
+    },
+
     activateUser(activationCode) {
         console.log('api module - activateUser() called');
         return ajax.get(`/api/users/activate?code=${activationCode}`).then(resp => resp.data);
@@ -55,5 +60,15 @@ module.exports = {
     deleteUser(user) {
         console.log('api module - deleteUser() called');
         return ajax.delete(`/api/users/${user.userId}`).then(resp => resp.data);
+    },
+
+    userChangePassword(details) {
+        console.log('api module - userChangePassword() called');
+        return ajax.put(`/api/users/changepassword/${details.user.userId}`, details).then(resp => resp.data);
+    },
+
+    userResetPassword(user) {
+        console.log('api module - userResetPassword() called');
+        return ajax.post(`/api/users/resetpassword`, user).then(resp => resp.data);
     }
 }
