@@ -42,7 +42,7 @@ const activateUserInitialState = {
     user: null,
     isActivating: false,
     isActivated: false,
-    error: ''
+    failed: false
 }
 
 export function activateUser ( state = activateUserInitialState, action ) {
@@ -71,7 +71,7 @@ export function activateUser ( state = activateUserInitialState, action ) {
             return {
                 ... state,
                 isActivating: false,
-                error: action.error
+                failed: true
             }
         default:
             return state
@@ -82,7 +82,7 @@ const setupUserInitialState = {
     user: null,
     isSettingUp: false,
     isSetupComplete: false,
-    error: ''
+    failed: false
 }
 
 export function setupUser ( state = setupUserInitialState, action ) {
@@ -111,7 +111,7 @@ export function setupUser ( state = setupUserInitialState, action ) {
             return {
                 ... state,
                 isSettingUp: false,
-                error: action.error
+                failed: true
             }
         default:
             return state
@@ -204,7 +204,7 @@ const userResetPasswordInitialState = {
     user: null,
     isInProgress: false,
     isCompleteSuccessfully: false,
-    error: ''
+    failed: false
 }
 
 export function userResetPassword ( state = userResetPasswordInitialState, action ) {
@@ -235,7 +235,7 @@ export function userResetPassword ( state = userResetPasswordInitialState, actio
             return {
                 ... state,
                 isInProgress: false,
-                error: action.error
+                failed: true
             }
         default:
             return state

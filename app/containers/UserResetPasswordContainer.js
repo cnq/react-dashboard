@@ -27,6 +27,9 @@ class UserResetPasswordContainer extends Component {
     render () {
         return ( 
                 <div className={centeredContainer}>
+                {this.props.isCompleteSuccessfully ? 
+                    <h2>We sent you an email with a reset link.</h2>             
+                  :
                     <Paper className={s.paper} zDepth={2}>
                         <Card>
                             <CardHeader title="Reset your password" subtitle="We'll send you a reset link." />
@@ -38,7 +41,9 @@ class UserResetPasswordContainer extends Component {
                                 }
                             </CardText>
                         </Card>
-                    </Paper>
+                    </Paper>   
+                }
+
                 </div>
             )
     }

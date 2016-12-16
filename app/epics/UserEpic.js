@@ -61,7 +61,8 @@ export const userActivateRequestEpic = (action$, store) =>
                 })
                 .catch(err => {
                     const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
-                    obs.next(userActions.userActivateFail('Failed to activate your account : ' + errorMessage));
+                    console.error('Failed to activate user : ' + errorMessage);
+                    obs.next(userActions.userActivateFail());
                     obs.complete()
                 });
           }));
@@ -92,7 +93,8 @@ export const userSetupRequestEpic = (action$, store) =>
                 })
                 .catch(err => {
                     const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
-                    obs.next(userActions.userSetupFail('Failed to activate your account : ' + errorMessage));
+                    console.error('Failed to setup user : ' + errorMessage);
+                    obs.next(userActions.userSetupFail());
                     obs.complete()
                 });
           }));
@@ -191,7 +193,8 @@ export const userResetPasswordRequestEpic = (action$, store) =>
                 })
                 .catch(err => {
                     const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
-                    obs.next(userActions.userResetPasswordFail(action.user, 'Failed to reset password : ' + errorMessage));
+                    console.error('Failed to reset user password: ' + errorMessage);
+                    obs.next(userActions.userResetPasswordFail());
                     obs.complete()
                 });
           }));

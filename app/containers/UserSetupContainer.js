@@ -8,14 +8,6 @@ import { userActions, signin } from 'actions'
 import s from './FormContainer.css'
 import { centeredContainer } from '../styles.css'
 
-const UserSetup = React.createClass({
-    render() {
-        return (
-            <div className={centeredContainer}>{this.props.children}</div>
-        )
-    }
-})
-
 class UserSetupContainer extends Component {
     propTypes : {
         user: PropTypes.object.isRequired,
@@ -23,6 +15,7 @@ class UserSetupContainer extends Component {
         isAuthenticated: PropTypes.bool.isRequired,
         isSettingUp: PropTypes.bool.isRequired,
         isSetupComplete: PropTypes.bool.isRequired,
+        failed: PropTypes.bool.isRequired,
         error: PropTypes.string.isRequired
     }
     handleFormSubmit = (event) => {
@@ -52,21 +45,29 @@ class UserSetupContainer extends Component {
 
     render () {
         return ( 
-                <UserSetup props={this.props}>
-                    <Paper className={s.paper} zDepth={2}>
-                        <Card>
-                            <CardHeader title="New Account Setup"/>
-                            <CardText className={s.cardText}>
-                                {
-                                     this.props.isAuthenticating || this.props.isSettingUp || this.props.isSetupComplete  ?   <LoadingIndicator size={2} /> : this.form(this.props, this.handleFormSubmit)
-                                }
-                            </CardText>
-                            <CardText className={`${s.footnote} ${s.cardText}`}>
-                                <p>{`By completing the account setup process, you agree to Paperhook's`} <br /> <a target="_blank" href="/terms-of-use">{`Terms of Use`}</a> {`and`} <a target="_blank" href="/privacy-policy">{`Privacy Policy.`}</a></p>
-                            </CardText>
-                        </Card>
-                    </Paper>
-                </UserSetup>
+            
+                <div className={centeredContainer}>
+                   { this.props.failed ? 
+                        <div>
+                            <h2>There is something wrong with that link...</h2>
+                            <h2>Go <a href="/forgot">here</a> to request a new one</h2> 
+                        </div>
+                        : 
+                        <Paper className={s.paper} zDepth={2}>
+                            <Card>
+                                <CardHeader title="Set your password"/>
+                                <CardText className={s.cardText}>
+                                    {
+                                         this.props.isAuthenticating || this.props.isSettingUp || this.props.isSetupComplete  ?   <LoadingIndicator size={2} /> : this.form(this.props, this.handleFormSubmit)
+                                    }
+                                </CardText>
+                                <CardText className={`${s.footnote} ${s.cardText}`}>
+                                    <p>{`By completing the account setup process, you agree to Paperhook's`} <br /> <a target="_blank" href="/terms-of-use">{`Terms of Use`}</a> {`and`} <a target="_blank" href="/privacy-policy">{`Privacy Policy.`}</a></p>
+                                </CardText>
+                            </Card>
+                        </Paper>
+                    }
+                </div>
             )
     }
 }
@@ -79,7 +80,8 @@ const mapStateToProps = ({activateUser, setupUser, signin}) => {
         isAuthenticated: signin.isAuthenticated,
         isSettingUp: setupUser.isSettingUp,
         isSetupComplete: setupUser.isSetupComplete,
-        error: (() => {setupUser.error ? setupUser.error : signin.error })()
+        failed: setupUser.failed,
+        error: signin.error
     }
 }
 

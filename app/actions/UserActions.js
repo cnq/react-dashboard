@@ -23,7 +23,7 @@ export const userActivateInitialize = (activationCode) => ({ type: USER_ACTIVATE
 export const userActivateStart = (activationCode) => ({ type: USER_ACTIVATE_START, code: activationCode})
 export const userActivateRequest = (activationCode) => ({ type: USER_ACTIVATE_REQUEST, code: activationCode})
 export const userActivateSuccess = (activatedUser) => ({ type: USER_ACTIVATE_SUCCESS, user: activatedUser})
-export const userActivateFail = (errorMessage) => ({ type: USER_ACTIVATE_FAIL, error: errorMessage })
+export const userActivateFail = () => ({ type: USER_ACTIVATE_FAIL })
 
 // User Setup Actions
 export const USER_SETUP_INITILIZE = 'USER_SETUP_INITILIZE'
@@ -36,7 +36,7 @@ export const userSetupInitialize = (userSetup) => ({ type: USER_SETUP_INITILIZE,
 export const userSetupStart = (userSetup) => ({ type: USER_SETUP_START, userSetup: userSetup})
 export const userSetupRequest = (userSetup) => ({ type: USER_SETUP_REQUEST, userSetup: userSetup})
 export const userSetupSuccess = (setupUser, userSetup) => ({ type: USER_SETUP_SUCCESS, user: setupUser, userSetup: userSetup})
-export const userSetupFail = (errorMessage) => ({ type: USER_SETUP_FAIL, error: errorMessage })
+export const userSetupFail = () => ({ type: USER_SETUP_FAIL })
 
 
 // User Delete Actions
@@ -76,7 +76,7 @@ export const userResetPasswordInitialize = (userToResetPassword) => ({ type: USE
 export const userResetPasswordStart = (userToResetPassword) => ({ type: USER_RESETPASSWORD_START, user: userToResetPassword})
 export const userResetPasswordRequest = (userToResetPassword) => ({ type: USER_RESETPASSWORD_REQUEST, user: userToResetPassword })
 export const userResetPasswordSuccess = (userToResetPassword) => ({ type: USER_RESETPASSWORD_SUCCESS, user: userToResetPassword})
-export const userResetPasswordFail = (user, errorMessage) => ({ type: USER_RESETPASSWORD_FAIL, user: user, error: errorMessage })
+export const userResetPasswordFail = (user) => ({ type: USER_RESETPASSWORD_FAIL, user: user })
 
 // User Change Roles Actions
 export const USER_CHANGEROLES_INITILIZE = 'USER_CHANGEROLES_INITILIZE'
