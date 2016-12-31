@@ -4,7 +4,7 @@ import LinearProgress from 'material-ui/LinearProgress'
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import { table, dataTable, progressContainer, addText, uri, clickable } from '../styles.css'
-import { cardContainer } from './UserCard.css'
+import { cardContainer } from '../styles-card.css'
 
 class UserCard extends Component {
     constructor(props) {

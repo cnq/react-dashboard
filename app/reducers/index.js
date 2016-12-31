@@ -8,6 +8,7 @@ import UserListReducer from './UserListReducer';
 import { addUser, activateUser, setupUser, deleteUser, userChangePassword, userResetPassword, userChangeRoles } from './UserReducer';
 import { addApp, deleteApp } from './AppReducer';
 import { addConnection, deleteConnection } from './ConnectionReducer';
+import { fetchSubscription, manageSubscription } from './SubscriptionReducer';
 import ConnectionStepperReducer from './ConnectionStepperReducer';
 //export <TYPE> from './PATH-TO-REDUCER-WITHOUT-EXTENSION';
 
@@ -29,6 +30,8 @@ export default combineReducers({
     deleteApp: deleteApp,
     addConnection: addConnection,
     deleteConnection: deleteConnection,
+    fetchSubscription: fetchSubscription,
+    manageSubscription: manageSubscription,
     connectionStepper: ConnectionStepperReducer,
     //LIST OF IMPORTED REDUCERS (FORMAT: actionname: ReducerName)
     form,

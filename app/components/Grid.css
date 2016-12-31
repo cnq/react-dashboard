@@ -11,7 +11,6 @@
 
 .gridList {
     display:flex;
-    min-height: 100vh;
     justify-content: flex-start;
     align-items: stretch;
     flex-direction: column;

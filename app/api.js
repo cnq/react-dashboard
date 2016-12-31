@@ -70,5 +70,15 @@ module.exports = {
     userResetPassword(user) {
         console.log('api module - userResetPassword() called');
         return ajax.post(`/api/users/resetpassword`, user).then(resp => resp.data);
+    },
+
+    getSubscription() {
+        console.log('api module - getSubscription() called');
+        return ajax.get(`/api/subscription`).then(resp => resp.data);
+    },
+
+    getSubscriptionManagementLink() {
+        console.log('api module - getSubscriptionManagementLink() called');
+        return ajax.get(`/api/subscription/managementurl`).then(resp => resp.data);
     }
 }

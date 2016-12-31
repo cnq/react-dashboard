@@ -6,6 +6,7 @@ import { initializeUserListEpic, startUserListFetchEpic, userListFetchEpic } fro
 import { initializeUserCreateEpic, startUserCreateEpic, userCreateRequestEpic, initializeUserActivateEpic, startUserActivateEpic, userActivateRequestEpic, initializeUserSetupEpic, startUserSetupEpic, userSetupRequestEpic, userSetupSuccessEpic, initializeUserDeleteEpic, startUserDeleteEpic, userDeleteRequestEpic, initializeUserChangePasswordEpic, startUserChangePasswordEpic, userChangePasswordRequestEpic, initializeUserResetPasswordEpic, startUserResetPasswordEpic, userResetPasswordRequestEpic, initializeUserChangeRolesEpic, startUserChangeRolesEpic, userChangeRolesRequestEpic } from './UserEpic';
 import { initializeAppCreateEpic, startAppCreateEpic, appCreateRequestEpic, initializeAppDeleteEpic, startAppDeleteEpic, appDeleteRequestEpic } from './AppEpic';
 import { initializeConnectionCreateEpic, startConnectionCreateEpic, connectionCreateRequestEpic, initializeConnectionDeleteEpic, startConnectionDeleteEpic, connectionDeleteRequestEpic } from './ConnectionEpic';
+import { initializeSubscriptionFetchEpic, startSubscriptionFetchEpic, subscriptionFetchRequestEpic, initializeSubscriptionManageEpic, startSubscriptionManageEpic, subscriptionManageRequestEpic } from './SubscriptionEpic';
 //import { <TYPE> } from './PATH-TO-REDUCER-WITHOUT-EXTENSION';
 
 export const combinedEpic = combineEpics(
@@ -55,7 +56,13 @@ export const combinedEpic = combineEpics(
   connectionCreateRequestEpic, 
   initializeConnectionDeleteEpic, 
   startConnectionDeleteEpic,  
-  connectionDeleteRequestEpic
+  connectionDeleteRequestEpic,
+  initializeSubscriptionManageEpic, 
+  startSubscriptionManageEpic, 
+  subscriptionManageRequestEpic,
+  initializeSubscriptionFetchEpic, 
+  startSubscriptionFetchEpic, 
+  subscriptionFetchRequestEpic
 
   //LIST HERE
 );

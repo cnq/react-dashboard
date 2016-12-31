@@ -7,7 +7,7 @@ import AddIcon from 'material-ui/svg-icons/content/add'
 import { GridList, GridListItem, DialogConfirm, UserCardAdd  } from 'components'
 import { userlist as userListActions, userActions } from 'actions'
 import { tableHeading, listItem } from './UserListContainer.css'
-import { leftContainer, rightContainer, centeredContainer, addContainer, breathingRoom, table, uri } from '../styles.css'
+import { leftContainer, rightContainer, centeredContainer, addContainer, breathingRoom, table, uri , center, subHeader } from '../styles.css'
 
 
 class UserListContainer extends Component {
@@ -43,38 +43,39 @@ class UserListContainer extends Component {
         return (
              <div className={centeredContainer}>
                 <div className={breathingRoom} style={{width: '100%'}}>
+                    <h1 className={center + ' ' + subHeader}>{'Users'}</h1>
+                    {
+                     this.props.users.length === 0  ?  '' :  
+                     <div style={{width: '100%'}}>
+                         <ul className={`${table} ${tableHeading}`}>
+                              <li>Name</li>
+                              <li></li>
+                              <li></li>
+                              <li>Actions</li>
+                          </ul>
+                          <GridList>
+                          {
+                             this.props.users.map( (user) => (
+                                 <GridListItem key={user.email}>
+                                     <UserContainer user={user} isAuthenticatedUserAnAdmin={this.props.isAuthenticatedUserAnAdmin}/>
+                                 </GridListItem> ))
+                          }
+                          </GridList>
+                      </div>
+                    }
                     {this.props.isAuthenticatedUserAnAdmin ? 
-                        <div className={`${addContainer} ${this.props.users.length === 0 ? centeredContainer : rightContainer}`} style={{height: '50px'}}>
-                            <FlatButton onClick={this.openCreateUserDialog} labelStyle={{color: '#f2f2f2', fontSize: '15px', letterSpacing: '.5px'}} backgroundColor="#3ED1D6" label="Add User" icon={<AddIcon color="#f2f2f2" />} />
-                        </div>    
-                    : null}
-                </div>
-                {this.props.isAuthenticatedUserAnAdmin  ?  
-                    <DialogConfirm title = "Add User" message = {renderCreateUserDialog()} isOpen = {this.state.showUserCreateDialog} cancelCallback = {this.closeCreateUserDialog} />
-                    : null
-                }
-                {
-                 this.props.users.length === 0  ?  '' :  
-                 <div style={{width: '100%'}}>
-                     <ul className={`${table} ${tableHeading}`}>
-                          <li>Name</li>
-                          <li></li>
-                          <li></li>
-                          <li>Actions</li>
-                      </ul>
-                      <GridList>
-                      {
-                         this.props.users.map( (user) => (
-                             <GridListItem key={user.email}>
-                                 <UserContainer user={user} isAuthenticatedUserAnAdmin={this.props.isAuthenticatedUserAnAdmin}/>
-                             </GridListItem> ))
-                      }
-                      </GridList>
-                 </div>
+                            <div className={`${addContainer} ${this.props.users.length === 0 ? centeredContainer : rightContainer}`} style={{height: '50px'}}>
+                                <FlatButton onClick={this.openCreateUserDialog} labelStyle={{color: '#f2f2f2', fontSize: '15px', letterSpacing: '.5px'}} backgroundColor="#3ED1D6" label="Add User" icon={<AddIcon color="#f2f2f2" />} />
+                            </div>    
+                        : null
+                    }
+                    {this.props.isAuthenticatedUserAnAdmin  ?  
+                                <DialogConfirm title = "Add User" message = {renderCreateUserDialog()} isOpen = {this.state.showUserCreateDialog} cancelCallback = {this.closeCreateUserDialog} />
+                                : null
                     }
                 </div>
-
-            )
+             </div>
+        )
     }
 }
 

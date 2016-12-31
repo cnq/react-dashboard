@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import {Card, CardText} from 'material-ui/Card';
 import { table, dataTable, progressContainer, addText, uri, clickable } from '../styles.css'
-import { cardContainer } from './ConnectionCard.css'
+import { cardContainer } from '../styles-card.css'
 import LinearProgress from 'material-ui/LinearProgress'
 
 

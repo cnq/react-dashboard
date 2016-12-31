@@ -48,7 +48,7 @@ class SettingsDropdown extends Component {
                 <Popover open={this.state.open} anchorEl={this.state.anchorEl} anchorOrigin={{horizontal: 'left', vertical: 'bottom'}} targetOrigin={{horizontal: 'left', vertical: 'top'}} onRequestClose={this.handleRequestClose} animation={PopoverAnimationVertical}>
                     <Menu onChange={this.handleChange} desktop={true} width={180}>
                         <MenuItem value={"/profile"} primaryText="Profile" rightIcon={<Profile />} />
-                        <MenuItem value="/dashboard/users" primaryText="Settings" rightIcon={<Settings />} />
+                        <MenuItem value="/dashboard/settings" primaryText="Settings" rightIcon={<Settings />} />
                         <Divider />
                         <MenuItem value="/signout" primaryText="Sign Out" rightIcon={<Signout />} />
                     </Menu>
