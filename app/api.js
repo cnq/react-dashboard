@@ -80,5 +80,10 @@ module.exports = {
     getSubscriptionManagementLink() {
         console.log('api module - getSubscriptionManagementLink() called');
         return ajax.get(`/api/subscription/managementurl`).then(resp => resp.data);
+    },
+
+    updateSubscription(subscription) {
+        console.log('api module - updateSubscrition() called');
+        return ajax.post(`/api/subscription/${subscription.subscriptionId}`, subscription).then(resp => resp.data);
     }
 }

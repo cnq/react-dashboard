@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import {SUBSCRIPTION_PLAN_LEVEL2} from '../constants';
 import {Card, CardText, } from 'material-ui/Card'
 import { cardContainer } from '../styles-card.css'
 import { table, dataTable } from '../styles.css'
@@ -8,6 +9,9 @@ import FlatButton from 'material-ui/RaisedButton';
 class SubscriptionInfo extends Component {
     handleManageClick = () => {
         this.props.handleManageSubscription()
+    }
+    handleUpgradeClick = () => {
+        this.props.handleUpgradeSubscription({...this.props.subscription, plan: SUBSCRIPTION_PLAN_LEVEL2.name})
     }
     render () {
         return (
@@ -29,16 +33,22 @@ class SubscriptionInfo extends Component {
                                     <FlatButton onClick={this.handleManageClick} labelStyle={{color: '#f2f2f2', fontSize: '15px', letterSpacing: '.5px'}} backgroundColor="#3ED1D6" label="Manage" />
                                  </li>
                             </ul>
+                            <ul className={`${table} ${dataTable}`}>
+                                 <li>
+                                    <FlatButton onClick={this.handleUpgradeClick} labelStyle={{color: '#f2f2f2', fontSize: '15px', letterSpacing: '.5px'}} backgroundColor="#3ED1D6" label="Upgrade" />
+                                 </li>
+                            </ul>
                     </CardText>
                     : null
                 }
                 </Card>  
             )
-                }
-                }
+      }
+}
 
 SubscriptionInfo.propTypes = {
                     handleManageSubscription: PropTypes.func.isRequired,
+                    handleUpgradeSubscription: PropTypes.func.isRequired,
                     subscription: PropTypes.object
                 }
 

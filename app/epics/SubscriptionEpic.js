@@ -64,3 +64,34 @@ export const subscriptionManageRequestEpic = (action$, store) =>
                     obs.complete()
                 });
           }));
+
+
+// subscription update
+
+export const initializeSubscriptionUpdateEpic = action$ =>
+    action$.ofType(subscriptionActions.SUBSCRIPTION_UPDATE_INITILIZE)
+      .map(action => { 
+          return subscriptionActions.subscriptionUpdateStart(action.subscription)
+      });
+
+export const startSubscriptionUpdateEpic = action$ =>
+    action$.ofType(subscriptionActions.SUBSCRIPTION_UPDATE_START)
+      .map(action => { 
+          return subscriptionActions.subscriptionUpdateRequest()
+      });
+
+export const subscriptionUpdateRequestEpic = (action$, store) =>
+    action$.ofType(subscriptionActions.SUBSCRIPTION_UPDATE_REQUEST)
+      .mergeMap(action =>
+          Rx.Observable.create(obs => {
+              api.updateSubscription(store.getState().updateSubscription.subscription)
+                .then(resp => {
+                    obs.next(subscriptionActions.subscriptionUpdateSuccess(store.getState().updateSubscription.subscription))
+                    obs.complete()
+                })
+                .catch(err => {
+                    const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
+                    obs.next(subscriptionActions.subscriptionUpdateFail(store.getState().updateSubscription.subscription, 'Failed to update subscription : ' + errorMessage));
+                    obs.complete()
+                });
+          }));

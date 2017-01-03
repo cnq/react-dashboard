@@ -24,3 +24,16 @@ export const subscriptionManageStart = () => ({ type: SUBSCRIPTION_MANAGE_START}
 export const subscriptionManageRequest = () => ({ type: SUBSCRIPTION_MANAGE_REQUEST})
 export const subscriptionManageSuccess = (subscriptionManagementUrl) => ({ type: SUBSCRIPTION_MANAGE_SUCCESS, subscriptionManagementUrl: subscriptionManagementUrl})
 export const subscriptionManageFail = (errorMessage) => ({ type: SUBSCRIPTION_MANAGE_FAIL, error: errorMessage })
+
+// Subscription Update Actions
+export const SUBSCRIPTION_UPDATE_INITILIZE = 'SUBSCRIPTION_UPDATE_INITILIZE'
+export const SUBSCRIPTION_UPDATE_START = 'SUBSCRIPTION_UPDATE_START'
+export const SUBSCRIPTION_UPDATE_REQUEST = 'SUBSCRIPTION_UPDATE_REQUEST'
+export const SUBSCRIPTION_UPDATE_SUCCESS = 'SUBSCRIPTION_UPDATE_SUCCESS'
+export const SUBSCRIPTION_UPDATE_FAIL = 'SUBSCRIPTION_UPDATE_FAIL'
+
+export const subscriptionUpdateInitialize = (subscriptionToUpdate) => ({ type: SUBSCRIPTION_UPDATE_INITILIZE, subscription: subscriptionToUpdate})
+export const subscriptionUpdateStart = (subscriptionToUpdate) => ({ type: SUBSCRIPTION_UPDATE_START, subscription: subscriptionToUpdate})
+export const subscriptionUpdateRequest = () => ({ type: SUBSCRIPTION_UPDATE_REQUEST})
+export const subscriptionUpdateSuccess = (updatedSubscription) => ({ type: SUBSCRIPTION_UPDATE_SUCCESS, subscription: updatedSubscription})
+export const subscriptionUpdateFail = (subscriptionToUpdate, errorMessage) => ({ type: SUBSCRIPTION_UPDATE_FAIL, subscription: subscriptionToUpdate, error: errorMessage })

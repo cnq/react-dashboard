@@ -74,3 +74,43 @@ export function manageSubscription ( state = subscriptionManageInitialState, act
             return state
     }
 }
+
+const updateSubscriptionInitialState = {
+    subscription: null,
+    isUpdating: false,
+    error: ''
+}
+
+export function updateSubscription ( state = updateSubscriptionInitialState, action ) {
+    switch ( action.type ) {
+        case subscriptionActions.SUBSCRIPTION_UPDATE_INITILIZE:
+            return {
+                ... state,
+                subscription: action.subscription,
+                isUpdating: true
+            }
+        case subscriptionActions.SUBSCRIPTION_UPDATE_START:
+            return {
+                ... state
+            }
+        case subscriptionActions.SUBSCRIPTION_UPDATE_REQUEST:
+            return {
+                ... state
+            }
+        case subscriptionActions.SUBSCRIPTION_UPDATE_SUCCESS:
+            return {
+                ... state,
+                subscription: action.subscription,
+                isUpdating: false,
+            }
+        case subscriptionActions.SUBSCRIPTION_UPDATE_FAIL:
+            return {
+                ... state,
+                isUpdating: false,
+                error: action.error
+            }
+        default:
+            return state
+    }
+}
+
