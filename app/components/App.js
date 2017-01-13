@@ -1,4 +1,6 @@
 ﻿import React, { Component, PropTypes } from 'react'
+import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
+import AlertError from 'material-ui/svg-icons/alert/error'
 import FlatButton from 'material-ui/FlatButton'
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
@@ -69,19 +71,37 @@ class App extends Component {
                         <MenuItem style={menuItemStyle} innerDivStyle={innerDivStyle} value="2" primaryText="Download Config Files" leftIcon={<ActionDownload style={iconStyle} />} />
                         <MenuItem style={menuItemStyle} innerDivStyle={innerDivStyle} value="3" primaryText="Delete Site" leftIcon={<ActionDelete style={iconStyle} />} onClick={(event) => {event.stopPropagation(); this.openDeleteConfirmation()}} />
                     </IconMenu>
-                    <div style={{color: '#383838', display: 'inline-block', position: 'relative', top: '-7px'}}><a className={s.uri} href={this.props.app.uri} target="_blank">{this.props.app.backendSiteUri}</a></div>
+                    <div style={{color: '#383838', display: 'inline-block', position: 'relative', top: '-7px'}}>
+                        <a className={s.uri} href={this.props.app.uri} target="_blank">{this.props.app.backendSiteUri}</a>
+                    </div>
+                    <div style={{display: 'inline-block', position: 'relative', float: 'right'}}>
+                    {this.props.app.isDnsLive ? 
+                        <IconButton tooltip={`The DNS for ${this.props.app.domain} has been configured to point to IP address ${this.props.app.ipAddress}`}>
+                            <ActionCheckCircle color="rgb(62, 209, 217)"></ActionCheckCircle>
+                        </IconButton>
+                        :
+                        <IconButton tooltip={`DNS not yet configured.  The A record for domain ${this.props.app.domain} must be configured to point to IP address ${this.props.app.ipAddress} in order to complete setup.`}>
+                            <AlertError color="#FBC02D"></AlertError>
+                        </IconButton>
+                    }
+
+                    </div>
                 </div>
             )
-        }
+                    }
 
         const renderMessage = () => {
             return (
                 <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>
-                    {`You are about to delete the site `}<span className={s.uri}> {this.props.app.backendSiteUri}</span>
+                    {this.props.app.isDnsLive ? 
+                    <div className={errorMsg}>{`As a result of deleting this site,`} <span className={s.uri}>{this.props.app.backendSiteUri}</span> {`will be down.`}</div> 
+                    : 
+                    <div>{`You are about to delete the site `}<span className={s.uri}> {this.props.app.backendSiteUri}</span></div>
+                    }
                     <div>{`This cannot be undone. Are you sure you want to delete?`}</div>
                 </div>
             )
-        }
+                    }
 
         return (
               this.props.isFetching === true ?   <div></div>
@@ -101,14 +121,14 @@ class App extends Component {
                         />
                     </div>
          )
-    }
+                    }
 
-}
+                    }
 
 App.propTypes = {
-    app: PropTypes.object.isRequired,
-    goToAppConnections: PropTypes.func.isRequired,
-    deleteApp: PropTypes.func.isRequired
-}
+                        app: PropTypes.object.isRequired,
+                        goToAppConnections: PropTypes.func.isRequired,
+                        deleteApp: PropTypes.func.isRequired
+                    }
 
 export default App

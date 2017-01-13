@@ -19,8 +19,11 @@ class SubscriptionInfoContainer extends Component {
     manageSubscription = () => {
         this.props.subscriptionManageInitialize()
     }
-    updateSubscription = (subscription) => {
-        this.props.subscriptionUpdateInitialize(subscription)
+    upgradeSubscription = (subscription) => {
+        if(subscription.plan.upgradeToPlan){
+            subscription.plan = {id: subscription.plan.upgradeToPlan}
+            this.props.subscriptionUpdateInitialize(subscription)
+        }
     }
     componentDidUpdate() {
         if(this.props.managementUrl){
@@ -34,7 +37,7 @@ class SubscriptionInfoContainer extends Component {
                     <div className={breathingRoom} style={{width: '100%'}}>
                         <h1 className={center + ' ' + subHeader}>{'Subscription & Billing'}</h1>
                         <div>
-                            <SubscriptionInfo handleManageSubscription={this.manageSubscription} handleUpgradeSubscription={this.updateSubscription} subscription={this.props.subscription}/>
+                            <SubscriptionInfo handleManageSubscription={this.manageSubscription} handleUpgradeSubscription={this.upgradeSubscription} subscription={this.props.subscription}/>
                         </div>
                     </div>
                 </div>

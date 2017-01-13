@@ -5,6 +5,7 @@ import { connectionActions } from 'actions'
 const initialState = {
     initialFetchComplete: false,
     isFetching: false,
+    constantFetch: false,
     error: '',
     apps: []
 }
@@ -18,7 +19,8 @@ export default function applist ( state = initialState, action ) {
             }
         case actions.APPLIST_FETCH_START:
             return {
-                ... state
+                ... state,
+                isFetching: true
             }
         case actions.APPLIST_FETCH_REQUEST:
             return {
@@ -39,6 +41,16 @@ export default function applist ( state = initialState, action ) {
                 initialFetchComplete: true,
                 error: action.error
         }
+        case actions.APPLIST_FETCH_START_CONSTANT:
+            return {
+                ... state,
+                constantFetch: true
+            }
+        case actions.APPLIST_FETCH_STOP_CONSTANT:
+            return {
+                ... state,
+                constantFetch: false
+            }
         case appActions.APP_CREATE_START:
             return {
                 ... state,

@@ -1,9 +1,21 @@
 ﻿import Rx from 'rxjs/Rx';
 import api from '../api'
-import { subscriptionActions } from 'actions'
+import { subscriptionActions, signin } from 'actions'
 
 
 // subscription fetch
+
+export const signinSuccessSubscriptionFetchEpic = action$ =>
+    action$.ofType(signin.SIGNIN_SUCCESS)
+      .map(action => { 
+          return subscriptionActions.subscriptionFetchInitialize()
+      });
+
+export const checkSigninSuccessSubscriptionFetchEpic = action$ =>
+    action$.ofType(signin.CHECK_SIGNIN_SUCCESS)
+      .map(action => { 
+          return subscriptionActions.subscriptionFetchInitialize()
+      });
 
 export const initializeSubscriptionFetchEpic = action$ =>
     action$.ofType(subscriptionActions.SUBSCRIPTION_FETCH_INITILIZE)
@@ -86,7 +98,8 @@ export const subscriptionUpdateRequestEpic = (action$, store) =>
           Rx.Observable.create(obs => {
               api.updateSubscription(store.getState().updateSubscription.subscription)
                 .then(resp => {
-                    obs.next(subscriptionActions.subscriptionUpdateSuccess(store.getState().updateSubscription.subscription))
+                    const subscription = resp
+                    obs.next(subscriptionActions.subscriptionUpdateSuccess(subscription))
                     obs.complete()
                 })
                 .catch(err => {

@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react'
-import {SUBSCRIPTION_PLAN_LEVEL2} from '../constants';
 import {Card, CardText, } from 'material-ui/Card'
 import { cardContainer } from '../styles-card.css'
 import { table, dataTable } from '../styles.css'
@@ -11,7 +10,7 @@ class SubscriptionInfo extends Component {
         this.props.handleManageSubscription()
     }
     handleUpgradeClick = () => {
-        this.props.handleUpgradeSubscription({...this.props.subscription, plan: SUBSCRIPTION_PLAN_LEVEL2.name})
+        this.props.handleUpgradeSubscription(this.props.subscription)
     }
     render () {
         return (
@@ -20,7 +19,7 @@ class SubscriptionInfo extends Component {
                     <CardText className={cardContainer} style={{padding: "0"}}>
                             <ul className={`${table} ${dataTable}`}>
                                  <li>{`Plan`}</li>
-                                 <li>{this.props.subscription.plan}</li>
+                                 <li>{this.props.subscription.plan.name}</li>
                             </ul>
                             {this.props.subscription.inTrial? 
                             <ul className={`${table} ${dataTable}`}>
@@ -33,11 +32,14 @@ class SubscriptionInfo extends Component {
                                     <FlatButton onClick={this.handleManageClick} labelStyle={{color: '#f2f2f2', fontSize: '15px', letterSpacing: '.5px'}} backgroundColor="#3ED1D6" label="Manage" />
                                  </li>
                             </ul>
+                            {this.props.subscription.plan.upgradeToPlan ?
                             <ul className={`${table} ${dataTable}`}>
                                  <li>
                                     <FlatButton onClick={this.handleUpgradeClick} labelStyle={{color: '#f2f2f2', fontSize: '15px', letterSpacing: '.5px'}} backgroundColor="#3ED1D6" label="Upgrade" />
                                  </li>
                             </ul>
+                            : null
+                            }
                     </CardText>
                     : null
                 }

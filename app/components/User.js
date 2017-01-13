@@ -62,7 +62,7 @@ class User extends Component {
                         isDeleting={this.props.user.isDeleting}
                         actions={renderCardActions(this.props)}
                         handleRoleChange={this.roleChange}
-                        allowRoleSelection={this.props.isAuthenticatedUserAnAdmin}
+                        allowRoleSelection={this.props.isAuthenticatedUserAnAdmin && !this.props.isUserTheAuthenticatedUser}
                     />
                     {this.props.deleteUser ?
                         <DialogConfirm
@@ -83,6 +83,7 @@ class User extends Component {
 
 User.propTypes = {
     user: PropTypes.object.isRequired,
+    isUserTheAuthenticatedUser: PropTypes.bool,
     isAuthenticatedUserAnAdmin: PropTypes.bool,
     deleteUser: PropTypes.func.isRequired,
     handleRoleChange: PropTypes.func.isRequired,

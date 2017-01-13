@@ -41,3 +41,19 @@ export const appListFetchEpic = action$ =>
                     obs.complete();
                 });
           }));
+
+export const appListFetchStartConstantEpic = action$ =>
+    action$.ofType(applist.APPLIST_FETCH_START_CONSTANT)
+      .map(action => { 
+          return applist.appListInitialize()
+      });
+
+export const appListFetchSuccessEpic = (action$, store) =>
+    action$.ofType(applist.APPLIST_FETCH_SUCCESS)
+      .filter(() => { 
+          return store.getState().applist.constantFetch; 
+      })
+      .delay(5000)
+      .map(action => { 
+          return applist.appListFetchRequest()
+      });

@@ -15,7 +15,7 @@ class UserContainer extends Component {
 
     render () {
         return (
-            <User deleteUser={this.deleteUser} handleRoleChange={this.updateUserRole} user={this.props.user} isAuthenticatedUserAnAdmin={this.props.isAuthenticatedUserAnAdmin} />
+            <User deleteUser={this.deleteUser} handleRoleChange={this.updateUserRole} user={this.props.user} isAuthenticatedUserAnAdmin={this.props.isAuthenticatedUserAnAdmin} isUserTheAuthenticatedUser={this.props.isUserTheAuthenticatedUser}/>
         )
     }
 
@@ -23,6 +23,7 @@ class UserContainer extends Component {
 
 UserContainer.propTypes = {
     user: PropTypes.object.isRequired,
+    isUserTheAuthenticatedUser: PropTypes.bool.isRequired,
     isAuthenticatedUserAnAdmin: PropTypes.bool.isRequired,
     userDeleteInitialize: PropTypes.func.isRequired
 }

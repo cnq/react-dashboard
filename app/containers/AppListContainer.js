@@ -11,8 +11,12 @@ import { errorMsg, centeredContainer, breathingRoom } from '../styles.css'
 
 class AppListContainer extends Component {
 
-    componentWillMount () {
-        this.props.appListInitialize()
+    componentDidMount () {
+            this.props.appListFetchStartConstant()
+    }
+
+    componentWillUnmount(){
+        this.props.appListFetchStopConstant()
     }
 
     goToAppConnections = (event, appId) => {

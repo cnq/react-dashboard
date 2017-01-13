@@ -29,6 +29,13 @@ export function fetchSubscription ( state = subscriptionFetchInitialState, actio
                 fetchComplete: true,
                 subscription: action.subscription
             }
+        case subscriptionActions.SUBSCRIPTION_UPDATE_SUCCESS:
+            return {
+                ... state,
+                isFetching: false,
+                fetchComplete: true,
+                subscription: action.subscription
+            }
         case subscriptionActions.SUBSCRIPTION_FETCH_FAIL:
             return {
                 ... state,
