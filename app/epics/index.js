@@ -1,7 +1,7 @@
 ﻿import { combineEpics } from 'redux-observable';
 import { initiateSigninEpic, signinRequestEpic, initiateCheckSigninEpic, checkSigninRequestEpic } from './SigninEpic';
 import { initiateSignoutEpic, signoutRequestEpic } from './SignoutEpic';
-import { loadAppListOnCheckSigninSuccessfulEpic, initializeAppListEpic, startAppListFetchEpic, appListFetchEpic, appListFetchStartConstantEpic, appListFetchSuccessEpic } from './AppListEpic';
+import { loadAppListOnCheckSigninSuccessfulEpic, initializeAppListEpic, startAppListFetchEpic, appListFetchEpic, appListRefreshEpic, appListRefreshStartConstantEpic, appListRefreshSuccessEpic } from './AppListEpic';
 import { initializeUserListEpic, startUserListFetchEpic, userListFetchEpic } from './UserListEpic';
 import { initializeUserCreateEpic, startUserCreateEpic, userCreateRequestEpic, initializeUserActivateEpic, startUserActivateEpic, userActivateRequestEpic, initializeUserSetupEpic, startUserSetupEpic, userSetupRequestEpic, userSetupSuccessEpic, initializeUserDeleteEpic, startUserDeleteEpic, userDeleteRequestEpic, initializeUserChangePasswordEpic, startUserChangePasswordEpic, userChangePasswordRequestEpic, initializeUserResetPasswordEpic, startUserResetPasswordEpic, userResetPasswordRequestEpic, initializeUserChangeRolesEpic, startUserChangeRolesEpic, userChangeRolesRequestEpic } from './UserEpic';
 import { initializeAppCreateEpic, startAppCreateEpic, appCreateRequestEpic, initializeAppDeleteEpic, startAppDeleteEpic, appDeleteRequestEpic } from './AppEpic';
@@ -20,8 +20,9 @@ export const combinedEpic = combineEpics(
   initializeAppListEpic,
   startAppListFetchEpic,
   appListFetchEpic,
-  appListFetchStartConstantEpic, 
-  appListFetchSuccessEpic,
+  appListRefreshEpic,
+  appListRefreshStartConstantEpic, 
+  appListRefreshSuccessEpic,
   initializeUserListEpic, 
   startUserListFetchEpic, 
   userListFetchEpic,

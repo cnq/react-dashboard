@@ -42,18 +42,36 @@ export const appListFetchEpic = action$ =>
                 });
           }));
 
-export const appListFetchStartConstantEpic = action$ =>
-    action$.ofType(applist.APPLIST_FETCH_START_CONSTANT)
+export const appListRefreshEpic = action$ =>
+    action$.ofType(applist.APPLIST_REFRESH_REQUEST)
+      .mergeMap(action =>
+          Rx.Observable.create(obs => {
+              api.getApps()
+                .then(resp => {
+                    const appArray = Object.keys(resp).map(function(key) { return resp[key] });
+                    obs.next(applist.appListRefreshSuccess(appArray));
+                    obs.complete();
+                })
+                .catch(err => {
+                    const errorMessage = err.response && err.response.data && err.response.data.message ? err.response.data.message: err.message
+                    obs.next(applist.appListRefreshFail(errorMessage));
+                    obs.complete();
+                });
+          }));
+
+export const appListRefreshStartConstantEpic = action$ =>
+    action$.ofType(applist.APPLIST_REFRESH_START_CONSTANT)
+      .delay(5000)
       .map(action => { 
-          return applist.appListInitialize()
+          return applist.appListRefreshRequest()
       });
 
-export const appListFetchSuccessEpic = (action$, store) =>
-    action$.ofType(applist.APPLIST_FETCH_SUCCESS)
+export const appListRefreshSuccessEpic = (action$, store) =>
+    action$.ofType(applist.APPLIST_REFRESH_SUCCESS)
       .filter(() => { 
           return store.getState().applist.constantFetch; 
       })
       .delay(5000)
       .map(action => { 
-          return applist.appListFetchRequest()
+          return applist.appListRefreshRequest()
       });

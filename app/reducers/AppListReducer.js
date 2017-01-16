@@ -41,15 +41,36 @@ export default function applist ( state = initialState, action ) {
                 initialFetchComplete: true,
                 error: action.error
         }
-        case actions.APPLIST_FETCH_START_CONSTANT:
+        case actions.APPLIST_REFRESH_START_CONSTANT:
             return {
                 ... state,
                 constantFetch: true
             }
-        case actions.APPLIST_FETCH_STOP_CONSTANT:
+        case actions.APPLIST_REFRESH_STOP_CONSTANT:
             return {
                 ... state,
                 constantFetch: false
+            }
+        case actions.APPLIST_REFRESH_REQUEST:
+            return {
+                ... state
+            }
+        case actions.APPLIST_REFRESH_SUCCESS:
+            return {
+                ... state,
+                error: '',
+                apps: state.apps.map(function(currentStateApp) { 
+                    var newapp = action.apps.find((a) => a.appId == currentStateApp.appId)
+                    if(newapp){
+                        currentStateApp.isDnsLive = newapp.isDnsLive;
+                    }
+                    return currentStateApp;
+                })
+            }
+        case actions.APPLIST_REFRESH_FAIL:
+            return {
+                ... state,
+            error: action.error
             }
         case appActions.APP_CREATE_START:
             return {
