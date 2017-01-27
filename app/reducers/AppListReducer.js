@@ -60,9 +60,10 @@ export default function applist ( state = initialState, action ) {
                 ... state,
                 error: '',
                 apps: state.apps.map(function(currentStateApp) { 
-                    var newapp = action.apps.find((a) => a.appId == currentStateApp.appId)
-                    if(newapp){
-                        currentStateApp.isDnsLive = newapp.isDnsLive;
+                    var freshapp = action.apps.find((a) => a.appId == currentStateApp.appId)
+                    if(freshapp){
+                        currentStateApp.isDnsLive = freshapp.isDnsLive;
+                        currentStateApp.uri = freshapp.uri;
                     }
                     return currentStateApp;
                 })
