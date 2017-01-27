@@ -11,8 +11,21 @@ import { errorMsg, centeredContainer, breathingRoom } from '../styles.css'
 
 class AppListContainer extends Component {
 
+    componentWillMount () {
+        this.props.appListInitialize()
+    }
+
     componentDidMount () {
+        //if this component mounts, only start refresh if the initial fetch has been performed and constant refresh has not been started
+        if(this.props.initialFetchComplete && !this.props.constantFetch){
             this.props.appListRefreshStartConstant()
+        }
+    }
+    componentDidUpdate() {
+        //if properties were updated, start refresh if the initial fetch has been performed and constant refresh has not been started
+        if(this.props.initialFetchComplete && !this.props.constantFetch){
+            this.props.appListRefreshStartConstant()
+        }
     }
 
     componentWillUnmount(){
@@ -56,6 +69,7 @@ class AppListContainer extends Component {
 
 AppListContainer.propTypes = {
     initialFetchComplete: PropTypes.bool.isRequired,
+    constantFetch: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
     apps: PropTypes.array.isRequired
@@ -65,6 +79,7 @@ AppListContainer.propTypes = {
 const mapStateToProps = ({applist}) => {
     return {
         initialFetchComplete: applist.isFetching,
+        constantFetch: applist.constantFetch,
         isFetching: applist.isFetching,
         error: applist.error,
         apps: applist.apps

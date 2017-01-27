@@ -62,6 +62,24 @@ class App extends Component {
             )
         }
 
+        const renderIsDnsLiveIndicator = () => {
+            if(this.props.app.appId == "newapp"){
+                return null;
+            }
+            else if(this.props.app.isDnsLive){
+                return (
+                    <IconButton tooltip={`The DNS for ${this.props.app.domain} has been configured to point to IP address ${this.props.app.ipAddress}`}>
+                        <ActionCheckCircle color="rgb(62, 209, 217)"></ActionCheckCircle>
+                    </IconButton>
+                )} 
+             else {
+                return (
+                    <IconButton tooltip={`DNS not yet configured.  The A record for domain ${this.props.app.domain} must be configured to point to IP address ${this.props.app.ipAddress} in order to complete setup.`}>
+                                    <AlertError color="#FBC02D"></AlertError>
+                                </IconButton>
+                 )}
+        }
+
         const renderCardTitle = () => {
             const { menuItemStyle, iconStyle, innerDivStyle } = styles
             return (
@@ -75,20 +93,11 @@ class App extends Component {
                         <a className={s.uri} href={this.props.app.uri} target="_blank">{this.props.app.backendSiteUri}</a>
                     </div>
                     <div style={{display: 'inline-block', position: 'relative', float: 'right'}}>
-                    {this.props.app.isDnsLive ? 
-                        <IconButton tooltip={`The DNS for ${this.props.app.domain} has been configured to point to IP address ${this.props.app.ipAddress}`}>
-                            <ActionCheckCircle color="rgb(62, 209, 217)"></ActionCheckCircle>
-                        </IconButton>
-                        :
-                        <IconButton tooltip={`DNS not yet configured.  The A record for domain ${this.props.app.domain} must be configured to point to IP address ${this.props.app.ipAddress} in order to complete setup.`}>
-                            <AlertError color="#FBC02D"></AlertError>
-                        </IconButton>
-                    }
-
+                        {renderIsDnsLiveIndicator()}
                     </div>
                 </div>
             )
-                    }
+        }
 
         const renderMessage = () => {
             return (

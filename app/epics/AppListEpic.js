@@ -42,8 +42,11 @@ export const appListFetchEpic = action$ =>
                 });
           }));
 
-export const appListRefreshEpic = action$ =>
+export const appListRefreshEpic = (action$, store) =>
     action$.ofType(applist.APPLIST_REFRESH_REQUEST)
+      .filter(() => { 
+          return store.getState().signin.isAuthenticated && store.getState().applist.initialFetchComplete; 
+      })
       .mergeMap(action =>
           Rx.Observable.create(obs => {
               api.getApps()
