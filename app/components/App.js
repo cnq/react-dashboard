@@ -90,7 +90,7 @@ class App extends Component {
                         <MenuItem style={menuItemStyle} innerDivStyle={innerDivStyle} value="3" primaryText="Delete Site" leftIcon={<ActionDelete style={iconStyle} />} onClick={(event) => {event.stopPropagation(); this.openDeleteConfirmation()}} />
                     </IconMenu>
                     <div style={{color: '#383838', display: 'inline-block', position: 'relative', top: '-7px'}}>
-                        <a className={s.uri} href={this.props.app.uri} target="_blank">{this.props.app.backendSiteUri}</a>
+                        <a className={s.uri} href={this.props.app.uri} target="_blank">{this.props.app.backendSiteUri?this.props.app.backendSiteUri:this.props.app.uri}</a>
                     </div>
                     <div style={{display: 'inline-block', position: 'relative', float: 'right'}}>
                         {renderIsDnsLiveIndicator()}
