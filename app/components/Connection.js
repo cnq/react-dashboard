@@ -28,23 +28,17 @@ class Connection extends Component {
     }
 
     render () {
-        const renderCardActions = () => {
+        const renderCardActions = connection => {
             return (
                 <div>
-                    {/*
-                    <PowerIcon data-tip data-for='power' onClick={() => {}} color={'#D4D4D4'} hoverColor={'#7dc93a'} style={{width: '32px', cursor: 'pointer'}} />
-                    <ReactTooltip id='power' type='success' effect='solid'>
-                        <span>Turn On</span>
-                    </ReactTooltip>
-                    <EditIcon data-tip data-for='edit' onClick={() => {}} color={'#D4D4D4'} hoverColor={'#3a89c9'} style={{width: '32px', cursor: 'pointer'}} />
-                    <ReactTooltip id='edit' type='info' effect='solid'>
-                        <span>Edit</span>
-                    </ReactTooltip>
-                    */}
-                    <DeleteIcon data-tip data-for='delete' onClick={(event) => {event.stopPropagation(); this.openDeleteConfirmation();}} color={'#D4D4D4'} hoverColor={'#ff4242'} style={{width: '32px', cursor: 'pointer'}}  />
-                    <ReactTooltip id='delete' type='error' effect='solid'>
-                        <span>Delete</span>
-                    </ReactTooltip>
+                    {connection.connectionType != "Legacy" ? 
+                        <div>
+                            <DeleteIcon data-tip data-for='delete' onClick={(event) => {event.stopPropagation(); this.openDeleteConfirmation();}} color={'#D4D4D4'} hoverColor={'#ff4242'} style={{width: '32px', cursor: 'pointer'}}  />
+                            <ReactTooltip id='delete' type='error' effect='solid'>
+                                <span>Delete</span>
+                            </ReactTooltip>
+                        </div>
+                    : null}
                 </div>
             )
         }
@@ -66,7 +60,7 @@ class Connection extends Component {
                         connectionName={this.props.connection.connectionName}
                         isCreating={this.props.connection.isCreating}
                         isDeleting={this.props.connection.isDeleting}
-                        actions={renderCardActions()}
+                        actions={renderCardActions(this.props.connection)}
                     />
                     <DialogConfirm
                         title = "Delete Connection"

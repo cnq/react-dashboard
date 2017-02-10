@@ -39,9 +39,11 @@ class ConnectionListContainer extends Component {
                                         <h2 className={uri}>{this.props.app.backendSiteUri}</h2>
                                     </div>
                         }
-                        <div className={`${addContainer} ${this.props.connections.length === 0 ? centeredContainer : rightContainer}`} style={{height: '50px'}}>
-                            <FlatButton onClick={this.goToAddAppConnections} labelStyle={{color: '#f2f2f2', fontSize: '15px', letterSpacing: '.5px'}} backgroundColor="#3ED1D6" label="Add Connection" icon={<AddIcon color="#f2f2f2" />} />
-                        </div>
+                        { this.props.connections.find((connection) => connection.connectionType == "Legacy") ? '' :
+                            <div className={`${addContainer} ${this.props.connections.length === 0 ? centeredContainer : rightContainer}`} style={{height: '50px'}}>
+                                <FlatButton onClick={this.goToAddAppConnections} labelStyle={{color: '#f2f2f2', fontSize: '15px', letterSpacing: '.5px'}} backgroundColor="#3ED1D6" label="Add Connection" icon={<AddIcon color="#f2f2f2" />} />
+                            </div>
+                        }
                     </div>
                     {
                      this.props.connections.length === 0
